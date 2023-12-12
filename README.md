@@ -6,13 +6,14 @@ This is a proof of concept for using C# & .NET to interact with the Steam Web AP
 
 Currently, there is the ability to find:
 - SteamID64 via Steam Community URL (XML)
-- Steam Username via Steam Community URL (XML)
+- Steam Username via Steam Community URL (XML) & SteamID64 (Web API)
 - VAC Ban Status via Steam Community URL (XML)
-- Steam Join Date via Steam Community URL (XML)
+- Steam Join Date via Steam Community URL (XML) & SteamID64 (Web API)
 - Owned Games via SteamID64 (Web API)
 	- Most played games (sorted)
 	- Most played games across last two weeks (sorted)
 
+* ~ Please note that getting information via Steam Community URL is preferred where possible ~ *
 Also included is an example Program.cs to get you started.
 
 ### What are the limitations?

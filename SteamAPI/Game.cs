@@ -9,10 +9,10 @@ namespace SteamAPI
 {
     public class Game
     {
-        public int appid;
+        public uint appid;
         public string title;
-        public int playtime_2weeks;
-        public int playtime_forever;
+        public uint playtime_2weeks;
+        public uint playtime_forever;
         public bool appinfo;
 
         // Constructors
@@ -26,7 +26,7 @@ namespace SteamAPI
         }
 
         // As it goes at the moment, these constructors are unused.
-        public Game(int _appid, int _playtime_forever)
+        public Game(uint _appid, uint _playtime_forever)
         {
             appid = _appid;
             playtime_forever = _playtime_forever;
@@ -35,7 +35,7 @@ namespace SteamAPI
             appinfo = false;
         }
 
-        public Game(int _appid, int _playtime_forever, string _title, int _playtime_2weeks)
+        public Game(uint _appid, uint _playtime_forever, string _title, uint _playtime_2weeks)
         {
             appid = _appid;
             playtime_forever = _playtime_forever;

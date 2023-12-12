@@ -10,7 +10,7 @@ namespace SteamAPI
     public class User
     {
         // Obtainable via XML
-        public long steamID64;
+        public ulong steamID64;
         public string steamID;
         public bool vacBanned;
         public string memberSince;      // At the minute this is a string -- this is probably better as a datetime and then we can do calculations with it?

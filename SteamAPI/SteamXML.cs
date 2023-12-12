@@ -45,7 +45,7 @@ namespace SteamAPI
             string member = document.SelectSingleNode("/profile/memberSince").InnerText;
 
             // They all come back as strings, so I do all the conversions here.
-            user.steamID64 = long.Parse(id64);
+            user.steamID64 = ulong.Parse(id64);
             user.steamID = id;
             user.vacBanned = Convert.ToBoolean(int.Parse(vac));
             user.memberSince = member;

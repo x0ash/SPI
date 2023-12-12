@@ -14,34 +14,16 @@ namespace SteamAPI
         public static string API_Key = "";
         // An API key is required to use the Steam Web API.
 
-        private static async Task<string> RequestOwnedGames(ulong steamid, bool appinfo=false)
+        private static string URL = "http://api.steampowered.com/{0}={1}&key={2}&format=json{3}";
+        // This is the standard API request template string
+
+        private static JsonElement MakeWebAPIRequest(string reqPath, ulong steamID64, string extra = "")
         {
             //
-            // An async task that returns the JSON response from the Steam Web API
-            // Requires: SteamID64, API key
-            // Returns: JSON response (as string)
+            // This just wraps the request for API calls into a method thats a little bit nicer
             //
-
-            string uri = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" + API_Key + "&steamid=" + steamid.ToString() + "&format=json";
-
-            // appinfo=true provides extra details (such as the title of the game and the playtime in the last two weeks) at the cost of being slower.
-            if (appinfo)
-            {
-                uri += "&include_appinfo=true";
-            }
-
-            try
-            {
-                HttpClient httpClient = new HttpClient();
-                return await httpClient.GetStringAsync(uri);
-
-            }
-
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return "-1";
-            }
+            string jsonResult = HTMLRequest.GetHTMLPage(string.Format(URL, reqPath, steamID64, API_Key, extra));
+            return JsonSerializer.Deserialize<JsonElement>(jsonResult).GetProperty("response");
         }
 
         public static void GetOwnedGames(User user)
@@ -51,9 +33,9 @@ namespace SteamAPI
             // Requires: user.steamID64 != null
             //
 
-            string result = RequestOwnedGames(user.steamID64,true).Result;      // This is a JSON string
+            const string reqPath = "IPlayerService/GetOwnedGames/v0001/?steamid";
 
-            JsonElement response = JsonSerializer.Deserialize<JsonElement>(result).GetProperty("response");     // This is the bit we care about
+            JsonElement response = MakeWebAPIRequest(reqPath, user.steamID64, "&include_appinfo=true");         // This is the bit we care about
             foreach (var game in response.GetProperty("games").EnumerateArray())                                // Games are (understandably) stored in an array as JSON objects
             {
                 JsonElement gameInfo = JsonSerializer.Deserialize<JsonElement>(game);                           // To work with them, we have to deserialize them
@@ -74,12 +56,35 @@ namespace SteamAPI
                     if (gameInfo.TryGetProperty("playtime_2weeks", out playtime_2weeks))
                     {
                         newGame.playtime_2weeks = playtime_2weeks.GetUInt32();
-                        newGame.appinfo = true;
                     }
 
 
                 }
                 user.gamesList.Add(newGame);                                                                    // Once the new game has been created fully, add it to the user object.
+            }
+        }
+
+        // Using this is NOT recommended compared to SteamXML.GetUserDetails for the following reasons:
+        //      1. It uses a Web API request -- there's a limit to those while XML requests are unlimited
+        //      2. Most users won't be interacting with a SteamID64 -- they'll have a profile URL
+        //
+        // However, it would be useful as a fallback option in the event that we can't get the data from a URL
+        // Additionally, it can allow us to request information on multiple accounts at once.
+
+        public static void GetUserDetails(User[] users, ulong steamIDs64)
+        {
+            const string reqPath = "ISteamUser/GetPlayerSummaries/v0002/?steamids";
+
+            JsonElement response = MakeWebAPIRequest(reqPath, steamIDs64, "&include_appinfo=true");
+            int count = 0;          // This really doesn't feel like the best way to handle this.
+
+            foreach (var player in response.GetProperty("players").EnumerateArray())
+            {
+                JsonElement playerJson = JsonSerializer.Deserialize<JsonElement>(player);
+                users[count].steamID = playerJson.GetProperty("personaname").ToString();
+                users[count].steamID64 = playerJson.GetProperty("steamid").GetUInt64();
+                users[count].memberSince = playerJson.GetProperty("timecreated").ToString();            // At the minute, I'm just returning this as a string but it's just the unix time.
+                count++;
             }
         }
     }

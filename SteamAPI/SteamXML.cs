@@ -11,18 +11,6 @@ namespace SteamAPI
 {
     public class SteamXML
     {
-        private async static Task<string> RequestXMLPage(string url)
-        {
-            //
-            // An async task that returns an XML response representing the Steam Community page
-            // Requires: Steam Community URL
-            // Returns: XML document (as string)
-            //
-
-            HttpClient httpClient = new HttpClient();
-            return await httpClient.GetStringAsync(url + "?xml=1");
-        }
-
         public static void GetUserDetails(User user, string url)
         {
             //
@@ -33,7 +21,7 @@ namespace SteamAPI
             // This could become a bool in future to signify Public/Private acc (true/false) to halt other areas of the code executing.
 
             // XML parsing is slow, I don't really want to do it multiple times.
-            string XMLPage = RequestXMLPage(url).Result;
+            string XMLPage = HTMLRequest.GetHTMLPage(url + "?xml=1");
             XmlDocument document = new XmlDocument();
             document.LoadXml(XMLPage);
 

@@ -59,7 +59,7 @@ namespace SteamAPI
                 }
             }
 
-            return $"Steam ID64: {steamID64}\n\tSteam ID: {steamID}\n\tVAC Banned: {vacBanned}\n\tMember Since: {memberSince}\n\nTop 5 Most Played Games:\n{playtimeString}\nTop 5 Recently Played Games:\n{recentPlaytime}";
+            return $"Steam ID64: {steamID64}\n\tSteam ID: {steamID}\n\tVAC Banned: {vacBanned}\n\tMember Since: {memberSince}\n\nTop 5 Most Played Games:\n{playtimeString}\nTop 5 Recently Played Games:\n{recentPlaytime}\n";
         }
     }
 }

@@ -19,7 +19,7 @@ Also included is an example Program.cs to get you started.
 
 ### What are the limitations?
 
-Currently, whoever is using the program will have to provide their *own Web API key*, though **vague** instructions have been provided on how you get one.
+Currently, whoever is using the program will have to provide their [*own Web API key*](https://steamcommunity.com/dev/apikey), though **vague** instructions have been provided on how you get one.
 Additionally, it comes with all of the costs of using the Steam Web API key, which is currently restricted to **100,000 calls** per day [[Source](https://steamcommunity.com/dev/apiterms)]
 
 It also does *not* save the API key locally, so it will have to be provided every time.

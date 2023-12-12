@@ -13,7 +13,7 @@ Currently, there is the ability to find:
 	- Most played games (sorted)
 	- Most played games across last two weeks (sorted)
 
-* ~ Please note that getting information via Steam Community URL is preferred where possible ~ *
+*Please note that getting information via Steam Community URL is preferred where possible*
 Also included is an example Program.cs to get you started.
 
 ### What are the limitations?

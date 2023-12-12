@@ -1,6 +1,6 @@
 # SteamAPI
 
-This is a proof of concept for using C# to interact with the Steam Web API and Steam Community XML Profiles.
+This is a proof of concept for using C# & .NET to interact with the Steam Web API and Steam Community XML Profiles.
 
 ### What is included?
 
@@ -21,3 +21,5 @@ Currently, whoever is using the program will have to provide their *own Web API 
 Additionally, it comes with all of the costs of using the Steam Web API key, which is currently restricted to **100,000 calls** per day [[Source](https://steamcommunity.com/dev/apiterms)]
 
 It also does *not* save the API key locally, so it will have to be provided every time.
+
+It's also currently untested with private Steam accounts -- I only tested it with my own. I'd expect a crash however.

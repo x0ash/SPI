@@ -1,5 +1,7 @@
 # Steam Player Investigator
 
+Steam player investigator TSE project.
+
 ### Sections
 
 [GUI](#gui)
@@ -12,13 +14,15 @@
 
 ## GUI
 
+The final part, which consumes the API and model. 
+
 ## Model Training
 
 Training an SVM off labelled data.
 
 ## Data Collection
 
-Taking labelled accounts, and getting data used in training.
+Takes labelled accounts, uses the API to get account data and saves it to a file.
 
 ## SteamAPI
 

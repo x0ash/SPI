@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 25.0.1705.4
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamAPI", "SteamAPI\SteamAPI.csproj", "{ED7FAD43-B587-4DE5-A43A-038154070392}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SteamAPI", "SteamAPI\SteamAPI.csproj", "{ED7FAD43-B587-4DE5-A43A-038154070392}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCollection", "DataCollection\DataCollection.csproj", "{F75EE333-DE62-4FDD-B4AF-CD9AE8A3BD8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmurfPredictorModelTraining", "SmurfPredictorModelTraining\SmurfPredictorModelTraining.csproj", "{CD40E9A7-CA84-4F1E-99C7-2952BC30A3C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{ED7FAD43-B587-4DE5-A43A-038154070392}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED7FAD43-B587-4DE5-A43A-038154070392}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED7FAD43-B587-4DE5-A43A-038154070392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F75EE333-DE62-4FDD-B4AF-CD9AE8A3BD8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F75EE333-DE62-4FDD-B4AF-CD9AE8A3BD8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F75EE333-DE62-4FDD-B4AF-CD9AE8A3BD8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F75EE333-DE62-4FDD-B4AF-CD9AE8A3BD8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD40E9A7-CA84-4F1E-99C7-2952BC30A3C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD40E9A7-CA84-4F1E-99C7-2952BC30A3C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD40E9A7-CA84-4F1E-99C7-2952BC30A3C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD40E9A7-CA84-4F1E-99C7-2952BC30A3C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

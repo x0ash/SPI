@@ -1,4 +1,26 @@
-# SteamAPI
+# Steam Player Investigator
+
+### Sections
+
+[GUI](#gui)
+
+[Model Training](#model-training)
+
+[Data Collection](#data-collection)
+
+[SteamAPI](#steamapi)
+
+## GUI
+
+## Model Training
+
+Training an SVM off labelled data.
+
+## Data Collection
+
+Taking labelled accounts, and getting data used in training.
+
+## SteamAPI
 
 This is a proof of concept for using C# & .NET to interact with the Steam Web API and Steam Community XML Profiles.
 

@@ -24,6 +24,25 @@ Training an SVM off labelled data.
 
 Takes labelled accounts, uses the API to get account data and saves it to a file.
 
+### LabelledAccounts.csv
+
+| name/steamid | Label |
+|--------------|-------|
+| smurfName        | 1     |
+| nonSmurfName     | 0     |
+|              |       |
+
+### LabelledAccountsWithData.csv
+
+The table/data for training will look something like this, open to change.
+
+| No. Games owned | Total playtime | Account lifetime | Acheveiment percentage | Label |
+|-----------------|----------------|------------------|------------------------|-------|
+| | | | | |
+| | | | | |
+| | | | | |
+
+
 ## SteamAPI
 
 This is a proof of concept for using C# & .NET to interact with the Steam Web API and Steam Community XML Profiles.

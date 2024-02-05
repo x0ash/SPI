@@ -53,7 +53,7 @@ namespace SteamAPI
             string tagsString = "";
             if (tags.Count > 0)
             {
-                tagsString = "\n\tTags: " + string.Join(", ", tags);
+                tagsString = "\n\tTags: " + string.Join(", ", tags.GetRange(0,Math.Min(tags.Count, 5)));
             }
 
             if (!appinfo)

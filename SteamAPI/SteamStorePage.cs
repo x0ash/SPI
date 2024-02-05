@@ -20,20 +20,25 @@ namespace SteamAPI
             //
 
             // We know the appID already, and Steam makes it very convenient to find store pages based on this.
+            Output.LogProgress("Requesting store page");
             string StorePage = HTMLRequest.GetHTMLPage("https://store.steampowered.com/app/"+game.appid);
+            Output.LogProgress("Converting store page to document");
             HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
             document.LoadHtml(StorePage);
 
             // Next we can obtain the tags (all have class 'app_tag')
+            Output.LogProgress("Obtaining tags");
             IEnumerable<HtmlAgilityPack.HtmlNode> tagNodes = Fizzler.Systems.HtmlAgilityPack.HtmlNodeSelection.QuerySelectorAll(document.DocumentNode, "a.app_tag");
 
             // Iterate through and add to the game's tags.
+            Output.LogProgress("Adding tags to list");
             foreach (HtmlAgilityPack.HtmlNode node in tagNodes)
             {
                 // Tags have awkward formatting like "\r\n\t\t\t\t\t\t\t\t\t\t\t\tFPS\t\t\t\t\t\t\t\t\t\t\t\t"
                 // This filter removes all the leading/trailing special characters.
                 string filteredText = node.InnerText.Substring(14, node.InnerText.Length - 26);
                 game.tags.Add(filteredText);
+
             }
 
         }

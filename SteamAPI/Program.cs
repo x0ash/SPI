@@ -42,6 +42,11 @@ SteamAPI.SteamXML.GetUserDetails(testUser, steam_url);
 
 // To access the full games list, we need to use the Steam Web API.
 
+SteamAPI.SteamUserPage.GetUserLevel(testUser, steam_url);
+
+// This populates the user with:
+//      1: Their Steam user level (more 'real' accounts have higher levels)
+
 SteamAPI.SteamWeb.GetOwnedGames(testUser);
 
 // This populates their games list with metadata including:

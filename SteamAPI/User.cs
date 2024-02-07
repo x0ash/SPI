@@ -18,6 +18,8 @@ namespace SteamAPI
         // Obtainable via Web API
         public List<Game> gamesList;
 
+        public int isSmurf; // Might not really belong here
+
         // Constructor
         public User()
         {
@@ -25,6 +27,8 @@ namespace SteamAPI
             steamID = "";
             vacBanned = false;
             memberSince = "";
+
+            isSmurf = 0;
 
             gamesList = new List<Game>();
         }
@@ -60,6 +64,16 @@ namespace SteamAPI
             }
 
             return $"Steam ID64: {steamID64}\n\tSteam ID: {steamID}\n\tVAC Banned: {vacBanned}\n\tMember Since: {memberSince}\n\nTop 5 Most Played Games:\n{playtimeString}\nTop 5 Recently Played Games:\n{recentPlaytime}\n";
+        }
+
+        public ulong TotalPlaytime()
+        {
+            ulong totalPlaytime = 0;
+            foreach (Game game in gamesList)
+            {
+                totalPlaytime += game.playtime_forever;
+            }
+            return totalPlaytime;
         }
     }
 }

@@ -26,18 +26,18 @@ Takes labelled accounts, uses the API to get account data and saves it to a file
 
 ### LabelledAccounts.csv
 
-| name/steamid | Label |
+| URL of steam account | Label |
 |--------------|-------|
-| smurfName        | 1     |
-| nonSmurfName     | 0     |
+| smurf URL    | 1     |
+| nonSmurf URL | 0     |
 |              |       |
 
 ### LabelledAccountsWithData.csv
 
 The table/data for training will look something like this, open to change.
 
-| No. Games owned | Total playtime | Account lifetime | Acheveiment percentage | Label |
-|-----------------|----------------|------------------|------------------------|-------|
+| No. Games owned | Total playtime | Account lifetime | Total Recent Playtime | Label |
+|-----------------|----------------|------------------|-----------------------|-------|
 | | | | | |
 | | | | | |
 | | | | | |

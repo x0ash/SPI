@@ -10,6 +10,10 @@ using SteamAPI;
 
 namespace DataCollection
 {
+    /// <summary>
+    /// Takes a csv of labelled accounts, uses the api to get information about the account
+    /// Saves the information to a csv, for it to be used for training.
+    /// </summary>
     internal class LabelledAccountsDataExporter
     {
 
@@ -26,6 +30,9 @@ namespace DataCollection
             _labelledAccountsDataFile = labelledAccountsDataFile;
         }
 
+        /// <summary>
+        /// Saves labelled accounts with the following data: games owned, total playtime, account lifetime, and total recent playtime
+        /// </summary>
         public void ExportLabelledAccountsData()
         {
             List<User> accounts = GetAccounts();
@@ -46,6 +53,10 @@ namespace DataCollection
             
         }
 
+        /// <summary>
+        /// Gets each line in the labelled accounts file.
+        /// </summary>
+        /// <returns></returns>
         private List<string> GetLabelledAccountLines()
         {
             List<string> lines = new List<string>();
@@ -61,6 +72,10 @@ namespace DataCollection
             return lines;
         }
 
+        /// <summary>
+        /// A list of accounts, all from the labelled accounts file. 
+        /// </summary>
+        /// <returns></returns>
         private List<User> GetAccounts()
         {
             List<string> lines = GetLabelledAccountLines();

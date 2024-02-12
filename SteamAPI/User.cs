@@ -58,6 +58,7 @@ namespace SteamAPI
             {
                 if (sortedPlaytime[i].playtime_2weeks != 0)
                 {
+                    SteamStorePage.GetCommunityTags(sortedPlaytime[i]);
                     recentPlaytime += sortedPlaytime[i].ToString();
                 }
             }

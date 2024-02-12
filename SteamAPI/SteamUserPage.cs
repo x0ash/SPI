@@ -17,10 +17,10 @@ namespace SteamAPI
 			//
 
 			Output.LogProgress("Requesting user page (HTML)");
-            string UserPage = HTMLRequest.GetHTMLPage(url);
+            string userPage = HTMLRequest.GetHTMLPage(url);
 			Output.LogProgress("Converting user page to document");
 			HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
-			document.LoadHtml(UserPage);
+			document.LoadHtml(userPage);
 
 			// There is only a single node with this class, and inside is the user level.
 			Output.LogProgress("Obtaining the user's level");

@@ -15,7 +15,7 @@ namespace SteamAPI
         public bool vacBanned;
         public string memberSince;      // At the minute this is a string -- this is probably better as a datetime and then we can do calculations with it?
         public int userLevel;
-
+        
         // Obtainable via Web API
         public List<Game> gamesList;
 

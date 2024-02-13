@@ -35,7 +35,9 @@ namespace SteamAPI
 
             const string reqPath = "IPlayerService/GetOwnedGames/v0001/?steamid";
 
+            Output.LogProgress("Requesting user summary from Web API");
             JsonElement response = MakeWebAPIRequest(reqPath, user.steamID64, "&include_appinfo=true");         // This is the bit we care about
+            Output.LogProgress("Adding games to gamesList");
             foreach (var game in response.GetProperty("games").EnumerateArray())                                // Games are (understandably) stored in an array as JSON objects
             {
                 JsonElement gameInfo = JsonSerializer.Deserialize<JsonElement>(game);                           // To work with them, we have to deserialize them

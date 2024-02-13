@@ -14,7 +14,8 @@ namespace SteamAPI
         public string steamID;
         public bool vacBanned;
         public string memberSince;      // At the minute this is a string -- this is probably better as a datetime and then we can do calculations with it?
-
+        public int userLevel;
+        
         // Obtainable via Web API
         public List<Game> gamesList;
 
@@ -25,6 +26,7 @@ namespace SteamAPI
             steamID = "";
             vacBanned = false;
             memberSince = "";
+            userLevel = -1;
 
             gamesList = new List<Game>();
         }
@@ -40,6 +42,7 @@ namespace SteamAPI
 
             for (int i = 0; i < 5; i++)
             {
+                SteamStorePage.GetCommunityTags(sortedPlaytime[i]);
                 playtimeString += sortedPlaytime[i].ToString();
             }
 
@@ -55,11 +58,12 @@ namespace SteamAPI
             {
                 if (sortedPlaytime[i].playtime_2weeks != 0)
                 {
+                    SteamStorePage.GetCommunityTags(sortedPlaytime[i]);
                     recentPlaytime += sortedPlaytime[i].ToString();
                 }
             }
 
-            return $"Steam ID64: {steamID64}\n\tSteam ID: {steamID}\n\tVAC Banned: {vacBanned}\n\tMember Since: {memberSince}\n\nTop 5 Most Played Games:\n{playtimeString}\nTop 5 Recently Played Games:\n{recentPlaytime}\n";
+            return $"Steam ID64: {steamID64}\n\tSteam ID: {steamID}\n\tUser Level: {userLevel}\n\tVAC Banned: {vacBanned}\n\tMember Since: {memberSince}\n\nTop 5 Most Played Games:\n{playtimeString}\nTop 5 Recently Played Games:\n{recentPlaytime}\n";
         }
     }
 }

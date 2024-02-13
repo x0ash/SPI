@@ -14,6 +14,7 @@ namespace SteamAPI
         public uint playtime_2weeks;
         public uint playtime_forever;
         public bool appinfo;
+        public List<string> tags;
 
         // Constructors
         public Game()
@@ -23,6 +24,7 @@ namespace SteamAPI
             title = "";
             playtime_2weeks = 0;
             appinfo = false;
+            tags = new List<string>();
         }
 
         // As it goes at the moment, these constructors are unused.
@@ -33,6 +35,7 @@ namespace SteamAPI
             title = "";
             playtime_2weeks = 0;
             appinfo = false;
+            tags = new List<string>();
         }
 
         public Game(uint _appid, uint _playtime_forever, string _title, uint _playtime_2weeks)
@@ -42,10 +45,17 @@ namespace SteamAPI
             title = _title;
             playtime_2weeks = _playtime_2weeks;
             appinfo = true;
+            tags = new List<string>();
         }
 
         public override string ToString()
         {
+            string tagsString = "";
+            if (tags.Count > 0)
+            {
+                tagsString = "\n\tTags: " + string.Join(", ", tags.GetRange(0,Math.Min(tags.Count, 5)));
+            }
+
             if (!appinfo)
             {
                 return $"App ID: {appid}\n\tTotal Playtime: {playtime_forever}\n\n";
@@ -54,7 +64,7 @@ namespace SteamAPI
             else
             {
                 // Playtime is always delivered in minutes, hours is how Steam displays it and probably a bit better for our usage?
-                return $"App ID: {appid}\n\tTitle: {title}\n\tTotal Hours: {Math.Round((float)playtime_forever / 60, 2)}\n\t\tLast Two Weeks: {Math.Round((float)playtime_2weeks / 60, 2)}\n\n";
+                return $"App ID: {appid}\n\tTitle: {title}{tagsString}\n\tTotal Hours: {Math.Round((float)playtime_forever / 60, 2)}\n\t\tLast Two Weeks: {Math.Round((float)playtime_2weeks / 60, 2)}\n\n";
             }
         }
     }

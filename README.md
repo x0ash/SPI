@@ -45,13 +45,14 @@ The table/data for training will look something like this, open to change.
 
 ## SteamAPI
 
-This is a proof of concept for using C# & .NET to interact with the Steam Web API and Steam Community XML Profiles.
+This is a proof of concept for using C# & .NET to interact with the Steam Web API and Steam Community Profiles.
 
 ### What is included?
 
 Currently, there is the ability to find:
 - SteamID64 via Steam Community URL (XML)
 - Steam Username via Steam Community URL (XML) & SteamID64 (Web API)
+- Steam User Level via Steam Community URL (HTML)
 - VAC Ban Status via Steam Community URL (XML)
 - Steam Join Date via Steam Community URL (XML) & SteamID64 (Web API)
 - Owned Games via SteamID64 (Web API)
@@ -69,4 +70,10 @@ Additionally, it comes with all of the costs of using the Steam Web API key, whi
 
 It also does *not* save the API key locally, so it will have to be provided every time.
 
+Some features (specifically requesting full HTML pages) lead to extreme slowdown and many requests may eventually lead to access being temporarily denied.
+
 It's also currently untested with private Steam accounts -- I only tested it with my own. I'd expect a crash however.
+
+### Exclusive to this branch
+- Ability to find user level
+- Ability to determine game tags (obtained via the store page)

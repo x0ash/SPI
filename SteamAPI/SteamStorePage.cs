@@ -22,7 +22,7 @@ namespace SteamAPI
             // Requires: game != null
             //
 
-            if (game.tags.Count == 0)
+            if (game.GetStoreTags().Count() == 0)
             {
                 // We know the appID already, and Steam makes it very convenient to find store pages based on this.
                 Output.LogProgress("Requesting store page");
@@ -30,7 +30,8 @@ namespace SteamAPI
                 // Games with 'mature content' will redirect to a age verification page upon loading.
                 // We need to simulate someone passing the age-verification check.
 
-                string storePage = HTMLRequest.GetHTMLPage("https://store.steampowered.com/app/" + game.appid);
+                uint appID = game.GetAppID();
+                string storePage = HTMLRequest.GetHTMLPage("https://store.steampowered.com/app/" + appID);
                 Output.LogProgress("Converting store page to document");
                 HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
                 document.LoadHtml(storePage);
@@ -61,13 +62,13 @@ namespace SteamAPI
                     // However, if it's needed, success code 1 is what we're looking for. 15 means the data supplied is malformed.
                     // If 15 is encountered in the future, CheckAgeGateSubmit has probably been updated and needs matching again.
 
-                    HTMLRequest.GetPOST($"https://store.steampowered.com/agecheckset/app/{game.appid}/", content);
+                    HTMLRequest.GetPOST($"https://store.steampowered.com/agecheckset/app/{appID}/", content);
 
                     // The Steam website uses a cookie to record whether the user wants to see mature content or not. However, it's not
                     // required as long as the user remains in the same session, which will happen as long as the program is open.
                     // After this, load the original page again to get the tags.
 
-                    storePage = HTMLRequest.GetHTMLPage("https://store.steampowered.com/app/" + game.appid);
+                    storePage = HTMLRequest.GetHTMLPage("https://store.steampowered.com/app/" + appID);
                     document.LoadHtml(storePage);
                 }
 
@@ -82,7 +83,7 @@ namespace SteamAPI
                     // Tags have awkward formatting like "\r\n\t\t\t\t\t\t\t\t\t\t\t\tFPS\t\t\t\t\t\t\t\t\t\t\t\t"
                     // This filter removes all the leading/trailing special characters.
                     string filteredText = node.InnerText.Substring(14, node.InnerText.Length - 26);
-                    game.tags.Add(filteredText);
+                    game.AddStoreTag(filteredText);
 
                 }
             }

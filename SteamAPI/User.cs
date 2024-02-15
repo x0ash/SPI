@@ -10,14 +10,14 @@ namespace SteamAPI
     public class User
     {
         // Obtainable via XML
-        public ulong steamID64;
-        public string steamID;
-        public bool vacBanned;
-        public string memberSince;      // At the minute this is a string -- this is probably better as a datetime and then we can do calculations with it?
-        public int userLevel;
+        ulong steamID64;
+        string steamID;
+        bool vacBanned;
+        DateTime memberSince;
+        int userLevel;
         
         // Obtainable via Web API
-        public List<Game> gamesList;
+        List<Game> gamesList;
 
         public int isSmurf; // Might not really belong here
 
@@ -27,7 +27,7 @@ namespace SteamAPI
             steamID64 = 0;
             steamID = "";
             vacBanned = false;
-            memberSince = "";
+            memberSince = new DateTime();
             userLevel = -1;
 
             isSmurf = 0;
@@ -35,12 +35,96 @@ namespace SteamAPI
             gamesList = new List<Game>();
         }
 
+        // -- Getter/Setters --
+
+        // SteamID64
+        public ulong GetSteamID64()
+        {
+            return steamID64;
+        }
+
+        public void SetSteamID64(ulong _steamID64)
+        {
+            steamID64 = _steamID64;
+        }
+
+        // SteamID
+        public string GetSteamID()
+        {
+            return steamID;
+        }
+
+        public void SetSteamID(string _steamID)
+        {
+            steamID = _steamID;
+        }
+
+        // VAC Status
+        public bool GetVacStatus()
+        {
+            return vacBanned;
+        }
+
+        public void SetVacStatus(bool _vacBanned)
+        {
+            vacBanned = _vacBanned;
+        }
+
+        // Join Date
+        public DateTime GetJoinDate()
+        {
+            return memberSince;
+        }
+
+        public void SetJoinDate(DateTime _memberSince)
+        {
+            memberSince = _memberSince;
+        }
+
+        public void SetJoinDate(string _memberSince)
+        {
+            memberSince = DateTime.Parse(_memberSince);             // XML pages return as string, so we can parse
+        }
+
+        // Obtaining the user details via Web API gives date created as a unix time, so this has to be supported.
+        public void SetJoinDateUnix(string timecreated)
+        {
+            memberSince = DateTimeOffset.FromUnixTimeSeconds(long.Parse(timecreated)).DateTime;
+        }
+
+        // User Level
+        public int GetUserLevel()
+        {
+            return userLevel;
+        }
+
+        public void SetUserLevel(int _userLevel)
+        {
+            userLevel = _userLevel;
+        }
+
+        // Games List
+        public Game[] GetGamesList()
+        {
+            return gamesList.ToArray();
+        }
+
+        public void SetGamesList(Game[] _gamesList)
+        {
+            gamesList = new List<Game>(_gamesList);
+        }
+
+        public void AddGamesList(Game game)
+        {
+            gamesList.Add(game);
+        }
+
         // Methods
         public override string ToString()
         {
             // -- Sorting by total playtime --
 
-            List<Game> sortedPlaytime = gamesList.OrderBy(o => o.playtime_forever).Reverse().ToList();
+            List<Game> sortedPlaytime = gamesList.OrderBy(o => o.GetTotalPlaytime()).Reverse().ToList();
 
             string playtimeString = "";
 
@@ -54,13 +138,13 @@ namespace SteamAPI
             // This is actually obtainable via the XML page, but this unlimits our reach on it
             // Obtaining via the XML page would also require a game parser from XML results to be created.
 
-            sortedPlaytime = gamesList.OrderBy(o => o.playtime_2weeks).Reverse().ToList();
+            sortedPlaytime = gamesList.OrderBy(o => o.GetRecentPlaytime()).Reverse().ToList();
 
             string recentPlaytime = "";
 
             for (int i = 0; i < 5; i++)
             {
-                if (sortedPlaytime[i].playtime_2weeks != 0)
+                if (sortedPlaytime[i].GetRecentPlaytime() != 0)
                 {
                     SteamStorePage.GetCommunityTags(sortedPlaytime[i]);
                     recentPlaytime += sortedPlaytime[i].ToString();
@@ -75,7 +159,7 @@ namespace SteamAPI
             ulong totalPlaytime = 0;
             foreach (Game game in gamesList)
             {
-                totalPlaytime += game.playtime_forever;
+                totalPlaytime += game.GetTotalPlaytime();
             }
             return totalPlaytime;
         }

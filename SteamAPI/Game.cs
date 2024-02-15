@@ -9,12 +9,12 @@ namespace SteamAPI
 {
     public class Game
     {
-        public uint appid;
-        public string title;
-        public uint playtime_2weeks;
-        public uint playtime_forever;
-        public bool appinfo;
-        public List<string> tags;
+        uint appid;
+        string title;
+        uint playtime_2weeks;
+        uint playtime_forever;
+        bool appinfo;
+        List<string> tags;
 
         // Constructors
         public Game()
@@ -48,6 +48,80 @@ namespace SteamAPI
             tags = new List<string>();
         }
 
+        // Getters/Setters
+
+        // App ID
+        public uint GetAppID()
+        {
+            return appid;
+        }
+
+        public void SetAppID(uint _appid)
+        {
+            appid = _appid;
+        }
+
+        // Game Title
+        public string GetTitle()
+        {
+            return title;
+        }
+
+        public void SetTitle(string _title)
+        {
+            title = _title;
+        }
+
+        // Playtime across two weeks
+        public uint GetRecentPlaytime()
+        {
+            return playtime_2weeks;
+        }
+
+        public void SetRecentPlaytime(uint _playtime_2weeks)
+        {
+            playtime_2weeks = _playtime_2weeks;
+        }
+
+        // Playtime across all time
+        public uint GetTotalPlaytime()
+        {
+            return playtime_forever;
+        }
+
+        public void SetTotalPlaytime(uint _playtime_forever)
+        {
+            playtime_forever = _playtime_forever;
+        }
+
+        // Is App Info available?
+        public bool GetAppInfo()
+        {
+            return appinfo;
+        }
+
+        public void SetAppInfo(bool _appinfo)
+        {
+            appinfo = _appinfo;
+        }
+
+        // Store Tags
+        public string[] GetStoreTags()
+        {
+            return tags.ToArray();
+        }
+
+        public void SetStoreTags(string[] _tags)
+        {
+            tags = new List<string>(_tags);
+        }
+
+        public void AddStoreTag(string tag)
+        {
+            tags.Add(tag);
+        }
+
+        // Methods
         public override string ToString()
         {
             string tagsString = "";

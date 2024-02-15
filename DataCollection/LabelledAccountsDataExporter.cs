@@ -46,7 +46,7 @@ namespace DataCollection
 
             foreach (User user in accounts)
             {
-                Console.WriteLine(user.gamesList.Count());
+                Console.WriteLine(user.GetGamesList().Count());
             }
 
             using (StreamWriter sw = new StreamWriter(_labelledAccountsDataFile))
@@ -54,7 +54,7 @@ namespace DataCollection
                 foreach (User account in accounts)
                 {
                     // games owned, total playtime, account lifetime, label
-                    sw.WriteLine($"{account.gamesList.Count()},{account.TotalPlaytime()},not implemented,{account.RecentPlaytime()}");
+                    sw.WriteLine($"{account.GetGamesList().Count()},{account.TotalPlaytime()},not implemented,{account.RecentPlaytime()}");
                 }
             }
             

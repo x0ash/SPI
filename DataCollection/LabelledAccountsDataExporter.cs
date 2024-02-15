@@ -23,9 +23,16 @@ namespace DataCollection
         string _labelledAccountsFile;
         string _labelledAccountsDataFile;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="apiKey"></param>
+        /// <param name="labelledAccountsFile">Location of the file with all the labelled accounts</param>
+        /// <param name="labelledAccountsDataFile">Location of output file with all the labelled accounts with user data</param>
         public LabelledAccountsDataExporter(string apiKey, string labelledAccountsFile, string labelledAccountsDataFile)
         {
             _apiKey = apiKey;
+            SteamWeb.API_Key = apiKey;
             _labelledAccountsFile = labelledAccountsFile;
             _labelledAccountsDataFile = labelledAccountsDataFile;
         }
@@ -47,7 +54,7 @@ namespace DataCollection
                 foreach (User account in accounts)
                 {
                     // games owned, total playtime, account lifetime, label
-                    sw.WriteLine($"{account.gamesList.Count()},{account.TotalPlaytime()}");
+                    sw.WriteLine($"{account.gamesList.Count()},{account.TotalPlaytime()},not implemented,{account.RecentPlaytime()}");
                 }
             }
             
@@ -89,9 +96,10 @@ namespace DataCollection
                 User user = new User();
                 string accountUrl = lineParts[0];
                 int accountLabel = Convert.ToInt32(lineParts[1]);
-                // Need to change this
-                // This does not populate gamelist
+
+                // Populate details, and game list
                 SteamXML.GetUserDetails(user, accountUrl);
+                SteamWeb.GetOwnedGames(user);
                 user.isSmurf = accountLabel;
                 accounts.Add(user);
             }

@@ -79,5 +79,15 @@ namespace SteamAPI
             }
             return totalPlaytime;
         }
+
+        public ulong RecentPlaytime()
+        {
+            ulong recentPlaytime = 0;
+            foreach (Game game in gamesList)
+            {
+                recentPlaytime += game.playtime_2weeks;
+            }
+            return recentPlaytime;
+        }
     }
 }

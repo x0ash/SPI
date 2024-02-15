@@ -9,6 +9,7 @@
         {
             Console.WriteLine("Input steam api key: ");
             string apiKey = Console.ReadLine();
+
             // Set this to the location of your local steam player spreadsheet.csv
             string labelledAccountsFile = "";
             string labelledAccountsDataFile = "";

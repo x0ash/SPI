@@ -26,6 +26,16 @@ Takes labelled accounts, uses the API to get account data and saves it to a file
 
 - Run the DataCollection main, to generate LabelledAccountsWithData.csv
 
+### config.json
+
+Requires this format:
+
+| Key | Description |
+|-----|-------------|
+| key | Steam Web API key |
+| sheetsid | Google Sheets document ID |
+| sheetsgid | Google Sheets tab GID |
+
 ### LabelledAccountsWithData.csv
 
 The table/data for training will look something like this, open to change.

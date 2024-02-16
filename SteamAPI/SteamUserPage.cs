@@ -26,7 +26,7 @@ namespace SteamAPI
 			Output.LogProgress("Obtaining the user's level");
 			HtmlAgilityPack.HtmlNode levelNode = Fizzler.Systems.HtmlAgilityPack.HtmlNodeSelection.QuerySelectorAll(document.DocumentNode, "span.friendPlayerLevelNum").First();
 
-			user.userLevel = int.Parse(levelNode.InnerText);
+			user.SetUserLevel(int.Parse(levelNode.InnerText));
 		}
 	}
 }

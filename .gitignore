@@ -4,3 +4,4 @@ obj/
 .vs/
 /DataCollection/LabelledAccountData.csv
 /DataCollection/LabelledAccount.csv
+.DS_Store

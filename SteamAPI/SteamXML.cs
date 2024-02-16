@@ -37,10 +37,10 @@ namespace SteamAPI
 
             // They all come back as strings, so I do all the conversions here.
             Output.LogProgress("Converting all to correct types");
-            user.steamID64 = ulong.Parse(id64);
-            user.steamID = id;
-            user.vacBanned = Convert.ToBoolean(int.Parse(vac));
-            user.memberSince = member;
+            user.SetSteamID64(ulong.Parse(id64));
+            user.SetSteamID(id);
+            user.SetVacStatus(Convert.ToBoolean(int.Parse(vac)));
+            user.SetJoinDate(member);
         }
     }
 }

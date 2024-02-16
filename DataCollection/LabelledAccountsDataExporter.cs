@@ -5,6 +5,7 @@
 
 
 using System;
+using System.Text.Json;
 using SteamAPI;
 
 
@@ -33,11 +34,15 @@ namespace DataCollection
         public LabelledAccountsDataExporter(string configFile, string labelledAccountsDataFile)
         {
             // We should probably refactor this once additional things require the config file
-            string[] config = File.ReadAllLines(configFile);
-            _apiKey = config[0];
-            SteamWeb.API_Key = config[0];
-            _sheetsID = config[1];
-            _sheetsGID = config[2];
+            using (StreamReader sr = new StreamReader(configFile))
+            {
+                string file = sr.ReadToEnd();
+                JsonElement config = JsonSerializer.Deserialize<JsonElement>(file);
+                _apiKey = config.GetProperty("key").GetString();
+                SteamWeb.API_Key = _apiKey;
+                _sheetsID = config.GetProperty("sheetsid").GetString();
+                _sheetsGID = config.GetProperty("sheetsgid").GetString();
+            }
             _labelledAccountsDataFile = labelledAccountsDataFile;
         }
 
@@ -94,6 +99,7 @@ namespace DataCollection
         {
             List<string> lines = GetLinesFromSheets(_sheetsID, _sheetsGID);
             List<User> accounts = new List<User>();
+            Console.WriteLine("Obtaining user data...");
             while (lines.Count >= 1)
             {
                 string line = lines.First();

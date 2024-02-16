@@ -18,7 +18,7 @@ namespace DataCollection
 
             // put the csv in this folder /SteamPlayerInvestigator/DataCollection/LabelledAccount.csv
 
-            string configFile = Path.Combine(assemblyParentParentParent, @"config.cfg"); ;
+            string configFile = Path.Combine(assemblyParentParentParent, @"config.json"); ;
             string labelledAccountsDataFile = Path.Combine(assemblyParentParentParent, @"LabelledAccountData.csv"); ;
 
             LabelledAccountsDataExporter dataExporter = new LabelledAccountsDataExporter(configFile, labelledAccountsDataFile);

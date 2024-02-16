@@ -3,6 +3,6 @@ bin/
 obj/
 .vs/
 /DataCollection/LabelledAccountData.csv
-/DataCollection/config.cfg
+/DataCollection/config.json
 /SteamAPI/.DS_Store
 /DataCollection/.DS_Store

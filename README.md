@@ -30,8 +30,6 @@ Takes labelled accounts, uses the API to get account data and saves it to a file
 
 Requires this format:
 
-| URL of steam account |
-|----------------------|
 | Steam Web API Key    |
 | Google Sheets ID     |
 | Google Sheets Tab GID|

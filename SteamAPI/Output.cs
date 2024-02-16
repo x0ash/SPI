@@ -27,13 +27,21 @@ namespace SteamAPI
 
 			else
 			{
-				Console.WriteLine("Loading: {0}%", Math.Round((float)_LoadingProgress * 100 / operationCount));
+				// This is broken so I'm just going to disable it for now.
+				//Console.WriteLine("Loading: {0}%", Math.Round((float)_LoadingProgress * 100 / operationCount));
 			}
 
 			_LoadingProgress++;
 		}
 
-		private static int _LoadingProgress;
+        public static void Error(string errorMessage)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"[Error] {errorMessage}");
+			Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        private static int _LoadingProgress;
 		private static long current;
 		private static long last = ((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds();
 		private static int operationCount = 28;             // This is obtained via testing on just my personal account, probably not too accurate

@@ -26,11 +26,12 @@ namespace SteamAPI
             return JsonSerializer.Deserialize<JsonElement>(jsonResult).GetProperty("response");
         }
 
-        public static void GetOwnedGames(User user)
+        public static int GetOwnedGames(User user)
         {
             //
             // A void that populates the gamesList variable for a given user
             // Requires: user.steamID64 != null
+            // Returns: 0 (if successful), 1 (if unsuccessful)
             //
 
             const string reqPath = "IPlayerService/GetOwnedGames/v0001/?steamid";
@@ -38,31 +39,42 @@ namespace SteamAPI
             Output.LogProgress("Requesting user summary from Web API");
             JsonElement response = MakeWebAPIRequest(reqPath, user.GetSteamID64(), "&include_appinfo=true");    // This is the bit we care about
             Output.LogProgress("Adding games to gamesList");
-            foreach (var game in response.GetProperty("games").EnumerateArray())                                // Games are (understandably) stored in an array as JSON objects
+
+            try
             {
-                JsonElement gameInfo = JsonSerializer.Deserialize<JsonElement>(game);                           // To work with them, we have to deserialize them
-                Game newGame = new Game();                                                                      // While games can be created with one line, it makes sense here to separate it as the results may not include name and/or playtime_2weeks
+                foreach (var game in response.GetProperty("games").EnumerateArray())                                // Games are (understandably) stored in an array as JSON objects
                 {
-                    newGame.SetAppID(gameInfo.GetProperty("appid").GetUInt32());                                // App IDs are stored as integers (on our side & Valve's)
-                    newGame.SetTotalPlaytime(gameInfo.GetProperty("playtime_forever").GetUInt32());             // The same applies to playtime_forever (records in minutes)
-
-                    JsonElement title;                                                                          // name & playtime_2weeks may not be present in the response so they must be checked specially.
-                    JsonElement playtime_2weeks;
-
-                    if (gameInfo.TryGetProperty("name", out title))
+                    JsonElement gameInfo = JsonSerializer.Deserialize<JsonElement>(game);                           // To work with them, we have to deserialize them
+                    Game newGame = new Game();                                                                      // While games can be created with one line, it makes sense here to separate it as the results may not include name and/or playtime_2weeks
                     {
-                        newGame.SetTitle(title.GetString());
-                        newGame.SetAppInfo(true);                                                               // If any of these extra details are present, appinfo must be set to true (this is useful for outputting without missing titles & playtime_2weeks)
+                        newGame.SetAppID(gameInfo.GetProperty("appid").GetUInt32());                                // App IDs are stored as integers (on our side & Valve's)
+                        newGame.SetTotalPlaytime(gameInfo.GetProperty("playtime_forever").GetUInt32());             // The same applies to playtime_forever (records in minutes)
+
+                        JsonElement title;                                                                          // name & playtime_2weeks may not be present in the response so they must be checked specially.
+                        JsonElement playtime_2weeks;
+
+                        if (gameInfo.TryGetProperty("name", out title))
+                        {
+                            newGame.SetTitle(title.GetString());
+                            newGame.SetAppInfo(true);                                                               // If any of these extra details are present, appinfo must be set to true (this is useful for outputting without missing titles & playtime_2weeks)
+                        }
+
+                        if (gameInfo.TryGetProperty("playtime_2weeks", out playtime_2weeks))
+                        {
+                            newGame.SetRecentPlaytime(playtime_2weeks.GetUInt32());
+                        }
+
+
                     }
-
-                    if (gameInfo.TryGetProperty("playtime_2weeks", out playtime_2weeks))
-                    {
-                        newGame.SetRecentPlaytime(playtime_2weeks.GetUInt32());
-                    }
-
-
+                    user.AddGamesList(newGame);                                                                     // Once the new game has been created fully, add it to the user object.
                 }
-                user.AddGamesList(newGame);                                                                     // Once the new game has been created fully, add it to the user object.
+                return 0;
+            }
+
+            catch
+            {
+                Output.Error($"Cannot obtain games list\nSteamID: {user.GetSteamID()}");
+                return 1;
             }
         }
 

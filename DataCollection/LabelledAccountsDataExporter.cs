@@ -99,10 +99,16 @@ namespace DataCollection
                 int accountLabel = Convert.ToInt32(lineParts[1]);
 
                 // Populate details, and game list
-                SteamXML.GetUserDetails(user, accountUrl);
-                SteamWeb.GetOwnedGames(user);
-                user.isSmurf = accountLabel;
-                accounts.Add(user);
+                ;
+                ;
+                if (
+                    !Convert.ToBoolean(SteamXML.GetUserDetails(user, accountUrl)) &&
+                    !Convert.ToBoolean(SteamWeb.GetOwnedGames(user))
+                )
+                {
+                    user.isSmurf = accountLabel;
+                    accounts.Add(user);
+                }
             }
             return accounts;
         }

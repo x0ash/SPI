@@ -36,7 +36,7 @@ Takes labelled accounts, uses the API to get account data and saves it to a file
 
 The table/data for training will look something like this, open to change.
 
-| No. Games owned | Total playtime | Account lifetime | Total Recent Playtime | Label |
+| No. Games owned | Total playtime (hrs)| Account lifetime (days)| Total Recent Playtime (hrs) | Label |
 |-----------------|----------------|------------------|-----------------------|-------|
 | | | | | |
 | | | | | |

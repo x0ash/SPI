@@ -110,6 +110,10 @@ namespace DataCollection
                     user.isSmurf = accountLabel;
                     accounts.Add(user);
                 }
+                else
+                {
+                    SteamAPI.Output.Error($"Didn't add user {user.GetSteamID()}");
+                }
             }
             return accounts;
         }

@@ -73,7 +73,7 @@ namespace SteamAPI
 
             catch
             {
-                Output.Error($"Cannot obtain games list\nSteamID: {user.GetSteamID()}");
+                Output.Error($"Cannot obtain games list (SteamID: {user.GetSteamID()})", "SteamAPI/SteamWeb:43");
                 return 1;
             }
         }

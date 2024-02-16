@@ -34,10 +34,10 @@ namespace SteamAPI
 			_LoadingProgress++;
 		}
 
-        public static void Error(string errorMessage)
+        public static void Error(string errorMessage, string origin="")
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"[Error] {errorMessage}");
+            Console.WriteLine($"{(origin==""?"":$"[{origin}] ")}[Error] {errorMessage}");				// I'm so sorry
 			Console.ForegroundColor = ConsoleColor.White;
         }
 

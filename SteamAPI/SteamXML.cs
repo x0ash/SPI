@@ -50,7 +50,7 @@ namespace SteamAPI
 
             catch
             {
-                Output.Error($"User account details cannot be obtained!\nURL: {url}");
+                Output.Error($"User account details cannot be obtained! (URL: {url})", "SteamAPI/SteamXML:34");
                 return 1;
             }
         }

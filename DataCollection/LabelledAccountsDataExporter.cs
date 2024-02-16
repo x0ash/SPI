@@ -20,7 +20,8 @@ namespace DataCollection
         // in: api key, csv
         // out: csv
         string _apiKey;
-        string _labelledAccountsFile;
+        string _sheetsID;
+        string _sheetsGID;
         string _labelledAccountsDataFile;
 
         /// <summary>
@@ -29,11 +30,14 @@ namespace DataCollection
         /// <param name="apiKey"></param>
         /// <param name="labelledAccountsFile">Location of the file with all the labelled accounts</param>
         /// <param name="labelledAccountsDataFile">Location of output file with all the labelled accounts with user data</param>
-        public LabelledAccountsDataExporter(string apiKey, string labelledAccountsFile, string labelledAccountsDataFile)
+        public LabelledAccountsDataExporter(string configFile, string labelledAccountsDataFile)
         {
-            _apiKey = apiKey;
-            SteamWeb.API_Key = apiKey;
-            _labelledAccountsFile = labelledAccountsFile;
+            // We should probably refactor this once additional things require the config file
+            string[] config = File.ReadAllLines(configFile);
+            _apiKey = config[0];
+            SteamWeb.API_Key = config[0];
+            _sheetsID = config[1];
+            _sheetsGID = config[2];
             _labelledAccountsDataFile = labelledAccountsDataFile;
         }
 
@@ -58,26 +62,28 @@ namespace DataCollection
                     Console.WriteLine($"total hr: {account.TotalPlaytimeInHours()}");
                 }
             }
-            
+
+        }
+
+        // We should probably refactor this later for loading API keys and maybe other things for GUI?
+        void LoadConfigFile()
+        {
+
         }
 
         /// <summary>
-        /// Gets each line in the labelled accounts file.
+        /// Obtains a CSV from a given Google Sheets page
         /// </summary>
+        /// <param name="sheetsID"></param>
+        /// <param name="gid"></param>
         /// <returns></returns>
-        private List<string> GetLabelledAccountLines()
+        private List<string> GetLinesFromSheets(string sheetsID, string gid)
         {
-            List<string> lines = new List<string>();
-            using (StreamReader sr = new StreamReader(_labelledAccountsFile))
-            {
-                // get rid of first line
-                sr.ReadLine();
-                while (!sr.EndOfStream)
-                {
-                    lines.Add(sr.ReadLine());
-                }
-            }
-            return lines;
+            // I'm just going to use the HTML stuff from SteamAPI because it's easy
+            // Modified from https://stackoverflow.com/questions/37705553/how-to-export-a-csv-from-google-sheet-api
+            Console.WriteLine("Getting CSV from Google Sheets");
+            string result = SteamAPI.HTMLRequest.GetHTMLPage($"https://docs.google.com/spreadsheets/d/{sheetsID}/gviz/tq?tqx=out:csv&gid={gid}");
+            return result.Replace("\"", string.Empty).Split("\n").ToList();
         }
 
         /// <summary>
@@ -86,7 +92,7 @@ namespace DataCollection
         /// <returns></returns>
         private List<User> GetAccounts()
         {
-            List<string> lines = GetLabelledAccountLines();
+            List<string> lines = GetLinesFromSheets(_sheetsID, _sheetsGID);
             List<User> accounts = new List<User>();
             while (lines.Count >= 1)
             {

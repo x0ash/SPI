@@ -24,17 +24,17 @@ Training an SVM off labelled data.
 
 Takes labelled accounts, uses the API to get account data and saves it to a file.
 
-- Download this and put it in the path Such that it is in the location:
-	- SteamPlayerInvestigator/DataCollection/LabelledAccounts.csv
 - Run the DataCollection main, to generate LabelledAccountsWithData.csv
 
-### LabelledAccounts.csv
+### config.cfg
 
-| URL of steam account | Label |
-|--------------|-------|
-| smurf URL    | 1     |
-| nonSmurf URL | 0     |
-|              |       |
+Requires this format:
+
+| URL of steam account |
+|----------------------|
+| Steam Web API Key    |
+| Google Sheets ID     |
+| Google Sheets Tab GID|
 
 ### LabelledAccountsWithData.csv
 
@@ -62,6 +62,8 @@ Currently, there is the ability to find:
 - Owned Games via SteamID64 (Web API)
 	- Most played games (sorted)
 	- Most played games across last two weeks (sorted)
+- Ability to find user level
+- Ability to determine game tags (obtained via the store page)
 
 *(Please note that getting information via Steam Community URL is preferred where possible)*
 
@@ -75,9 +77,3 @@ Additionally, it comes with all of the costs of using the Steam Web API key, whi
 It also does *not* save the API key locally, so it will have to be provided every time.
 
 Some features (specifically requesting full HTML pages) lead to extreme slowdown and many requests may eventually lead to access being temporarily denied.
-
-It's also currently untested with private Steam accounts -- I only tested it with my own. I'd expect a crash however.
-
-### Exclusive to this branch
-- Ability to find user level
-- Ability to determine game tags (obtained via the store page)

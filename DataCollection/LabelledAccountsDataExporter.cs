@@ -54,7 +54,8 @@ namespace DataCollection
                 foreach (User account in accounts)
                 {
                     // games owned, total playtime, account lifetime, label
-                    sw.WriteLine($"{account.gamesList.Count()},{account.TotalPlaytime()},not implemented,{account.RecentPlaytime()}");
+                    sw.WriteLine($"{account.gamesList.Count()},{account.TotalPlaytimeInHours().ToString()},not implemented,{account.RecentPlaytimeInHours().ToString()}");
+                    Console.WriteLine($"total hr: {account.TotalPlaytimeInHours()}");
                 }
             }
             

@@ -70,24 +70,24 @@ namespace SteamAPI
             return $"Steam ID64: {steamID64}\n\tSteam ID: {steamID}\n\tUser Level: {userLevel}\n\tVAC Banned: {vacBanned}\n\tMember Since: {memberSince}\n\nTop 5 Most Played Games:\n{playtimeString}\nTop 5 Recently Played Games:\n{recentPlaytime}\n";
         }
 
-        public ulong TotalPlaytime()
+        public double TotalPlaytimeInHours()
         {
             ulong totalPlaytime = 0;
             foreach (Game game in gamesList)
             {
                 totalPlaytime += game.playtime_forever;
             }
-            return totalPlaytime;
+            return Math.Round((float)totalPlaytime / 60, 2);
         }
 
-        public ulong RecentPlaytime()
+        public double RecentPlaytimeInHours()
         {
             ulong recentPlaytime = 0;
             foreach (Game game in gamesList)
             {
                 recentPlaytime += game.playtime_2weeks;
             }
-            return recentPlaytime;
+            return Math.Round((float)recentPlaytime / 60, 2);
         }
     }
 }

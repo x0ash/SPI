@@ -1,4 +1,6 @@
-﻿namespace DataCollection
+﻿using System.Reflection;
+
+namespace DataCollection
 {
     internal class Program
     {
@@ -11,8 +13,14 @@
             string apiKey = Console.ReadLine();
 
             // Set this to the location of your local steam player spreadsheet.csv
-            string labelledAccountsFile = "";
-            string labelledAccountsDataFile = "";
+            string assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string assemblyParent = Directory.GetParent(assemblyPath).FullName;
+            string assemblyParentParent = Path.GetDirectoryName(assemblyParent);
+            string assemblyParentParentParent = Path.GetDirectoryName(assemblyParentParent);
+            Console.WriteLine(assemblyParentParentParent);
+
+            string labelledAccountsFile = Path.Combine(assemblyParentParentParent, @"LabelledAccount.csv"); ;
+            string labelledAccountsDataFile = Path.Combine(assemblyParentParentParent, @"LabelledAccountData.csv"); ;
 
             LabelledAccountsDataExporter dataExporter = new LabelledAccountsDataExporter(apiKey,labelledAccountsFile,labelledAccountsDataFile);
             dataExporter.ExportLabelledAccountsData();

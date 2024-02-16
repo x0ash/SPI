@@ -19,6 +19,8 @@ namespace DataCollection
             string assemblyParentParentParent = Path.GetDirectoryName(assemblyParentParent);
             Console.WriteLine(assemblyParentParentParent);
 
+            // put the csv in this folder /SteamPlayerInvestigator/DataCollection/LabelledAccount.csv
+
             string labelledAccountsFile = Path.Combine(assemblyParentParentParent, @"LabelledAccount.csv"); ;
             string labelledAccountsDataFile = Path.Combine(assemblyParentParentParent, @"LabelledAccountData.csv"); ;
 

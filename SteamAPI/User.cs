@@ -156,24 +156,24 @@ namespace SteamAPI
             return $"Steam ID64: {steamID64}\n\tSteam ID: {steamID}\n\tUser Level: {userLevel}\n\tVAC Banned: {vacBanned}\n\tMember Since: {memberSince}\n\nTop 5 Most Played Games:\n{playtimeString}\nTop 5 Recently Played Games:\n{recentPlaytime}\n";
         }
 
-        public double TotalPlaytimeInHours()
+        public float TotalPlaytimeInHours()
         {
             ulong totalPlaytime = 0;
             foreach (Game game in gamesList)
             {
                 totalPlaytime += game.GetTotalPlaytime();
             }
-            return Math.Round((double)totalPlaytime / 60, 2);
+            return MathF.Round((float)totalPlaytime / 60, 2);
         }
 
-        public double RecentPlaytimeInHours()
+        public float RecentPlaytimeInHours()
         {
             ulong recentPlaytime = 0;
             foreach (Game game in gamesList)
             {
                 recentPlaytime += game.GetRecentPlaytime();
             }
-            return Math.Round((double)recentPlaytime / 60, 2);
+            return MathF.Round((float)recentPlaytime / 60, 2);
         }
 
         public int AccountLifeTimeInDays()

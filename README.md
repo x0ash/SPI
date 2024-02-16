@@ -24,6 +24,10 @@ Training an SVM off labelled data.
 
 Takes labelled accounts, uses the API to get account data and saves it to a file.
 
+- Download this and put it in the path Such that it is in the location:
+	- SteamPlayerInvestigator/DataCollection/LabelledAccounts.csv
+- Run the DataCollection main, to generate LabelledAccountsWithData.csv
+
 ### LabelledAccounts.csv
 
 | URL of steam account | Label |

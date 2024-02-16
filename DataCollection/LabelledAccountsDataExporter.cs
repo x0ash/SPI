@@ -102,8 +102,9 @@ namespace DataCollection
                 ;
                 ;
                 if (
-                    !Convert.ToBoolean(SteamXML.GetUserDetails(user, accountUrl)) &&
-                    !Convert.ToBoolean(SteamWeb.GetOwnedGames(user))
+                    SteamXML.GetUserDetails(user, accountUrl) == 0 &&
+                    SteamWeb.GetOwnedGames(user) == 0 &&
+                    user.TotalPlaytimeInHours() != 0
                 )
                 {
                     user.isSmurf = accountLabel;

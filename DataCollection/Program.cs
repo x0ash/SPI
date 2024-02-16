@@ -12,7 +12,7 @@ namespace DataCollection
             Console.WriteLine("Input steam api key: ");
             string apiKey = Console.ReadLine();
 
-            // Set this to the location of your local steam player spreadsheet.csv
+            // Not pretty at all
             string assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string assemblyParent = Directory.GetParent(assemblyPath).FullName;
             string assemblyParentParent = Path.GetDirectoryName(assemblyParent);

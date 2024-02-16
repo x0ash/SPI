@@ -5,6 +5,8 @@
  *      Description: This file defines a User class -- this represents Steam users using the API & XML
  */
 
+using System.ComponentModel;
+
 namespace SteamAPI
 {
     public class User
@@ -161,7 +163,7 @@ namespace SteamAPI
             {
                 totalPlaytime += game.GetTotalPlaytime();
             }
-            return Math.Round((float)totalPlaytime / 60, 2);
+            return Math.Round((double)totalPlaytime / 60, 2);
         }
 
         public double RecentPlaytimeInHours()
@@ -169,9 +171,17 @@ namespace SteamAPI
             ulong recentPlaytime = 0;
             foreach (Game game in gamesList)
             {
-                recentPlaytime += game.playtime_2weeks;
+                recentPlaytime += game.GetRecentPlaytime();
             }
-            return Math.Round((float)recentPlaytime / 60, 2);
+            return Math.Round((double)recentPlaytime / 60, 2);
+        }
+
+        public int AccountLifeTimeInDays()
+        {
+            DateTime now = DateTime.Now;
+            TimeSpan lifeTime = now.Subtract(memberSince);
+
+            return lifeTime.Days;
         }
     }
 }

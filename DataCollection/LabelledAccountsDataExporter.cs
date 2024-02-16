@@ -54,12 +54,8 @@ namespace DataCollection
                 foreach (User account in accounts)
                 {
                     // games owned, total playtime, account lifetime, label
-<<<<<<< HEAD
-                    sw.WriteLine($"{account.gamesList.Count()},{account.TotalPlaytimeInHours().ToString()},not implemented,{account.RecentPlaytimeInHours().ToString()}");
+                    sw.WriteLine($"{account.GetGamesList().Count()},{account.TotalPlaytimeInHours()},{account.AccountLifeTimeInDays()},{account.RecentPlaytimeInHours().ToString()}");
                     Console.WriteLine($"total hr: {account.TotalPlaytimeInHours()}");
-=======
-                    sw.WriteLine($"{account.GetGamesList().Count()},{account.TotalPlaytime()},not implemented,{account.RecentPlaytime()}");
->>>>>>> 54254850438f8263eb55eaa1be50dac9c0d10067
                 }
             }
             

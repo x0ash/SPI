@@ -9,17 +9,11 @@ namespace DataCollection
         // Put it all into a csv or other file for training.
         static void Main(string[] args)
         {
-            // Not pretty at all
-            string assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string assemblyParent = Directory.GetParent(assemblyPath).FullName;
-            string assemblyParentParent = Path.GetDirectoryName(assemblyParent);
-            string assemblyParentParentParent = Path.GetDirectoryName(assemblyParentParent);
-            Console.WriteLine(assemblyParentParentParent);
+            string projectPath = Directory.GetParent(Assembly.GetExecutingAssembly().Location).Parent.Parent.Parent.FullName;
+            Console.WriteLine(projectPath);
 
-            // put the csv in this folder /SteamPlayerInvestigator/DataCollection/LabelledAccount.csv
-
-            string configFile = Path.Combine(assemblyParentParentParent, @"config.json"); ;
-            string labelledAccountsDataFile = Path.Combine(assemblyParentParentParent, @"LabelledAccountData.csv"); ;
+            string configFile = Path.Combine(projectPath, @"config.json"); ;
+            string labelledAccountsDataFile = Path.Combine(projectPath, @"LabelledAccountData.csv"); ;
 
             LabelledAccountsDataExporter dataExporter = new LabelledAccountsDataExporter(configFile, labelledAccountsDataFile);
             dataExporter.ExportLabelledAccountsData();

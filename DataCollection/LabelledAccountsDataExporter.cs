@@ -17,9 +17,6 @@ namespace DataCollection
     /// </summary>
     internal class LabelledAccountsDataExporter
     {
-
-        // in: api key, csv
-        // out: csv
         string _apiKey;
         string _sheetsID;
         string _sheetsGID;
@@ -33,16 +30,7 @@ namespace DataCollection
         /// <param name="labelledAccountsDataFile">Location of output file with all the labelled accounts with user data</param>
         public LabelledAccountsDataExporter(string configFile, string labelledAccountsDataFile)
         {
-            // We should probably refactor this once additional things require the config file
-            using (StreamReader sr = new StreamReader(configFile))
-            {
-                string file = sr.ReadToEnd();
-                JsonElement config = JsonSerializer.Deserialize<JsonElement>(file);
-                _apiKey = config.GetProperty("key").GetString();
-                SteamWeb.API_Key = _apiKey;
-                _sheetsID = config.GetProperty("sheetsid").GetString();
-                _sheetsGID = config.GetProperty("sheetsgid").GetString();
-            }
+            LoadConfigFile(configFile);
             _labelledAccountsDataFile = labelledAccountsDataFile;
         }
 
@@ -71,9 +59,18 @@ namespace DataCollection
         }
 
         // We should probably refactor this later for loading API keys and maybe other things for GUI?
-        void LoadConfigFile()
+        void LoadConfigFile(string configFile)
         {
-
+            // We should probably refactor this once additional things require the config file
+            using (StreamReader sr = new StreamReader(configFile))
+            {
+                string file = sr.ReadToEnd();
+                JsonElement config = JsonSerializer.Deserialize<JsonElement>(file);
+                _apiKey = config.GetProperty("key").GetString();
+                SteamWeb.API_Key = _apiKey;
+                _sheetsID = config.GetProperty("sheetsid").GetString();
+                _sheetsGID = config.GetProperty("sheetsgid").GetString();
+            }
         }
 
         /// <summary>

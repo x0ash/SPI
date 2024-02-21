@@ -6,3 +6,4 @@ obj/
 /DataCollection/config.json
 /SteamAPI/.DS_Store
 /DataCollection/.DS_Store
+/DataCollection/LabelledAccount.csv

@@ -38,6 +38,7 @@ namespace SteamAPI
         }
 
         // -- Getter/Setters --
+        #region GettersSetters
 
         // SteamID64
         public ulong GetSteamID64()
@@ -115,6 +116,8 @@ namespace SteamAPI
         {
             gamesList = new List<Game>(_gamesList);
         }
+
+        #endregion
 
         public void AddGamesList(Game game)
         {

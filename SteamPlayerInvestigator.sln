@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCollection", "DataColle
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmurfPredictorModelTraining", "SmurfPredictorModelTraining\SmurfPredictorModelTraining.csproj", "{CD40E9A7-CA84-4F1E-99C7-2952BC30A3C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logger\Logger.csproj", "{90A312C7-CF18-47B6-ADFA-F26714CDBC10}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{CD40E9A7-CA84-4F1E-99C7-2952BC30A3C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD40E9A7-CA84-4F1E-99C7-2952BC30A3C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD40E9A7-CA84-4F1E-99C7-2952BC30A3C0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90A312C7-CF18-47B6-ADFA-F26714CDBC10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90A312C7-CF18-47B6-ADFA-F26714CDBC10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90A312C7-CF18-47B6-ADFA-F26714CDBC10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90A312C7-CF18-47B6-ADFA-F26714CDBC10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

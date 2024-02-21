@@ -61,7 +61,24 @@ namespace DataCollection
         // We should probably refactor this later for loading API keys and maybe other things for GUI?
         private void LoadConfigFile(string configFile)
         {
-            // Create config in correct format
+            CreateConfigIfNotExists(configFile);
+            using (StreamReader sr = new StreamReader(configFile))
+            {
+                string file = sr.ReadToEnd();
+                Config config = JsonSerializer.Deserialize<Config>(file);
+                _apiKey = config.key;
+                SteamWeb.API_Key = config.key;
+                _sheetsID = config.sheetsid;
+                _sheetsGID = config.sheetsgid;
+            }
+        }
+
+        /// <summary>
+        /// If config.json not present, one is created with the correct format
+        /// </summary>
+        /// <param name="configFile"></param>
+        private void CreateConfigIfNotExists(string configFile)
+        {
             if (!File.Exists(configFile))
             {
                 using (StreamWriter sw = new StreamWriter(configFile))
@@ -70,15 +87,6 @@ namespace DataCollection
                     sw.Write(JsonSerializer.Serialize(newConfig));
                     Console.WriteLine($"New config created, {configFile}, populate fields.");
                 }
-            }
-            using (StreamReader sr = new StreamReader(configFile))
-            {
-                string file = sr.ReadToEnd();
-                Config config1 = JsonSerializer.Deserialize<Config>(file);
-                _apiKey = config1.key;
-                SteamWeb.API_Key = config1.key;
-                _sheetsID = config1.sheetsid;
-                _sheetsGID = config1.sheetsgid;
             }
         }
 
@@ -117,8 +125,6 @@ namespace DataCollection
                 int accountLabel = Convert.ToInt32(lineParts[1]);
 
                 // Populate details, and game list
-                ;
-                ;
                 if (
                     SteamXML.GetUserDetails(user, accountUrl) == 0 &&
                     SteamWeb.GetOwnedGames(user) == 0 &&

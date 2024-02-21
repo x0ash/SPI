@@ -8,3 +8,4 @@ obj/
 /DataCollection/.DS_Store
 /DataCollection/LabelledAccount.csv
 /Logger/Logger.csproj
+Logger/

@@ -59,17 +59,26 @@ namespace DataCollection
         }
 
         // We should probably refactor this later for loading API keys and maybe other things for GUI?
-        void LoadConfigFile(string configFile)
+        private void LoadConfigFile(string configFile)
         {
-            // We should probably refactor this once additional things require the config file
+            // Create config in correct format
+            if (!File.Exists(configFile))
+            {
+                using (StreamWriter sw = new StreamWriter(configFile))
+                {
+                    Config newConfig = new Config();
+                    sw.Write(JsonSerializer.Serialize(newConfig));
+                    Console.WriteLine($"New config created, {configFile}, populate fields.");
+                }
+            }
             using (StreamReader sr = new StreamReader(configFile))
             {
                 string file = sr.ReadToEnd();
-                JsonElement config = JsonSerializer.Deserialize<JsonElement>(file);
-                _apiKey = config.GetProperty("key").GetString();
-                SteamWeb.API_Key = _apiKey;
-                _sheetsID = config.GetProperty("sheetsid").GetString();
-                _sheetsGID = config.GetProperty("sheetsgid").GetString();
+                Config config1 = JsonSerializer.Deserialize<Config>(file);
+                _apiKey = config1.key;
+                SteamWeb.API_Key = config1.key;
+                _sheetsID = config1.sheetsid;
+                _sheetsGID = config1.sheetsgid;
             }
         }
 

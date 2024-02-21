@@ -9,8 +9,8 @@ namespace DataCollection
         // Put it all into a csv or other file for training.
         static void Main(string[] args)
         {
+            // Path .../steamplayerinvestigator/datacollection
             string projectPath = Directory.GetParent(Assembly.GetExecutingAssembly().Location).Parent.Parent.Parent.FullName;
-            Console.WriteLine(projectPath);
 
             string configFile = Path.Combine(projectPath, @"config.json"); ;
             string labelledAccountsDataFile = Path.Combine(projectPath, @"LabelledAccountData.csv"); ;

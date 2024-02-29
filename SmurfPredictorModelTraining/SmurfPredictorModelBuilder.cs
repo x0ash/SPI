@@ -16,8 +16,9 @@ namespace SmurfPredictorModelTraining
         var SmurfDetectorPipeline = mlContext.Transforms.Concatenate("Features", "GamesOwned", "TotalPlaytime",
 "AccountLifetime")
         .Append(mlContext.BinaryClassification.Trainers.SdcaLogisticRegression());
-
+        // Trains the model with the data
         var SmurfDetectorModel = SmurfDetectorPipeline.Fit(DataView);
+        // Makes predictions with the data
         var SmurfDetectorPredictor = SmurfDetectorModel.Transform(DataView);
         var SmurfDetectorMetrics = mlContext.BinaryClassification.Evaluate(SmurfDetectorPredictor);
 

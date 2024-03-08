@@ -25,8 +25,7 @@ namespace DataCollection
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="apiKey"></param>
-        /// <param name="labelledAccountsFile">Location of the file with all the labelled accounts</param>
+        /// <param name="configFile">Location of config</param>
         /// <param name="labelledAccountsDataFile">Location of output file with all the labelled accounts with user data</param>
         public LabelledAccountsDataExporter(string configFile, string labelledAccountsDataFile)
         {
@@ -51,7 +50,7 @@ namespace DataCollection
                 foreach (User account in accounts)
                 {
                     // games owned, total playtime, account lifetime, label
-                    sw.WriteLine($"{account.GetGamesList().Count()},{account.TotalPlaytimeInHours()},{account.AccountLifeTimeInDays()},{account.RecentPlaytimeInHours().ToString()}");
+                    sw.WriteLine($"{account.GetGamesList().Count()},{account.TotalPlaytimeInHours()},{account.AccountLifeTimeInDays()},{account.RecentPlaytimeInHours().ToString()},{account.IsSmurf}");
                     Console.WriteLine($"total hr: {account.TotalPlaytimeInHours()}");
                 }
             }
@@ -131,7 +130,7 @@ namespace DataCollection
                     user.TotalPlaytimeInHours() != 0
                 )
                 {
-                    user.isSmurf = accountLabel;
+                    user.IsSmurf = accountLabel;
                     accounts.Add(user);
                 }
                 else

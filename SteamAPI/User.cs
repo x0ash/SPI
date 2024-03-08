@@ -21,7 +21,7 @@ namespace SteamAPI
         // Obtainable via Web API
         List<Game> gamesList;
 
-        public int isSmurf; // Might not really belong here
+        public int IsSmurf; // Might not really belong here
 
         // Constructor
         public User()
@@ -32,7 +32,7 @@ namespace SteamAPI
             memberSince = new DateTime();
             userLevel = -1;
 
-            isSmurf = 0;
+            IsSmurf = 0;
 
             gamesList = new List<Game>();
         }

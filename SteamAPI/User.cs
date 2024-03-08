@@ -119,7 +119,7 @@ namespace SteamAPI
 
         #endregion
 
-        public void AddGamesList(Game game)
+        public void AddGame(Game game)
         {
             gamesList.Add(game);
         }

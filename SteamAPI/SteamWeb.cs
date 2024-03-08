@@ -66,7 +66,7 @@ namespace SteamAPI
 
 
                     }
-                    user.AddGamesList(newGame);                                                                     // Once the new game has been created fully, add it to the user object.
+                    user.AddGame(newGame);                                                                     // Once the new game has been created fully, add it to the user object.
                 }
                 return 0;
             }

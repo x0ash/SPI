@@ -23,7 +23,17 @@ namespace SteamAPI
             // This just wraps the request for API calls into a method thats a little bit nicer
             //
             string jsonResult = HTMLRequest.GetHTMLPage(string.Format(URL, reqPath, steamID64, API_Key, extra));
-            return JsonSerializer.Deserialize<JsonElement>(jsonResult).GetProperty("response");
+            JsonElement returnElement;
+            try
+            {
+                returnElement = JsonSerializer.Deserialize<JsonElement>(jsonResult).GetProperty("response");
+            }
+            catch
+            {
+                returnElement = JsonSerializer.Deserialize<JsonElement>(jsonResult);
+            }
+
+            return returnElement;
         }
 
         public static int GetOwnedGames(User user)
@@ -96,10 +106,34 @@ namespace SteamAPI
             {
                 JsonElement playerJson = JsonSerializer.Deserialize<JsonElement>(player);
                 users[count].SetSteamID(playerJson.GetProperty("personaname").ToString());
-                users[count].SetSteamID64(playerJson.GetProperty("steamid").GetUInt64());
-                users[count].SetJoinDateUnix(playerJson.GetProperty("timecreated").ToString());
+                users[count].SetSteamID64(Convert.ToUInt64(playerJson.GetProperty("steamid").GetString()));
+                try
+                {
+                    users[count].SetJoinDateUnix(playerJson.GetProperty("timecreated").ToString());
+                }
+                catch
+                {
+                    SteamAPI.Output.Error("Can't obtain time created");
+                }
+                users[count].SetURL(playerJson.GetProperty("profileurl").ToString());
                 count++;
             }
+        }
+
+        // This is so hastily thrown in just to scrape accounts atm
+        // When this is pulled back into SteamAPI I need to rewrite this to write into the user object
+        public static ulong[] GetFriendList(User user)
+        {
+            List<ulong> steamIDs = new List<ulong>();
+            const string reqPath = "ISteamUser/GetFriendList/v0001/?steamid";
+
+            JsonElement response = MakeWebAPIRequest(reqPath, user.GetSteamID64(), "&relationship=friend");
+            foreach (var friend in response.GetProperty("friendslist").GetProperty("friends").EnumerateArray())
+            {
+                steamIDs.Add(Convert.ToUInt64(friend.GetProperty("steamid").GetString()));
+            }
+
+            return steamIDs.ToArray();
         }
     }
 }

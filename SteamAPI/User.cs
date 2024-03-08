@@ -17,6 +17,7 @@ namespace SteamAPI
         bool vacBanned;
         DateTime memberSince;
         int userLevel;
+        string url;
         
         // Obtainable via Web API
         List<Game> gamesList;
@@ -104,6 +105,17 @@ namespace SteamAPI
         public void SetUserLevel(int _userLevel)
         {
             userLevel = _userLevel;
+        }
+
+        // URL
+        public string GetURL()
+        {
+            return url;
+        }
+
+        public void SetURL(string _url)
+        {
+            url = _url;
         }
 
         // Games List

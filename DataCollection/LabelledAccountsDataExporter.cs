@@ -49,8 +49,9 @@ namespace DataCollection
             {
                 foreach (User account in accounts)
                 {
-                    // games owned, total playtime, account lifetime, label
-                    sw.WriteLine($"{account.GetGamesList().Count()},{account.TotalPlaytimeInHours()},{account.AccountLifeTimeInDays()},{account.RecentPlaytimeInHours().ToString()},{account.IsSmurf}");
+                    float gamesOwnedAsFloat = (float)account.GetGamesList().Count();
+                    float accountLifeTimeAsFloat = (float)account.AccountLifeTimeInDays();
+                    sw.WriteLine($"{gamesOwnedAsFloat.ToString("0.00")},{account.TotalPlaytimeInHours()},{accountLifeTimeAsFloat.ToString("0.00")},{account.RecentPlaytimeInHours().ToString()},{account.IsSmurf}");
                     Console.WriteLine($"total hr: {account.TotalPlaytimeInHours()}");
                 }
             }

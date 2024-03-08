@@ -19,19 +19,21 @@ namespace SmurfPredictorModelTraining
             
             var DataView = mlContext.Data.LoadFromTextFile<AccountDataSchema>(dataLocation, separatorChar: ',');
 
-            //
+            var SmurfDetectorPipeline = mlContext.Transforms.Conversion.ConvertType("S_GamesOwned", "GamesOwned", Microsoft.ML.Data.DataKind.Single)
+                .Append(mlContext.Transforms.Conversion.ConvertType("S_AccountLifetime", "AccountLifetime", Microsoft.ML.Data.DataKind.Single))
+                .Append(mlContext.Transforms.Concatenate("Features", "S_GamesOwned", "TotalPlaytime", "S_AccountLifetime", "RecentPlaytime"))
+                .Append(mlContext.BinaryClassification.Trainers.LdSvm(labelColumnName: "IsSmurf"));
 
-            var SmurfDetectorPipeline = mlContext.Transforms.Concatenate("Features", "GamesOwned", "TotalPlaytime","AccountLifetime", "RecentPlaytime")
-            .Append(mlContext.BinaryClassification.Trainers.SdcaLogisticRegression(labelColumnName: "IsSmurf" ));
+
+            //var SmurfDetectorPipeline = mlContext.Transforms.Concatenate("Features", "GamesOwned", "TotalPlaytime","AccountLifetime", "RecentPlaytime")
+            //.Append(mlContext.BinaryClassification.Trainers.SdcaLogisticRegression(labelColumnName: "IsSmurf" ));
             
-            
+
             // Trains the model with the data
             var SmurfDetectorModel = SmurfDetectorPipeline.Fit(DataView);
-            // Makes predictions with the data
-            var SmurfDetectorPredictor = SmurfDetectorModel.Transform(DataView);
-            var SmurfDetectorMetrics = mlContext.BinaryClassification.Evaluate(SmurfDetectorPredictor);
 
-            Console.WriteLine($"Accuracy: {SmurfDetectorMetrics.Accuracy:P2}");
+
+            // Now need to make predicitons somehow?
         }
     }
 }

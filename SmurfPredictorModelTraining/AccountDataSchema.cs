@@ -16,7 +16,7 @@ namespace SmurfPredictorModelTraining
         [LoadColumn(2)] public int AccountLifetime { get; set; }
         [LoadColumn(3)] public float RecentPlaytime { get; set; }
 
-        [LoadColumn(4)] public int IsSmurf { get; set; }
+        [LoadColumn(4)] public bool IsSmurf { get; set; }
 
     }
 }

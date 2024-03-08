@@ -48,7 +48,7 @@ namespace SteamAPI
                     Game newGame = new Game();                                                                      // While games can be created with one line, it makes sense here to separate it as the results may not include name and/or playtime_2weeks
                     {
                         newGame.SetAppID(gameInfo.GetProperty("appid").GetUInt32());                                // App IDs are stored as integers (on our side & Valve's)
-                        newGame.SetTotalPlaytime(gameInfo.GetProperty("playtime_forever").GetUInt32());             // The same applies to playtime_forever (records in minutes)
+                        newGame.SetTotalPlaytimeInMinutes(gameInfo.GetProperty("playtime_forever").GetUInt32());             // The same applies to playtime_forever (records in minutes)
 
                         JsonElement title;                                                                          // name & playtime_2weeks may not be present in the response so they must be checked specially.
                         JsonElement playtime_2weeks;
@@ -61,7 +61,7 @@ namespace SteamAPI
 
                         if (gameInfo.TryGetProperty("playtime_2weeks", out playtime_2weeks))
                         {
-                            newGame.SetRecentPlaytime(playtime_2weeks.GetUInt32());
+                            newGame.SetRecentPlaytimeInMinutes(playtime_2weeks.GetUInt32());
                         }
 
 

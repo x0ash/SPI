@@ -129,7 +129,7 @@ namespace SteamAPI
         {
             // -- Sorting by total playtime --
 
-            List<Game> sortedPlaytime = gamesList.OrderBy(o => o.GetTotalPlaytime()).Reverse().ToList();
+            List<Game> sortedPlaytime = gamesList.OrderBy(o => o.GetTotalPlaytimeInMinutes()).Reverse().ToList();
 
             string playtimeString = "";
 
@@ -143,13 +143,13 @@ namespace SteamAPI
             // This is actually obtainable via the XML page, but this unlimits our reach on it
             // Obtaining via the XML page would also require a game parser from XML results to be created.
 
-            sortedPlaytime = gamesList.OrderBy(o => o.GetRecentPlaytime()).Reverse().ToList();
+            sortedPlaytime = gamesList.OrderBy(o => o.GetRecentPlaytimeInMinutes()).Reverse().ToList();
 
             string recentPlaytime = "";
 
             for (int i = 0; i < 5; i++)
             {
-                if (sortedPlaytime[i].GetRecentPlaytime() != 0)
+                if (sortedPlaytime[i].GetRecentPlaytimeInMinutes() != 0)
                 {
                     SteamStorePage.GetCommunityTags(sortedPlaytime[i]);
                     recentPlaytime += sortedPlaytime[i].ToString();
@@ -164,7 +164,7 @@ namespace SteamAPI
             ulong totalPlaytime = 0;
             foreach (Game game in gamesList)
             {
-                totalPlaytime += game.GetTotalPlaytime();
+                totalPlaytime += game.GetTotalPlaytimeInMinutes();
             }
             return MathF.Round((float)totalPlaytime / 60, 2);
         }
@@ -174,7 +174,7 @@ namespace SteamAPI
             ulong recentPlaytime = 0;
             foreach (Game game in gamesList)
             {
-                recentPlaytime += game.GetRecentPlaytime();
+                recentPlaytime += game.GetRecentPlaytimeInMinutes();
             }
             return MathF.Round((float)recentPlaytime / 60, 2);
         }

@@ -9,43 +9,43 @@ namespace SteamAPI
 {
     public class Game
     {
-        uint appid;
-        string title;
-        uint playtime_2weeks;
-        uint playtime_forever;
-        bool appinfo;
-        List<string> tags;
+        uint _appid;
+        string _title;
+        uint _playtime2WeeksInMinutes;
+        uint _playtimeForeverInMinutes;
+        bool _appinfo;
+        List<string> _tags;
 
         // Constructors
         public Game()
         {
-            appid = 0;
-            playtime_forever = 0;
-            title = "";
-            playtime_2weeks = 0;
-            appinfo = false;
-            tags = new List<string>();
+            _appid = 0;
+            _playtimeForeverInMinutes = 0;
+            _title = "";
+            _playtime2WeeksInMinutes = 0;
+            _appinfo = false;
+            _tags = new List<string>();
         }
 
         // As it goes at the moment, these constructors are unused.
         public Game(uint _appid, uint _playtime_forever)
         {
-            appid = _appid;
-            playtime_forever = _playtime_forever;
-            title = "";
-            playtime_2weeks = 0;
-            appinfo = false;
-            tags = new List<string>();
+            this._appid = _appid;
+            _playtimeForeverInMinutes = _playtime_forever;
+            _title = "";
+            _playtime2WeeksInMinutes = 0;
+            _appinfo = false;
+            _tags = new List<string>();
         }
 
         public Game(uint _appid, uint _playtime_forever, string _title, uint _playtime_2weeks)
         {
-            appid = _appid;
-            playtime_forever = _playtime_forever;
-            title = _title;
-            playtime_2weeks = _playtime_2weeks;
-            appinfo = true;
-            tags = new List<string>();
+            this._appid = _appid;
+            _playtimeForeverInMinutes = _playtime_forever;
+            this._title = _title;
+            _playtime2WeeksInMinutes = _playtime_2weeks;
+            _appinfo = true;
+            _tags = new List<string>();
         }
 
         // Getters/Setters
@@ -53,92 +53,92 @@ namespace SteamAPI
         // App ID
         public uint GetAppID()
         {
-            return appid;
+            return _appid;
         }
 
         public void SetAppID(uint _appid)
         {
-            appid = _appid;
+            this._appid = _appid;
         }
 
         // Game Title
         public string GetTitle()
         {
-            return title;
+            return _title;
         }
 
         public void SetTitle(string _title)
         {
-            title = _title;
+            this._title = _title;
         }
 
         // Playtime across two weeks
-        public uint GetRecentPlaytime()
+        public uint GetRecentPlaytimeInMinutes()
         {
-            return playtime_2weeks;
+            return _playtime2WeeksInMinutes;
         }
 
-        public void SetRecentPlaytime(uint _playtime_2weeks)
+        public void SetRecentPlaytimeInMinutes(uint playtime2WeeksInMinutes)
         {
-            playtime_2weeks = _playtime_2weeks;
+            _playtime2WeeksInMinutes = playtime2WeeksInMinutes;
         }
 
         // Playtime across all time
-        public uint GetTotalPlaytime()
+        public uint GetTotalPlaytimeInMinutes()
         {
-            return playtime_forever;
+            return _playtimeForeverInMinutes;
         }
 
-        public void SetTotalPlaytime(uint _playtime_forever)
+        public void SetTotalPlaytimeInMinutes(uint playtimeForeverInMinutes)
         {
-            playtime_forever = _playtime_forever;
+            _playtimeForeverInMinutes = playtimeForeverInMinutes;
         }
 
         // Is App Info available?
         public bool GetAppInfo()
         {
-            return appinfo;
+            return _appinfo;
         }
 
-        public void SetAppInfo(bool _appinfo)
+        public void SetAppInfo(bool appinfo)
         {
-            appinfo = _appinfo;
+            _appinfo = appinfo;
         }
 
         // Store Tags
         public string[] GetStoreTags()
         {
-            return tags.ToArray();
+            return _tags.ToArray();
         }
 
-        public void SetStoreTags(string[] _tags)
+        public void SetStoreTags(string[] tags)
         {
-            tags = new List<string>(_tags);
+            _tags = new List<string>(tags);
         }
 
         public void AddStoreTag(string tag)
         {
-            tags.Add(tag);
+            _tags.Add(tag);
         }
 
         // Methods
         public override string ToString()
         {
             string tagsString = "";
-            if (tags.Count > 0)
+            if (_tags.Count > 0)
             {
-                tagsString = "\n\tTags: " + string.Join(", ", tags.GetRange(0,Math.Min(tags.Count, 5)));
+                tagsString = "\n\tTags: " + string.Join(", ", _tags.GetRange(0,Math.Min(_tags.Count, 5)));
             }
 
-            if (!appinfo)
+            if (!_appinfo)
             {
-                return $"App ID: {appid}\n\tTotal Playtime: {playtime_forever}\n\n";
+                return $"App ID: {_appid}\n\tTotal Playtime: {_playtimeForeverInMinutes}\n\n";
             }
 
             else
             {
                 // Playtime is always delivered in minutes, hours is how Steam displays it and probably a bit better for our usage?
-                return $"App ID: {appid}\n\tTitle: {title}{tagsString}\n\tTotal Hours: {Math.Round((float)playtime_forever / 60, 2)}\n\t\tLast Two Weeks: {Math.Round((float)playtime_2weeks / 60, 2)}\n\n";
+                return $"App ID: {_appid}\n\tTitle: {_title}{tagsString}\n\tTotal Hours: {Math.Round((float)_playtimeForeverInMinutes / 60, 2)}\n\t\tLast Two Weeks: {Math.Round((float)_playtime2WeeksInMinutes / 60, 2)}\n\n";
             }
         }
     }

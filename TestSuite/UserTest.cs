@@ -7,6 +7,7 @@ using SteamAPI;
 
 namespace TestSuite
 {
+    [TestFixture]
     internal class UserTest
     {
         private User user;
@@ -17,8 +18,13 @@ namespace TestSuite
             user = new User();
             Game game1 = new Game();
             Game game2 = new Game();
-            game1.SetTotalPlaytime(60);
-            game2.SetTotalPlaytime(60);
+            game1.SetTotalPlaytimeInMinutes(60);
+            game2.SetTotalPlaytimeInMinutes(60);
+            game1.SetRecentPlaytimeInMinutes(30);
+            game2.SetRecentPlaytimeInMinutes(30);
+
+            user.SetJoinDate(DateTime.MinValue);
+
             user.AddGame(game1);
             user.AddGame(game2);
         }
@@ -27,6 +33,20 @@ namespace TestSuite
         public void TestPlaytime()
         {
             Assert.AreEqual(user.TotalPlaytimeInHours(), 2);
+        }
+
+        [Test]
+        public void TestRecentPlaytime()
+        {
+            Assert.AreEqual(user.RecentPlaytimeInHours(), 1);
+        }
+
+        [Test]
+        public void TestAccountLifetime()
+        {
+            TimeSpan lifeTime = DateTime.Now - DateTime.MinValue;
+            Assert.AreEqual(user.AccountLifeTimeInDays(), lifeTime.Days);
+
         }
     }
 }

@@ -18,6 +18,7 @@ namespace SteamAPI
         DateTime memberSince;
         int userLevel;
         string url;
+        bool visible;
         
         // Obtainable via Web API
         List<Game> gamesList;
@@ -116,6 +117,17 @@ namespace SteamAPI
         public void SetURL(string _url)
         {
             url = _url;
+        }
+
+        // Public Visibility
+        public bool GetVisible()
+        {
+            return visible;
+        }
+
+        public void SetVisible(bool _visible)
+        {
+            visible = _visible;
         }
 
         // Games List

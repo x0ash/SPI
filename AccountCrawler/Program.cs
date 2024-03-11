@@ -14,8 +14,7 @@ using System.Text.Json;
 using System.Diagnostics;
 
 const int max_accs = 10;
-List<string> urls_to_check = new List<string>();
-List<(string, int)> output = new List<(string, int)>();
+List<(string, string)> urls_to_check = new List<(string, string)>();
 
 Console.WriteLine("Loading API key from Data Collection config");
 // This will not have any sort of error correction sorry
@@ -45,20 +44,28 @@ while (urls_to_check.Count() < max_accs && steamids.Count > 0)
         SteamWeb.GetUserDetails(users, steamids[0]);
 
         user = users[0];
-        urls_to_check.Add(user.GetURL());
-        try
+        if (user.GetVisible())
         {
-            foreach (ulong id in SteamWeb.GetFriendList(user))
+            urls_to_check.Add((user.GetSteamID(), user.GetURL()));
+
+            try
             {
-                if (!steamids.Contains(id))
+                foreach (ulong id in SteamWeb.GetFriendList(user))
                 {
-                    steamids.Add(id);
+                    if (!steamids.Contains(id))
+                    {
+                        steamids.Add(id);
+                    }
                 }
             }
+            catch
+            {
+                SteamAPI.Output.Error("Friends list is private!");
+            }
         }
-        catch
+        else
         {
-            SteamAPI.Output.Error("Friends list is private!");
+            SteamAPI.Output.Error("Profile probably private");
         }
     }
     catch
@@ -72,17 +79,17 @@ Console.WriteLine("done");
 
 string out_csv = "";
 
-foreach (string url in urls_to_check)
+foreach ((string,string) url in urls_to_check)
 {
-    var ps = new ProcessStartInfo(url)
+    var ps = new ProcessStartInfo(url.Item2)
     {
         UseShellExecute = true,
         Verb = "open"
     };
     Process.Start(ps);
-    Console.Write("Smurf or nah? (0/1) >> ");
+    Console.Write($"{url.Item1}: Smurf or nah? (0/1) >> ");
     string decision = Console.ReadLine();
-    out_csv += $"{url},{decision}\n";
+    out_csv += $"{url.Item2},{decision}\n";
 }
 
 using (StreamWriter sw = new StreamWriter("../../../accounts.csv"))

@@ -115,6 +115,7 @@ namespace SteamAPI
                 {
                     SteamAPI.Output.Error("Can't obtain time created");
                 }
+                users[count].SetVisible(playerJson.GetProperty("communityvisibilitystate").GetInt32() == 3);
                 users[count].SetURL(playerJson.GetProperty("profileurl").ToString());
                 count++;
             }

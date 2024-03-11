@@ -69,6 +69,9 @@ while (urls_to_check.Count() < max_accs && steamids.Count > 0)
 }
 
 Console.WriteLine("done");
+
+string out_csv = "";
+
 foreach (string url in urls_to_check)
 {
     var ps = new ProcessStartInfo(url)
@@ -77,6 +80,13 @@ foreach (string url in urls_to_check)
         Verb = "open"
     };
     Process.Start(ps);
-    Console.Write("Real or nah? (0/1) >> ");
-    Console.ReadLine();
+    Console.Write("Smurf or nah? (0/1) >> ");
+    string decision = Console.ReadLine();
+    out_csv += $"{url},{decision}\n";
 }
+
+using (StreamWriter sw = new StreamWriter("../../../accounts.csv"))
+{
+    sw.Write(out_csv);
+}
+

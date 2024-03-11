@@ -9,3 +9,4 @@ obj/
 /DataCollection/LabelledAccount.csv
 /Logger/Logger.csproj
 Logger/
+AccountCrawler/accounts.csv

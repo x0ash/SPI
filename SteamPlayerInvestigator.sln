@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCollection", "DataColle
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmurfPredictorModelTraining", "SmurfPredictorModelTraining\SmurfPredictorModelTraining.csproj", "{CD40E9A7-CA84-4F1E-99C7-2952BC30A3C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSuite", "TestSuite\TestSuite.csproj", "{C36CC31E-5ADD-4554-A359-3C000A812EAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSuite", "TestSuite\TestSuite.csproj", "{C36CC31E-5ADD-4554-A359-3C000A812EAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountCrawler", "AccountCrawler\AccountCrawler.csproj", "{3C1C3FE7-13F1-466F-B5C9-9240EB4848D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountCrawler", "AccountCrawler\AccountCrawler.csproj", "{3C1C3FE7-13F1-466F-B5C9-9240EB4848D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

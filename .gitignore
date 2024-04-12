@@ -10,3 +10,4 @@ obj/
 /Logger/Logger.csproj
 Logger/
 AccountCrawler/accounts.csv
+/SmurfPredictorModelTraining/SmurfPredictorModel_Temp.zip

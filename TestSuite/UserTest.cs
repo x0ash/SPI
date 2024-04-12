@@ -32,12 +32,14 @@ namespace TestSuite
         [Test]
         public void TestPlaytime()
         {
+            // 60 + 60 min = 2hr
             Assert.AreEqual(user.TotalPlaytimeInHours(), 2);
         }
 
         [Test]
         public void TestRecentPlaytime()
         {
+            // 30 + 30 min = 1hr
             Assert.AreEqual(user.RecentPlaytimeInHours(), 1);
         }
 

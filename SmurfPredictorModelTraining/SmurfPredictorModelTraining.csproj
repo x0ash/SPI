@@ -1,14 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.ML" Version="3.0.1" />
   </ItemGroup>
-
+  <ItemGroup Label="SmurfPredictorModel_Temp">
+    <None Include="SmurfPredictorModel_Temp.consumption.cs">
+      <DependentUpon>SmurfPredictorModel_Temp.mbconfig</DependentUpon>
+    </None>
+    <None Include="SmurfPredictorModel_Temp.training.cs">
+      <DependentUpon>SmurfPredictorModel_Temp.mbconfig</DependentUpon>
+    </None>
+    <None Include="SmurfPredictorModel_Temp.zip">
+      <DependentUpon>SmurfPredictorModel_Temp.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

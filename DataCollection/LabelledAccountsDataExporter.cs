@@ -51,7 +51,7 @@ namespace DataCollection
                 {
                     float gamesOwnedAsFloat = (float)account.GetGamesList().Count();
                     float accountLifeTimeAsFloat = (float)account.AccountLifeTimeInDays();
-                    sw.WriteLine($"{gamesOwnedAsFloat.ToString("0.00")},{account.TotalPlaytimeInHours()},{accountLifeTimeAsFloat.ToString("0.00")},{account.RecentPlaytimeInHours().ToString()},{account.IsSmurf}");
+                    sw.WriteLine($"{gamesOwnedAsFloat.ToString()},{account.TotalPlaytimeInHours()},{accountLifeTimeAsFloat.ToString()},{account.RecentPlaytimeInHours().ToString()},{account.IsSmurf}");
                     Console.WriteLine($"total hr: {account.TotalPlaytimeInHours()}");
                 }
             }

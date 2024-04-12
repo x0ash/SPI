@@ -32,6 +32,15 @@ namespace SmurfPredictorModelTraining
             // Trains the model with the data
             var SmurfDetectorModel = SmurfDetectorPipeline.Fit(DataView);
 
+            Console.WriteLine("Fitted dataview");
+
+            using (FileStream fs = new FileStream("smurfPredictorModel.zip", FileMode.Create, FileAccess.Write, FileShare.Write))
+            {
+                mlContext.Model.Save(SmurfDetectorModel, DataView.Schema, fs);
+            }
+
+            Console.WriteLine("Saved model");
+
 
             // Now need to make predicitons somehow?
         }

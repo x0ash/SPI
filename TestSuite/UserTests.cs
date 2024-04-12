@@ -8,7 +8,7 @@ using SteamAPI;
 namespace TestSuite
 {
     [TestFixture]
-    internal class UserTest
+    internal class UserTests
     {
         private User user;
 

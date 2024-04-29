@@ -7,6 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ML" Version="3.0.1" />
+    <PackageReference Include="Microsoft.ML.FastTree" Version="1.7.1" />
   </ItemGroup>
   <ItemGroup Label="SmurfPredictorModel_Temp">
     <None Include="SmurfPredictorModel_Temp.consumption.cs">

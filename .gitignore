@@ -7,7 +7,4 @@ obj/
 /SteamAPI/.DS_Store
 /DataCollection/.DS_Store
 /DataCollection/LabelledAccount.csv
-/Logger/Logger.csproj
-Logger/
 AccountCrawler/accounts.csv
-/SmurfPredictorModelTraining/SmurfPredictorModel_Temp.zip

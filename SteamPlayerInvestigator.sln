@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSuite", "TestSuite\Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountCrawler", "AccountCrawler\AccountCrawler.csproj", "{3C1C3FE7-13F1-466F-B5C9-9240EB4848D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{40750B63-1704-4E7F-80C5-1F024082D4E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{3C1C3FE7-13F1-466F-B5C9-9240EB4848D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C1C3FE7-13F1-466F-B5C9-9240EB4848D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C1C3FE7-13F1-466F-B5C9-9240EB4848D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40750B63-1704-4E7F-80C5-1F024082D4E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40750B63-1704-4E7F-80C5-1F024082D4E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40750B63-1704-4E7F-80C5-1F024082D4E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40750B63-1704-4E7F-80C5-1F024082D4E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,29 @@
+﻿@page "/counter"
+@using SteamAPI;
+@using System.Text.Json;
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @api_key</p>
+
+<button class="btn btn-primary" @onclick="ChangeAPIKey">Click me</button>
+
+@code
+{
+
+    private string api_key = "Test";
+
+    private void ChangeAPIKey()
+    {
+        
+        using (StreamReader sr = new StreamReader("../../../config.json"))
+        {
+            string file = sr.ReadToEnd();
+            IO.Config config = JsonSerializer.Deserialize<IO.Config>(file);
+            string _apiKey = config.key;
+            SteamWeb.API_Key = _apiKey;
+            api_key = SteamWeb.API_Key;
+        }
+    }
+}
+

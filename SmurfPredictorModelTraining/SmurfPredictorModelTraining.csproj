@@ -15,9 +15,5 @@
     <None Include="SmurfPredictorModel_Temp.training.cs">
       <DependentUpon>SmurfPredictorModel_Temp.mbconfig</DependentUpon>
     </None>
-    <None Include="SmurfPredictorModel_Temp.zip">
-      <DependentUpon>SmurfPredictorModel_Temp.mbconfig</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>

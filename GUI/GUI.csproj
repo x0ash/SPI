@@ -62,4 +62,10 @@
       <ProjectReference Include="..\DataCollection\DataCollection.csproj" />
       <ProjectReference Include="..\SmurfPredictorModelTraining\SmurfPredictorModelTraining.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <None Remove="Resources\.DS_Store" />
+    </ItemGroup>
+    <ItemGroup>
+      <BundleResource Include="Resources\.DS_Store" />
+    </ItemGroup>
 </Project>

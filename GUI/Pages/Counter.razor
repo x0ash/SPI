@@ -1,6 +1,9 @@
 ﻿@page "/counter"
 @using SteamAPI;
+@using System;
 @using System.Text.Json;
+@using System.IO;
+@using System.Reflection;
 
 <h1>Counter</h1>
 
@@ -13,10 +16,37 @@
 
     private string api_key = "Test";
 
+    private string GetFilePath()
+    {
+        string AssemblyLocation = Assembly.GetExecutingAssembly().Location;
+        string path;
+        if (OperatingSystem.IsWindows())
+        {
+            path = Directory.GetParent(AssemblyLocation).FullName;
+        }
+
+        else if (OperatingSystem.IsMacOS() || OperatingSystem.IsMacCatalyst())
+        {
+            path = Directory.GetParent(AssemblyLocation).Parent.Parent.Parent.FullName;
+        }
+
+        else if (OperatingSystem.IsLinux())
+        {
+            path = "Linux";
+        }
+        else
+        {
+            path = "Unknown";
+        }
+
+        return path;
+    }
+
     private void ChangeAPIKey()
     {
-        
-        using (StreamReader sr = new StreamReader("../../../config.json"))
+        string path = GetFilePath();
+        /*
+        using (StreamReader sr = new StreamReader(path + "config.json"))
         {
             string file = sr.ReadToEnd();
             IO.Config config = JsonSerializer.Deserialize<IO.Config>(file);
@@ -24,6 +54,9 @@
             SteamWeb.API_Key = _apiKey;
             api_key = SteamWeb.API_Key;
         }
-    }
-}
+        */
 
+        //api_key = Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
+        api_key = path;
+    }
+    }

@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿#define WIN
+#define OSX
+#define Linux
+using Microsoft.Extensions.Logging;
 using GUI.Data;
 
 namespace GUI;

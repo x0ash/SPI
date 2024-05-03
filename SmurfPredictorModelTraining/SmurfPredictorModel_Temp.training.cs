@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ML.Data;
+using Microsoft.ML.Trainers.FastTree;
 using Microsoft.ML.Trainers;
 using Microsoft.ML;
 
@@ -37,8 +38,7 @@ namespace SmurfPredictorModelTraining
             var pipeline = mlContext.Transforms.ReplaceMissingValues(new []{new InputOutputColumnPair(@"col0", @"col0"),new InputOutputColumnPair(@"col1", @"col1"),new InputOutputColumnPair(@"col2", @"col2"),new InputOutputColumnPair(@"col3", @"col3")})      
                                     .Append(mlContext.Transforms.Concatenate(@"Features", new []{@"col0",@"col1",@"col2",@"col3"}))      
                                     .Append(mlContext.Transforms.Conversion.MapValueToKey(outputColumnName:@"col4",inputColumnName:@"col4"))      
-                                    .Append(mlContext.Transforms.NormalizeMinMax(@"Features", @"Features"))      
-                                    .Append(mlContext.MulticlassClassification.Trainers.OneVersusAll(binaryEstimator: mlContext.BinaryClassification.Trainers.LbfgsLogisticRegression(new LbfgsLogisticRegressionBinaryTrainer.Options(){L1Regularization=0.03125F,L2Regularization=0.03125F,LabelColumnName=@"col4",FeatureColumnName=@"Features"}), labelColumnName:@"col4"))      
+                                    .Append(mlContext.MulticlassClassification.Trainers.OneVersusAll(binaryEstimator:mlContext.BinaryClassification.Trainers.FastForest(new FastForestBinaryTrainer.Options(){NumberOfTrees=4,NumberOfLeaves=4,FeatureFraction=1F,LabelColumnName=@"col4",FeatureColumnName=@"Features"}),labelColumnName:@"col4"))      
                                     .Append(mlContext.Transforms.Conversion.MapKeyToValue(outputColumnName:@"PredictedLabel",inputColumnName:@"PredictedLabel"));
 
             return pipeline;

@@ -7,9 +7,17 @@ using System.Threading.Tasks;
 
 namespace SmurfPredictorModelTraining
 {
-    internal class AccountPrediction
+    public class AccountPrediction
     {
         [ColumnName("PredictedLabel")]
         public bool IsSmurf { get; set; }
+
+        // Score is not normalized
+        [ColumnName("Score")]
+        public float Score { get; set; }
+
+        // Probability is normalized and therefore the more useful "certainty" value
+        [ColumnName("Probability")]
+        public float Probability { get; set; }
     }
 }

@@ -16,9 +16,16 @@ Steam player investigator TSE project.
 
 The final part, which consumes the API and model. 
 
-## Model Training
+## Smurf predictor and training
 
-Training an SVM off labelled data.
+Train binary classification models using labelled data produced from data collection.
+Currently 2 models, LdSvm and fast tree models.
+
+LdSvm does not provide score, fast tree does.
+
+Make sure there are models in assembly folder before using prediction (copy from SteamPlayerInvestigator/Models).
+
+Example of using smurfPredictor in SmurfPredictor Program.cs. 
 
 ## Data Collection
 

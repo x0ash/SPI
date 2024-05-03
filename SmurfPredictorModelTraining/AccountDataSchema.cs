@@ -9,7 +9,7 @@ using Microsoft.ML.Data;
 
 namespace SmurfPredictorModelTraining
 {
-    internal class AccountDataSchema
+    public class AccountDataSchema
     {
         [LoadColumn(0)] public int GamesOwned { get; set; }
         [LoadColumn(1)] public float TotalPlaytime { get; set; }

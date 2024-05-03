@@ -16,9 +16,11 @@ Steam player investigator TSE project.
 
 The final part, which consumes the API and model. 
 
-## Model Training
+## Smurf predictor and training
 
 Training an SVM off labelled data.
+
+Example of using smurfPredictor. 
 
 ## Data Collection
 

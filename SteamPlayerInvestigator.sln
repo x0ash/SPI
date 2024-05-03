@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSuite", "TestSuite\Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountCrawler", "AccountCrawler\AccountCrawler.csproj", "{3C1C3FE7-13F1-466F-B5C9-9240EB4848D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmurfPredictorModel_Temp_ConsoleApp2", "SmurfPredictorModel_Temp_ConsoleApp2\SmurfPredictorModel_Temp_ConsoleApp2.csproj", "{DEA3C7AA-4AAF-48CE-9B34-7261C3FC09D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmurfPredictor", "SmurfPredictor\SmurfPredictor.csproj", "{4AC731B6-C8EB-4514-AA11-5F8BAD81DDC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{3C1C3FE7-13F1-466F-B5C9-9240EB4848D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C1C3FE7-13F1-466F-B5C9-9240EB4848D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C1C3FE7-13F1-466F-B5C9-9240EB4848D3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DEA3C7AA-4AAF-48CE-9B34-7261C3FC09D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DEA3C7AA-4AAF-48CE-9B34-7261C3FC09D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DEA3C7AA-4AAF-48CE-9B34-7261C3FC09D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DEA3C7AA-4AAF-48CE-9B34-7261C3FC09D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AC731B6-C8EB-4514-AA11-5F8BAD81DDC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AC731B6-C8EB-4514-AA11-5F8BAD81DDC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AC731B6-C8EB-4514-AA11-5F8BAD81DDC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AC731B6-C8EB-4514-AA11-5F8BAD81DDC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

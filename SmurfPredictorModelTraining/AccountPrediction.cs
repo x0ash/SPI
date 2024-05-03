@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SmurfPredictorModelTraining
 {
-    internal class AccountPrediction
+    public class AccountPrediction
     {
         [ColumnName("PredictedLabel")]
         public bool IsSmurf { get; set; }

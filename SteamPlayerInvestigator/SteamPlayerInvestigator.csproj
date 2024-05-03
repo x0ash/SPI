@@ -3,19 +3,15 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
-    <RootNamespace>SteamAPI</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fizzler.Systems.HtmlAgilityPack" Version="1.2.1" />
-    <PackageReference Include="Microsoft.ML" Version="3.0.1" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="FIleOperations">
       <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
-    <ProjectReference Include="..\FIleOperations\FIleOperations.csproj" />
+    <ProjectReference Include="..\SteamAPI\SteamAPI.csproj" />
+    <ProjectReference Include="..\FIleOperations\IO.csproj" />
   </ItemGroup>
 </Project>

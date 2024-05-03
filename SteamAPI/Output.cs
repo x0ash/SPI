@@ -34,13 +34,6 @@ namespace SteamAPI
 			_LoadingProgress++;
 		}
 
-        public static void Error(string errorMessage, string origin="")
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"{(origin==""?"":$"[{origin}] ")}[Error] {errorMessage}");				// I'm so sorry
-			Console.ForegroundColor = ConsoleColor.White;
-        }
-
         private static int _LoadingProgress;
 		private static long current;
 		private static long last = ((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds();

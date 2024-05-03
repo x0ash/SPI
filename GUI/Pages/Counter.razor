@@ -1,62 +1,30 @@
 ﻿@page "/counter"
-@using SteamAPI;
-@using System;
-@using System.Text.Json;
-@using System.IO;
-@using System.Reflection;
+@using IO;
 
-<h1>Counter</h1>
+<h1>Show me the API key!</h1>
 
-<p role="status">Current count: @api_key</p>
+<p role="status">Here it is: @api_key</p>
 
 <button class="btn btn-primary" @onclick="ChangeAPIKey">Click me</button>
 
 @code
 {
+    public string api_key = "No API key found";
 
-    private string api_key = "Test";
-
-    private string GetFilePath()
+    private void Initialise()
     {
-        string AssemblyLocation = Assembly.GetExecutingAssembly().Location;
-        string path;
-        if (OperatingSystem.IsWindows())
-        {
-            path = Directory.GetParent(AssemblyLocation).FullName;
-        }
-
-        else if (OperatingSystem.IsMacOS() || OperatingSystem.IsMacCatalyst())
-        {
-            path = Directory.GetParent(AssemblyLocation).Parent.Parent.Parent.FullName;
-        }
-
-        else if (OperatingSystem.IsLinux())
-        {
-            path = "Linux";
-        }
-        else
-        {
-            path = "Unknown";
-        }
-
-        return path;
+        FileOperations.GetPath();
+        FileOperations.LoadConfigFile();
     }
 
     private void ChangeAPIKey()
     {
-        string path = GetFilePath();
-        /*
-        using (StreamReader sr = new StreamReader(path + "config.json"))
-        {
-            string file = sr.ReadToEnd();
-            IO.Config config = JsonSerializer.Deserialize<IO.Config>(file);
-            string _apiKey = config.key;
-            SteamWeb.API_Key = _apiKey;
-            api_key = SteamWeb.API_Key;
-        }
-        */
+        api_key = FileOperations.loaded_config.key;
+    }
 
-        //api_key = Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
-        api_key = path;
+    protected override void OnInitialized()
+    {
+        Initialise();
+        base.OnInitialized();
     }
-    }
+}

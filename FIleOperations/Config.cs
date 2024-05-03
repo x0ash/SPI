@@ -1,7 +1,7 @@
 ﻿namespace IO
 {
     [Serializable]
-    internal struct Config
+    public struct Config
     {
         public string key { get; set; }
 

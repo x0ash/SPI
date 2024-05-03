@@ -61,6 +61,7 @@
       <ProjectReference Include="..\SteamAPI\SteamAPI.csproj" />
       <ProjectReference Include="..\DataCollection\DataCollection.csproj" />
       <ProjectReference Include="..\SmurfPredictorModelTraining\SmurfPredictorModelTraining.csproj" />
+      <ProjectReference Include="..\FIleOperations\IO.csproj" />
     </ItemGroup>
     <ItemGroup>
       <None Remove="Resources\.DS_Store" />

@@ -8,7 +8,7 @@ using SmurfPredictorModelTraining;
 
 namespace SmurfPredictor
 {
-    internal class SmurfPredictor
+    public class SmurfPredictor
     {
         private MLContext _mlContext;
         private PredictionEngine<AccountDataSchema, AccountPrediction> _predictionEngine;

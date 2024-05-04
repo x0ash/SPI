@@ -47,4 +47,4 @@ IO.Output.Print(accountInfo.ToString());
 
 AccountPrediction prediction = smurfPredictor.Predict(accountInfo);
 
-Console.WriteLine(prediction.IsSmurf);
+Console.WriteLine($"{prediction.IsSmurf}, {prediction.Probability}");

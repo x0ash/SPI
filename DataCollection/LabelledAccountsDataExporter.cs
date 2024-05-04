@@ -136,7 +136,7 @@ namespace DataCollection
                 }
                 else
                 {
-                    SteamAPI.Output.Error($"Didn't add user {user.GetSteamID()}");
+                    IO.Output.Error($"Didn't add user {user.GetSteamID()}");
                 }
             }
             return accounts;

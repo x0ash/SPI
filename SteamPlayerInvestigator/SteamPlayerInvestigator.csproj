@@ -8,9 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="FIleOperations">
-      <ReferenceSourceTarget></ReferenceSourceTarget>
-    </ProjectReference>
     <ProjectReference Include="..\SmurfPredictor\SmurfPredictor.csproj" />
     <ProjectReference Include="..\SteamAPI\SteamAPI.csproj" />
     <ProjectReference Include="..\IO\IO.csproj" />

@@ -12,7 +12,7 @@
       <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
     <ProjectReference Include="..\SmurfPredictor\SmurfPredictor.csproj" />
-    <ProjectReference Include="..\FIleOperations\IO.csproj" />
     <ProjectReference Include="..\SteamAPI\SteamAPI.csproj" />
+    <ProjectReference Include="..\IO\IO.csproj" />
   </ItemGroup>
 </Project>

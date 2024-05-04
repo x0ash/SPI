@@ -13,10 +13,10 @@
     <PackageReference Include="Microsoft.ML" Version="3.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="FIleOperations">
+    <ProjectReference Include="IO">
       <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
-    <ProjectReference Include="..\FIleOperations\FIleOperations.csproj" />
-    <ProjectReference Include="..\FIleOperations\IO.csproj" />
+    <ProjectReference Include="..\IO\FIleOperations.csproj" />
+    <ProjectReference Include="..\IO\IO.csproj" />
   </ItemGroup>
 </Project>

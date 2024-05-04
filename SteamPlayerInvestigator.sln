@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountCrawler", "AccountCr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{40750B63-1704-4E7F-80C5-1F024082D4E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IO", "FileOperations\IO.csproj", "{87BD83C5-6725-4904-8BC9-CD9264696568}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IO", "IO\IO.csproj", "{87BD83C5-6725-4904-8BC9-CD9264696568}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamPlayerInvestigator", "SteamPlayerInvestigator\SteamPlayerInvestigator.csproj", "{45B0157E-A6B1-4268-853D-9D78DEAB30FE}"
 EndProject

@@ -19,6 +19,7 @@ namespace SteamAPI
         int userLevel;
         string url;
         bool visible;
+        int gameCount;
         
         // Obtainable via Web API
         List<Game> gamesList;
@@ -33,6 +34,7 @@ namespace SteamAPI
             vacBanned = false;
             memberSince = new DateTime();
             userLevel = -1;
+            gameCount = 0;
 
             IsSmurf = 0;
 
@@ -139,6 +141,16 @@ namespace SteamAPI
         public void SetGamesList(Game[] _gamesList)
         {
             gamesList = new List<Game>(_gamesList);
+        }
+
+        public int GetGameCount()
+        {
+            return gameCount;
+        }
+
+        public void SetGameCount(int _gameCount)
+        {
+            gameCount = _gameCount;
         }
 
         #endregion

@@ -18,5 +18,9 @@ namespace SmurfPredictor
 
         [LoadColumn(4)] public bool IsSmurf { get; set; }
 
+        public string ToString()
+        {
+            return $"{GamesOwned}, {TotalPlaytime}, {AccountLifetime}, {RecentPlaytime}";
+        }
     }
 }

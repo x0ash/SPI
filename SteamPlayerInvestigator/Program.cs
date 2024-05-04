@@ -22,7 +22,14 @@ string steam_url = IO.Input.Read();
 User user = new User();
 SteamXML.GetUserDetails(user, steam_url);
 SteamUserPage.GetUserLevel(user, steam_url);
-SteamWeb.GetOwnedGames(user);
+if (SteamWeb.GetOwnedGames(user) == 0)
+{
+    user.SetGameCount(user.GetGamesList().Count());
+}
+else
+{
+    SteamUserPage.GetGameCountFromBadge(user, steam_url);
+}
 
 // Initialise the predictor
 
@@ -30,11 +37,13 @@ SmurfPredictor.SmurfPredictor smurfPredictor = new SmurfPredictor.SmurfPredictor
 
 AccountDataSchema accountInfo = new AccountDataSchema
 {
-    GamesOwned = user.GetGamesList().Count(),
+    GamesOwned = user.GetGameCount(),
     TotalPlaytime = user.TotalPlaytimeInHours(),
     AccountLifetime = user.AccountLifeTimeInDays(),
     RecentPlaytime = user.RecentPlaytimeInHours(),
 };
+
+IO.Output.Print(accountInfo.ToString());
 
 AccountPrediction prediction = smurfPredictor.Predict(accountInfo);
 

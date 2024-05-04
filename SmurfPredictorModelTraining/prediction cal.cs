@@ -8,9 +8,9 @@ using Microsoft.ML;
 
 namespace SmurfPredictorModelTraining
 {
-    internal class SmurfPredictorModelBuilder
+    internal class SmurfPredictorModelBuilderPredictionCal
     {
-        public SmurfPredictorModelBuilder()
+        public SmurfPredictorModelBuilderPredictionCal()
         {
             var mlContext = new MLContext();
 
@@ -59,7 +59,7 @@ namespace SmurfPredictorModelTraining
                 int recentPlaytime = int.Parse(values[3]);
 
                
-                var testAccount = new AccountDataSchema
+                var account = new AccountDataSchema
                 {
                     GamesOwned = gamesOwned,
                     TotalPlaytime = totalPlaytime,
@@ -74,10 +74,18 @@ namespace SmurfPredictorModelTraining
             var predictionEngine = mlContext.Model.CreatePredictionEngine<AccountDataSchema, AccountPrediction>(SmurfDetectorModel);
 
             // Make prediction
+            //AccountDataSchema testAccount = new AccountDataSchema
+            AccountDataSchema testAccount = new AccountDataSchema
+            {
+                GamesOwned = 2,
+                TotalPlaytime = 150,
+                AccountLifetime = 600,
+                RecentPlaytime = 0,
+            };
             var prediction = predictionEngine.Predict(testAccount);
 
             // Interpret prediction score as percentage
-            double probabilityOfSmurf = prediction.Score[1]; // Assuming index 1 corresponds to the positive class
+            double probabilityOfSmurf = prediction.Score;
 
             //  ranges and corresponding interpretations
             if (probabilityOfSmurf >= 0.9)

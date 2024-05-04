@@ -1,6 +1,4 @@
-﻿using SmurfPredictorModelTraining;
-
-namespace SmurfPredictor
+﻿namespace SmurfPredictor
 {
     internal class Program
     {

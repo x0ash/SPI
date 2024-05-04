@@ -11,7 +11,8 @@
     <ProjectReference Include="FIleOperations">
       <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
-    <ProjectReference Include="..\SteamAPI\SteamAPI.csproj" />
+    <ProjectReference Include="..\SmurfPredictor\SmurfPredictor.csproj" />
     <ProjectReference Include="..\FIleOperations\IO.csproj" />
+    <ProjectReference Include="..\SteamAPI\SteamAPI.csproj" />
   </ItemGroup>
 </Project>

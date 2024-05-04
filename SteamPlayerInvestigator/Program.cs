@@ -3,6 +3,7 @@
 
 using SteamAPI;
 using IO;
+using SmurfPredictor;
 
 FileOperations.GetPath();        // We need to start by obtaining the path for all files we use
 FileOperations.LoadConfigFile(); // Next we need to load the config file. This gives us information such as the API key
@@ -23,3 +24,18 @@ SteamXML.GetUserDetails(user, steam_url);
 SteamUserPage.GetUserLevel(user, steam_url);
 SteamWeb.GetOwnedGames(user);
 
+// Initialise the predictor
+
+SmurfPredictor.SmurfPredictor smurfPredictor = new SmurfPredictor.SmurfPredictor();
+
+AccountDataSchema accountInfo = new AccountDataSchema
+{
+    GamesOwned = user.GetGamesList().Count(),
+    TotalPlaytime = user.TotalPlaytimeInHours(),
+    AccountLifetime = user.AccountLifeTimeInDays(),
+    RecentPlaytime = user.RecentPlaytimeInHours(),
+};
+
+AccountPrediction prediction = smurfPredictor.Predict(accountInfo);
+
+Console.WriteLine(prediction.IsSmurf);

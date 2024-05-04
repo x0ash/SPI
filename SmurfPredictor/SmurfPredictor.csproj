@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SmurfPredictorModelTraining\SmurfPredictorModelTraining.csproj" />
+    <PackageReference Include="Microsoft.ML" Version="3.0.1" />
   </ItemGroup>
-
 </Project>

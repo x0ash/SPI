@@ -17,5 +17,6 @@
       <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
     <ProjectReference Include="..\FIleOperations\FIleOperations.csproj" />
+    <ProjectReference Include="..\FIleOperations\IO.csproj" />
   </ItemGroup>
 </Project>

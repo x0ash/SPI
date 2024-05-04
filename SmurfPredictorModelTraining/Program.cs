@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ML;
 
-namespace SmurfPredictorModelTraining
+namespace SmurfPredictorModelTraining_Hamza
 {
     internal class SmurfPredictorModelBuilder
     {

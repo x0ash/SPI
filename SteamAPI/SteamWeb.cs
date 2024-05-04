@@ -6,6 +6,7 @@
  */
 
 using System.Text.Json;
+using IO;
 
 namespace SteamAPI
 { 
@@ -83,7 +84,7 @@ namespace SteamAPI
 
             catch
             {
-                Output.Error($"Cannot obtain games list (SteamID: {user.GetSteamID()})", "SteamAPI/SteamWeb:43");
+                IO.Output.Error($"Cannot obtain games list (SteamID: {user.GetSteamID()})", "SteamAPI/SteamWeb:43");
                 return 1;
             }
         }
@@ -113,7 +114,7 @@ namespace SteamAPI
                 }
                 catch
                 {
-                    SteamAPI.Output.Error("Can't obtain time created");
+                    IO.Output.Error("Can't obtain time created");
                 }
                 users[count].SetVisible(playerJson.GetProperty("communityvisibilitystate").GetInt32() == 3);
                 users[count].SetURL(playerJson.GetProperty("profileurl").ToString());

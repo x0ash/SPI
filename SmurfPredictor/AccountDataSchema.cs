@@ -7,7 +7,7 @@ using Microsoft.ML;
 using Microsoft.ML.Data;
 
 
-namespace SmurfPredictorModelTraining
+namespace SmurfPredictor
 {
     public class AccountDataSchema
     {

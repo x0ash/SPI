@@ -15,9 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountCrawler", "AccountCr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{40750B63-1704-4E7F-80C5-1F024082D4E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IO", "FIleOperations\IO.csproj", "{87BD83C5-6725-4904-8BC9-CD9264696568}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IO", "FileOperations\IO.csproj", "{87BD83C5-6725-4904-8BC9-CD9264696568}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamPlayerInvestigator", "SteamPlayerInvestigator\SteamPlayerInvestigator.csproj", "{45B0157E-A6B1-4268-853D-9D78DEAB30FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmurfPredictor", "SmurfPredictor\SmurfPredictor.csproj", "{36CFEC73-421C-4285-BBD2-7A1C0047A1CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +74,16 @@ Global
 		{45B0157E-A6B1-4268-853D-9D78DEAB30FE}.WIN|Any CPU.Build.0 = Debug|Any CPU
 		{45B0157E-A6B1-4268-853D-9D78DEAB30FE}.LINUX|Any CPU.ActiveCfg = Debug|Any CPU
 		{45B0157E-A6B1-4268-853D-9D78DEAB30FE}.LINUX|Any CPU.Build.0 = Debug|Any CPU
+		{36CFEC73-421C-4285-BBD2-7A1C0047A1CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36CFEC73-421C-4285-BBD2-7A1C0047A1CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36CFEC73-421C-4285-BBD2-7A1C0047A1CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36CFEC73-421C-4285-BBD2-7A1C0047A1CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36CFEC73-421C-4285-BBD2-7A1C0047A1CD}.OSX|Any CPU.ActiveCfg = Debug|Any CPU
+		{36CFEC73-421C-4285-BBD2-7A1C0047A1CD}.OSX|Any CPU.Build.0 = Debug|Any CPU
+		{36CFEC73-421C-4285-BBD2-7A1C0047A1CD}.WIN|Any CPU.ActiveCfg = Debug|Any CPU
+		{36CFEC73-421C-4285-BBD2-7A1C0047A1CD}.WIN|Any CPU.Build.0 = Debug|Any CPU
+		{36CFEC73-421C-4285-BBD2-7A1C0047A1CD}.LINUX|Any CPU.ActiveCfg = Debug|Any CPU
+		{36CFEC73-421C-4285-BBD2-7A1C0047A1CD}.LINUX|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

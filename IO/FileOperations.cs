@@ -33,10 +33,26 @@ namespace IO
 
         public static void LoadConfigFile()
         {
+            CreateConfigIfNotExists();
             using (StreamReader sr = new StreamReader(path+"/config.json"))
             {
                 string file = sr.ReadToEnd();
                 loaded_config = JsonSerializer.Deserialize<Config>(file);
+            }
+        }
+
+        private static void CreateConfigIfNotExists()
+        {
+            string configPath = path + "/config.json";
+            if (!File.Exists(configPath))
+            {
+                using (StreamWriter sw = new StreamWriter(configPath))
+                {
+                    Config newConfig = new Config();
+                    sw.Write(JsonSerializer.Serialize(newConfig));
+                }
+                // maybe remove me later or something?
+                Output.Print("Config created");
             }
         }
     }

@@ -2,7 +2,6 @@
 #define OSX
 #define Linux
 using Microsoft.Extensions.Logging;
-using GUI.Data;
 
 namespace GUI;
 
@@ -24,9 +23,6 @@ public static class MauiProgram
 		builder.Services.AddBlazorWebViewDeveloperTools();
 		builder.Logging.AddDebug();
 #endif
-        builder.Services.AddBlazorWebViewDeveloperTools();
-        builder.Logging.AddDebug();
-        builder.Services.AddSingleton<WeatherForecastService>();
 
 		return builder.Build();
 	}

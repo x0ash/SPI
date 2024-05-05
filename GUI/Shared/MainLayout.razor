@@ -1,18 +1,68 @@
 ﻿@inherits LayoutComponentBase
+@using SteamAPI;
+@using IO;
+@using SmurfPredictor;
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
+<div class="container">
+    <div class="homepage">
+        <h1>Steam Player Investigation System</h1>
+        <h2>Enter a Steam URL to see if it could be a smurf account</h2>
+        <div class="row">
+            <input type="text" @bind="@steamURL" placeholder="Player's URL">
+            <button onclick="CheckUser()">Find User</button>
+        </div>
     </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+    <div class="loading">
+        <h2>@playerName</h2>
+        <h3><!--insert name here--></h3>
+        <ul>
+            <h4></h4>
+        </ul>
+
+        <div class="progress_bar_container">
+            <div class="bar">
+            </div>
+        </div>
+        <!--Create loading bar potentially-->
+        <!--once loaded button appears to move on-->
+        <button onclick="endScreen()">Finished</button>
+    </div>
+
+    <div class="finalpage">
+        <h2>Rating</h2>
+        <h1><!--insert rating here--></h1>
+    </div>
 </div>
 
+
+@code
+{
+    // Initialisation
+    string steamURL;
+    string playerName = "";
+
+    private void Initialise()
+    {
+        FileOperations.GetPath();
+        FileOperations.LoadConfigFile();
+        SteamWeb.API_Key = FileOperations.loaded_config.key;
+    }
+
+    private void CheckUser()
+    {
+        User user = new User();
+
+        // First get username
+        SteamXML.GetUserDetails(user, steamURL);
+        playerName = user.GetSteamID();
+
+    }
+
+    protected override void OnInitialized()
+    {
+        Initialise();
+        base.OnInitialized();
+    }
+}

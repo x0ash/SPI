@@ -1,18 +1,34 @@
-﻿* {
+*{
     margin: 0;
     padding: 0;
     font-family: 'Poppins',sans-serif;
     box-sizing: border-box;
 }
 
-.container {
+.container{
     width: 100%;
     min-height: 100vh;
     background: linear-gradient(135deg, #0158FB, #b15bff);
     padding: 10px;
 }
 
-.homepage {
+.homepage{
+    width: 100%;
+    max-width: 540px;
+    background: #fff;
+    margin: 100px auto 20px;
+    padding: 40px 30px 70px;
+    border-radius: 10px;
+}
+.loading{
+    width: 100%;
+    max-width: 540px;
+    background: #fff;
+    margin: 100px auto 20px;
+    padding: 40px 30px 70px;
+    border-radius: 10px;
+}
+.finalpage{
     width: 100%;
     max-width: 540px;
     background: #fff;
@@ -21,25 +37,7 @@
     border-radius: 10px;
 }
 
-.loading {
-    width: 100%;
-    max-width: 540px;
-    background: #fff;
-    margin: 100px auto 20px;
-    padding: 40px 30px 70px;
-    border-radius: 10px;
-}
-
-.finalpage {
-    width: 100%;
-    max-width: 540px;
-    background: #fff;
-    margin: 100px auto 20px;
-    padding: 40px 30px 70px;
-    border-radius: 10px;
-}
-
-.row {
+.row{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -48,8 +46,7 @@
     padding-left: 20px;
     margin-bottom: 25px;
 }
-
-input {
+input{
     flex: 1;
     border: none;
     outline: none;
@@ -57,19 +54,18 @@ input {
     padding: 10px;
     font-weight: 14px;
 }
-
-button {
+button{
     border: none;
     outline: none;
     padding: 16px 50px;
     background: #b15bff;
     color: #c8c8c8;
-    font-size: 16px;
+    font-size:16px;
     cursor: pointer;
-    border-radius: 40px;
+    border-radius:40px;
 }
 
-.progress_bar_container {
+.progress_bar_container{
     width: 80%;
     height: 2rem;
     border-radius: 2rem;
@@ -79,20 +75,19 @@ button {
     will-change: transform;
     box-shadow: 0 0 5px #0158FB;
 }
-
 .progress-bar {
     position: absolute;
     height: 100%;
     width: 100%;
     content: "";
     background-color: #9C01FB;
-    top: 0;
+    top:0;
     bottom: 0;
     left: -100%;
     border-radius: inherit;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items:center;
     color: white;
     font-family: sans-serif;
-}
+  }

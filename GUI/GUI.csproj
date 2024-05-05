@@ -60,8 +60,8 @@
     <ItemGroup>
       <ProjectReference Include="..\SteamAPI\SteamAPI.csproj" />
       <ProjectReference Include="..\DataCollection\DataCollection.csproj" />
-      <ProjectReference Include="..\SmurfPredictorModelTraining\SmurfPredictorModelTraining.csproj" />
       <ProjectReference Include="..\IO\IO.csproj" />
+      <ProjectReference Include="..\SmurfPredictor\SmurfPredictor.csproj" />
     </ItemGroup>
     <ItemGroup>
       <None Remove="Resources\.DS_Store" />

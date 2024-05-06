@@ -1,10 +1,14 @@
 ﻿using System.Net;
+using System.IO.Pipes;
+using System.Text;
 
 namespace SteamAPI
 {
     public class HTMLRequest
     {
         private static HttpClient httpClient = new HttpClient();
+        static NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", "spi", PipeDirection.InOut, PipeOptions.None);
+        static StreamString ss;
 
         // I'm keeping this public for now because it might be useful at some point?
         public async static Task<string> RequestHTMLPage(string url)
@@ -33,15 +37,72 @@ namespace SteamAPI
             return await httpClient.PostAsync(url, content).Result.Content.ReadAsStringAsync();
         }
 
+        /*
         // Most interaction should be performed using this, however.
         public static string GetHTMLPage(string url)
         {
             return RequestHTMLPage(url).Result;
         }
+        */
+
+        public static string GetHTMLPage(string url)
+        {
+            if (!pipeClient.IsConnected)
+            {
+                pipeClient.Connect();
+            }
+            ss = new StreamString(pipeClient);
+
+            ss.WriteString(url);
+            string page = ss.ReadString();
+
+            return page;
+        }
+
+
 
         public static string GetPOST(string url, HttpContent content)
         {
             return RequestPOST(url, content).Result;
+        }
+    }
+
+    public class StreamString
+    {
+        private Stream ioStream;
+        private UnicodeEncoding streamEncoding;
+
+        public StreamString(Stream ioStream)
+        {
+            this.ioStream = ioStream;
+            streamEncoding = new UnicodeEncoding();
+        }
+
+        public string ReadString()
+        {
+            int len;
+            len = ioStream.ReadByte() * 256;
+            len += ioStream.ReadByte();
+            var inBuffer = new byte[len];
+            ioStream.Read(inBuffer, 0, len);
+
+            return streamEncoding.GetString(inBuffer);
+        }
+
+        public int WriteString(string outString)
+        {
+            byte[] outBuffer = streamEncoding.GetBytes(outString);
+            int len = outBuffer.Length;
+            if (len > UInt16.MaxValue)
+            {
+                len = (int)UInt16.MaxValue;
+            }
+            ioStream.WriteByte((byte)(len / 256));
+            ioStream.WriteByte((byte)(len & 255));
+            ioStream.Write(outBuffer, 0, len);
+            ioStream.Flush();
+
+            return outBuffer.Length + 2;
         }
     }
 }

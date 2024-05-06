@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Program.cs.old" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SmurfPredictor\SmurfPredictor.csproj" />
     <ProjectReference Include="..\SteamAPI\SteamAPI.csproj" />
     <ProjectReference Include="..\IO\IO.csproj" />

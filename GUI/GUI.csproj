@@ -58,6 +58,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Backend\Backend.csproj" />
       <ProjectReference Include="..\SteamAPI\SteamAPI.csproj" />
       <ProjectReference Include="..\DataCollection\DataCollection.csproj" />
       <ProjectReference Include="..\IO\IO.csproj" />

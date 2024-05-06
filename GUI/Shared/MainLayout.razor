@@ -2,6 +2,7 @@
 @using SteamAPI;
 @using IO;
 @using SmurfPredictor;
+@using System.Diagnostics;
 
 <div class="container">
     <div class="homepage">
@@ -42,16 +43,22 @@
     // Initialisation
     string steamURL;
     string playerName = "";
+    Process backend;
 
     private void Initialise()
     {
         FileOperations.GetPath();
         FileOperations.LoadConfigFile();
         SteamWeb.API_Key = FileOperations.loaded_config.key;
+
     }
 
     private void CheckUser()
     {
+        if (backend == null)
+        {
+            backend = Process.Start("Backend.exe");
+        }
         User user = new User();
 
         // First get username
@@ -60,9 +67,16 @@
 
     }
 
+
+
     protected override void OnInitialized()
     {
         Initialise();
         base.OnInitialized();
+    }
+
+    void OnProcessExit(object sender, EventArgs e) {
+        Process.Start("SteamAPI.exe");
+        backend.Close();
     }
 }

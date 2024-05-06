@@ -63,13 +63,14 @@ namespace SmurfPredictorModelTraining
 
         static string GetTestDataFilePathFromDataCollection()
         {
-            return LabelledAccountsDataExporter.GetTestDataFilePath();
+            throw new NotImplementedException();
+            //return LabelledAccountsDataExporter.GetTestDataFilePath();
         }
 
-        static IEnumerable<AccountData> ReadTestData(string testDataFilePath)
+        static IEnumerable<AccountDataSchema> ReadTestData(string testDataFilePath)
         {
             // Read data file           
-            var testData = new List<AccountData>();
+            var testData = new List<AccountDataSchema>();
 
             // Read data from the file
             string[] lines = File.ReadAllLines(testDataFilePath);
@@ -78,7 +79,7 @@ namespace SmurfPredictorModelTraining
             foreach(var line in lines.Skip(1)) 
             {
                 string[] values = line.Split(',');
-                var account = new AccountData
+                var account = new AccountDataSchema
                 {
                     GamesOwned = int.Parse(values[0]),
                     TotalPlaytime = int.Parse(values[1]),
@@ -91,13 +92,13 @@ namespace SmurfPredictorModelTraining
             return testData;
         }
 
-        static void MakePredictions(MLContext mlContext, ITransformer model, IEnumerable<AccountData> testData)
-
+        static void MakePredictions(MLContext mlContext, ITransformer model, IEnumerable<AccountDataSchema> testData)
+        { 
             // Create prediction engine
-            var predictionEngine = mlContext.Model.CreatePredictionEngine<AccountData, AccountPrediction>(SmurfPredictorModelTraining);
+            var predictionEngine = mlContext.Model.CreatePredictionEngine<AccountDataSchema, AccountPrediction>(model);
 
             // Make predictions for each test account
-            foreach(var account in data)
+            foreach(var account in testData)
             {
                 var prediction = predictionEngine.Predict(account);
 
@@ -146,7 +147,7 @@ namespace SmurfPredictorModelTraining
                 }
 
                 // Output predicted label
-                Console.WriteLine($"Predicted label: {prediction.Prediction}");
+                Console.WriteLine($"Predicted label: {prediction.Score}");
             }
         }
     }

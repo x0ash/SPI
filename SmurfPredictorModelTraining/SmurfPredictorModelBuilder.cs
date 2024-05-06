@@ -16,7 +16,7 @@ namespace SmurfPredictorModelTraining
 
             string solutionPath = Directory.GetParent(Assembly.GetExecutingAssembly().Location).Parent.Parent.Parent.Parent.FullName;
             string dataLocation = Path.Combine(solutionPath, @"DataCollection\LabelledAccountData.csv"); ;
-            
+
             var DataView = mlContext.Data.LoadFromTextFile<AccountDataSchema>(dataLocation, separatorChar: ',');
             // Convert fields into floats
             // Add them to the pipeline
@@ -58,93 +58,107 @@ namespace SmurfPredictorModelTraining
             Console.WriteLine("Saved model");
 
 
-            // Now need to make predicitons somehow?
-           
-            string testDataFilePath = "test_data.csv"; // need to know the name of the csv file whcih contains test data
-            // Read tfrom the CSV file
+            // Now need to make predicitons somehow?        
+        }
+
+        static string GetTestDataFilePathFromDataCollection()
+        {
+            return LabelledAccountsDataExporter.GetTestDataFilePath();
+        }
+
+        static IEnumerable<AccountData> ReadTestData(string testDataFilePath)
+        {
+            // Read data file           
+            var testData = new List<AccountData>();
+
+            // Read data from the file
             string[] lines = File.ReadAllLines(testDataFilePath);
 
-            // will skip the first column
-            foreach (string line in lines.Skip(1))
+            // Parse each line and create AccountData objects
+            foreach(var line in lines.Skip(1)) 
             {
-                // Split the line by commas to get individual values
                 string[] values = line.Split(',');
-
-                // needs to be set like this so algorithm can read it
-                int gamesOwned = int.Parse(values[0]);
-                int totalPlaytime = int.Parse(values[1]);
-                int accountLifetime = int.Parse(values[2]);
-                int recentPlaytime = int.Parse(values[3]);
-
-
-                var account = new AccountDataSchema
+                var account = new AccountData
                 {
-                    GamesOwned = gamesOwned,
-                    TotalPlaytime = totalPlaytime,
-                    AccountLifetime = accountLifetime,
-                    RecentPlaytime = recentPlaytime
+                    GamesOwned = int.Parse(values[0]),
+                    TotalPlaytime = int.Parse(values[1]),
+                    AccountLifetime = int.Parse(values[2]),
+                    RecentPlaytime = int.Parse(values[3])
                 };
-
-
+                testData.Add(account);
             }
+
+            return testData;
+        }
+
+        static void MakePredictions(MLContext mlContext, ITransformer model, IEnumerable<AccountData> testData)
 
             // Create prediction engine
-            var predictionEngine = mlContext.Model.CreatePredictionEngine<AccountDataSchema, AccountPrediction>(SmurfDetectorModel);
+            var predictionEngine = mlContext.Model.CreatePredictionEngine<AccountData, AccountPrediction>(SmurfPredictorModelTraining);
 
-            // Make prediction
-            //AccountDataSchema testAccount = new AccountDataSchema
-            AccountDataSchema testAccount = new AccountDataSchema
+            // Make predictions for each test account
+            foreach(var account in data)
             {
-                GamesOwned = 2,
-                TotalPlaytime = 150,
-                AccountLifetime = 600,
-                RecentPlaytime = 0,
-            };
-            var prediction = predictionEngine.Predict(testAccount);
+                var prediction = predictionEngine.Predict(account);
 
-            // Interpret prediction score as percentage
-            double probabilityOfSmurf = prediction.Score;
+                //  prediction as percentage
+                double probabilityOfSmurf = prediction.Score * 100;
 
-            //  ranges and corresponding interpretations
-            if (probabilityOfSmurf >= 0.9)
-            {
-                Console.WriteLine("Prediction: 90-100 percent a smurf");
-            }
-            else if (probabilityOfSmurf >= 0.8)
-            {
-                Console.WriteLine("Prediction: 80-89 percent a smurf");
-            }
-            else if (probabilityOfSmurf >= 0.7)
-            {
-                Console.WriteLine("Prediction: 70-79 percent a smurf");
-            }
-            else if (probabilityOfSmurf >= 0.6)
-            {
-                Console.WriteLine("Prediction: 60-69 percent a smurf");
-            }
-            else if (probabilityOfSmurf >= 0.5)
-            {
-                Console.WriteLine("Prediction: 50-59 percent a smurf");
-            }
-            else if (probabilityOfSmurf >= 0.4)
-            {
-                Console.WriteLine("Prediction: 40-49 percent a smurf");
-            }
-            else if (probabilityOfSmurf >= 0.3)
-            {
-                Console.WriteLine("Prediction: 30-39 percent a smurf");
-            }
-            else if (probabilityOfSmurf >= 0.2)
-            {
-                Console.WriteLine("Prediction: 20-29 percent a smurf");
-            }
-            else
-            {
-                Console.WriteLine("Prediction: 0-19 percent a smurf (least likely)");
-            }
+                //  prediction result
+                Console.WriteLine($"Prediction: {probabilityOfSmurf}% likely a smurf");
 
-            // Output result
-            Console.WriteLine($"Predicted label: {prediction.IsSmurf}");
+                // Output result interpretation
+                if (probabilityOfSmurf >= 0.9)
+                {
+                    Console.WriteLine("Prediction: 90-100 percent a smurf");
+                }
+                else if (probabilityOfSmurf >= 0.8)
+                {
+                    Console.WriteLine("Prediction: 80-89 percent a smurf");
+                }
+                else if (probabilityOfSmurf >= 0.7)
+                {
+                    Console.WriteLine("Prediction: 70-79 percent a smurf");
+                }
+                else if (probabilityOfSmurf >= 0.6)
+                {
+                    Console.WriteLine("Prediction: 60-69 percent a smurf");
+                }
+                else if (probabilityOfSmurf >= 0.5)
+                {
+                    Console.WriteLine("Prediction: 50-59 percent a smurf");
+                }
+                else if (probabilityOfSmurf >= 0.4)
+                {
+                    Console.WriteLine("Prediction: 40-49 percent a smurf");
+                }
+                else if (probabilityOfSmurf >= 0.3)
+                {
+                    Console.WriteLine("Prediction: 30-39 percent a smurf");
+                }
+                else if (probabilityOfSmurf >= 0.2)
+                {
+                    Console.WriteLine("Prediction: 20-29 percent a smurf");
+                }
+                else
+                {
+                    Console.WriteLine("Prediction: 0-19 percent a smurf (least likely)");
+                }
+
+                // Output predicted label
+                Console.WriteLine($"Predicted label: {prediction.Prediction}");
+            }
         }
+    }
+    
+    class DataCollection
+    {
+        public int GamesOwned{ get; set; }
+        public int TotalPlaytime{ get; set; }
+        public int AccountLifetime{ get; set; }
+        public int RecentPlaytime{ get; set; }
+        //prediction result   
+        public bool Prediction{ get; set; }
+        public float Score{ get; set; }
     }
 }

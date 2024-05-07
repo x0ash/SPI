@@ -56,7 +56,7 @@
     {
         if (backend == null)
         {
-            backend = Process.Start("Backend.exe");
+            backend = Process.Start("WebHelper.exe");
         }
         User user = new User();
 
@@ -72,10 +72,5 @@
     {
         Initialise();
         base.OnInitialized();
-    }
-
-    void OnProcessExit(object sender, EventArgs e) {
-        Process.Start("SteamAPI.exe");
-        backend.Close();
     }
 }

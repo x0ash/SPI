@@ -10,7 +10,7 @@
         <h2>Enter a Steam URL</h2>
         <div class="row">
             <input type="text" @bind="@steamURL" placeholder="Player's URL">
-            <button @onclick="CheckUser"><img src="images/search.png"></button>
+            <button @onclick="CheckUser"><img src="images/image.png"></button>
         </div>
     </div>
 
@@ -33,6 +33,15 @@
 
     <div class="finalpage">
         <h1>Rating</h1>
+        <h2>@playerName</h2>
+        <h4>Percentage Chance of Smurf: </h4>
+        <ul>
+            <li>Number of Games: </li>
+            <li>VAC Bans: </li>
+            <li>Hours Played: </li>
+            <li>Active for: </li>
+        </ul>
+        
     </div>
 </div>
 

@@ -20,6 +20,11 @@
     padding: 40px 30px 70px;
     border-radius: 10px;
 }
+    .homepage button img{
+        width:30px;
+        height: 30px;
+    }
+
 
 h1 {
     color: #b15bff;
@@ -34,7 +39,12 @@ h2 {
     align-items: center;
     margin-bottom: 20px;
 }
-h4
+h4 {
+    color: #0158FB;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
 
 .loading {
     width: 100%;
@@ -82,6 +92,16 @@ button {
     font-size: 16px;
     cursor: pointer;
     border-radius: 40px;
+}
+
+ul li {
+    list-style: none;
+    font-size: 17px;
+    padding: 12px 8px 12px 50px;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+    color: #b15bff;
 }
 
 .progress_bar_container {

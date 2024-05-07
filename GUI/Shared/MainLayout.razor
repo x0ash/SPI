@@ -31,7 +31,7 @@
     </div>  *@
    
 
-    <div class="finalpage">
+    <div class="finalpage" hidden="@containerHidden">
         <h1>Rating</h1>
         <h2>@playerName</h2>
         <h4>Percentage Chance of Smurf: </h4>
@@ -41,7 +41,6 @@
             <li>Hours Played: </li>
             <li>Active for: </li>
         </ul>
-        
     </div>
 </div>
 
@@ -52,6 +51,7 @@
     string steamURL;
     string playerName = "";
     Process backend;
+    private bool containerHidden = true;
 
     private void Initialise()
     {
@@ -72,6 +72,9 @@
         // First get username
         SteamXML.GetUserDetails(user, steamURL);
         playerName = user.GetSteamID();
+
+
+        containerHidden = false;
 
     }
 

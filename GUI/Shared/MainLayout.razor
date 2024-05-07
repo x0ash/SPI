@@ -7,7 +7,7 @@
 <div class="container">
     <div class="homepage">
         <h1>Steam Player Investigation System</h1>
-        <h2>Enter a Steam URL to see if it could be a smurf account</h2>
+        <h2>Enter a Steam URL</h2>
         <div class="row">
             <input type="text" @bind="@steamURL" placeholder="Player's URL">
             <button @onclick="CheckUser">Find User</button>
@@ -17,7 +17,6 @@
 
     <div class="loading">
         <h2>@playerName</h2>
-        <h3><!--insert name here--></h3>
         <ul>
             <h4></h4>
         </ul>
@@ -32,8 +31,7 @@
     </div>
 
     <div class="finalpage">
-        <h2>Rating</h2>
-        <h1><!--insert rating here--></h1>
+        <h1>Rating</h1>
     </div>
 </div>
 

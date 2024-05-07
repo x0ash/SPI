@@ -1,7 +1,7 @@
 ﻿* {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Lucida Console',sans-serif;
     box-sizing: border-box;
 }
 
@@ -19,6 +19,20 @@
     margin: 100px auto 20px;
     padding: 40px 30px 70px;
     border-radius: 10px;
+}
+
+h1 {
+    color: #b15bff;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #0158FB;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .loading {

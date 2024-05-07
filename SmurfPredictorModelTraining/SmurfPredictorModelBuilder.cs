@@ -61,44 +61,14 @@ namespace SmurfPredictorModelTraining
             // Now need to make predicitons somehow?        
         }
 
-        static string GetTestDataFilePathFromDataCollection()
         {
-            throw new NotImplementedException();
-            //return LabelledAccountsDataExporter.GetTestDataFilePath();
-        }
+            static void MakePredictions(MLContext mlContext, ITransformer model, IEnumerable<AccountData> testData)
 
-        static IEnumerable<AccountDataSchema> ReadTestData(string testDataFilePath)
-        {
-            // Read data file           
-            var testData = new List<AccountDataSchema>();
-
-            // Read data from the file
-            string[] lines = File.ReadAllLines(testDataFilePath);
-
-            // Parse each line and create AccountData objects
-            foreach(var line in lines.Skip(1)) 
-            {
-                string[] values = line.Split(',');
-                var account = new AccountDataSchema
-                {
-                    GamesOwned = int.Parse(values[0]),
-                    TotalPlaytime = int.Parse(values[1]),
-                    AccountLifetime = int.Parse(values[2]),
-                    RecentPlaytime = int.Parse(values[3])
-                };
-                testData.Add(account);
-            }
-
-            return testData;
-        }
-
-        static void MakePredictions(MLContext mlContext, ITransformer model, IEnumerable<AccountDataSchema> testData)
-        { 
-            // Create prediction engine
-            var predictionEngine = mlContext.Model.CreatePredictionEngine<AccountDataSchema, AccountPrediction>(model);
+                // Create prediction engine
+                var predictionEngine = mlContext.Model.CreatePredictionEngine<AccountData, AccountPrediction>(SmurfPredictorModelTraining);
 
             // Make predictions for each test account
-            foreach(var account in testData)
+            foreach(var account in data)
             {
                 var prediction = predictionEngine.Predict(account);
 
@@ -147,19 +117,8 @@ namespace SmurfPredictorModelTraining
                 }
 
                 // Output predicted label
-                Console.WriteLine($"Predicted label: {prediction.Score}");
+                Console.WriteLine($"Predicted label: {prediction.Prediction}");
             }
         }
-    }
-    
-    class DataCollection
-    {
-        public int GamesOwned{ get; set; }
-        public int TotalPlaytime{ get; set; }
-        public int AccountLifetime{ get; set; }
-        public int RecentPlaytime{ get; set; }
-        //prediction result   
-        public bool Prediction{ get; set; }
-        public float Score{ get; set; }
     }
 }

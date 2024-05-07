@@ -171,7 +171,7 @@ namespace SteamAPI
 
             for (int i = 0; i < 5; i++)
             {
-                SteamStorePage.GetCommunityTags(sortedPlaytime[i]);
+                //SteamStorePage.GetCommunityTags(sortedPlaytime[i]);
                 playtimeString += sortedPlaytime[i].ToString();
             }
 
@@ -187,7 +187,7 @@ namespace SteamAPI
             {
                 if (sortedPlaytime[i].GetRecentPlaytimeInMinutes() != 0)
                 {
-                    SteamStorePage.GetCommunityTags(sortedPlaytime[i]);
+                    //SteamStorePage.GetCommunityTags(sortedPlaytime[i]);
                     recentPlaytime += sortedPlaytime[i].ToString();
                 }
             }

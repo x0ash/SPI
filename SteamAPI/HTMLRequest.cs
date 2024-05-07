@@ -8,7 +8,8 @@ namespace SteamAPI
     {
         private static HttpClient httpClient = new HttpClient();
         static NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", "spi", PipeDirection.InOut, PipeOptions.None);
-        static StreamString ss;
+        static StreamWriter sw;
+        static StreamReader sr;
 
         // I'm keeping this public for now because it might be useful at some point?
         public async static Task<string> RequestHTMLPage(string url)
@@ -51,10 +52,17 @@ namespace SteamAPI
             {
                 pipeClient.Connect();
             }
-            ss = new StreamString(pipeClient);
+            sw = new StreamWriter(pipeClient);
+            sr = new StreamReader(pipeClient);
 
-            ss.WriteString(url);
-            string page = ss.ReadString();
+            sw.AutoFlush = true;
+            string page = "";
+
+            sw.WriteLine(url);
+            if (sr.Peek() > 0)
+            {
+                page = sr.ReadToEnd();
+            }
 
             return page;
         }
@@ -93,10 +101,6 @@ namespace SteamAPI
         {
             byte[] outBuffer = streamEncoding.GetBytes(outString);
             int len = outBuffer.Length;
-            if (len > UInt16.MaxValue)
-            {
-                len = (int)UInt16.MaxValue;
-            }
             ioStream.WriteByte((byte)(len / 256));
             ioStream.WriteByte((byte)(len & 255));
             ioStream.Write(outBuffer, 0, len);

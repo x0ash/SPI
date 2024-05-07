@@ -1,20 +1,17 @@
-﻿using System;
+﻿using System.IO.Pipes;
 using System.Text;
-using System.IO.Pipes;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Diagnostics.Eventing.Reader;
 
 // Start the server
 NamedPipeServerStream pipeServer;
-StreamString ss;
+StreamWriter sw;
+StreamReader sr;
 
 HttpClient httpClient = new HttpClient();
 
 pipeServer = new NamedPipeServerStream("spi", PipeDirection.InOut);
-ss = new StreamString(pipeServer);
+sw = new StreamWriter(pipeServer);
+sr = new StreamReader(pipeServer);
+
 
 try
 {
@@ -22,9 +19,10 @@ try
     string url = "";
     while (true)
     {
-        if (connected)
+        if (connected && sr.Peek() > 0)
         {
-            url = ss.ReadString();
+            url = sr.ReadLine();
+            Console.WriteLine("URL: {0}", url);
             if (url == "spi::-1::disconnected")
             {
                 //connected = false;
@@ -33,16 +31,19 @@ try
             else
             {
                 string page = GetHTMLPage(url);
-                ss.WriteString(page);
+                sw.Write(page);
+                Console.WriteLine(page);
             }
         }
         else
         {
             pipeServer.Close();
             pipeServer = new NamedPipeServerStream("spi", PipeDirection.InOut);
-            ss = new StreamString(pipeServer);
+            sw = new StreamWriter(pipeServer);
+            sr = new StreamReader(pipeServer);
             Console.WriteLine("Waiting on client connection..");
             pipeServer.WaitForConnection();
+            sw.AutoFlush = true;
             Console.WriteLine("Client connected!");
             connected = true;
         }
@@ -50,7 +51,7 @@ try
 }
 catch (IOException e)
 {
-    Console.WriteLine("Error: {0}",e.Message);
+    Console.WriteLine("Error: {0}", e.Message);
 }
 
 pipeServer.Close();
@@ -109,10 +110,6 @@ class StreamString
     {
         byte[] outBuffer = streamEncoding.GetBytes(outString);
         int len = outBuffer.Length;
-        if (len > UInt16.MaxValue)
-        {
-            len = (int)UInt16.MaxValue;
-        }
         ioStream.WriteByte((byte)(len / 256));
         ioStream.WriteByte((byte)(len & 255));
         ioStream.Write(outBuffer, 0, len);

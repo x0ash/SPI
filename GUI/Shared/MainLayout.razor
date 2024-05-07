@@ -10,7 +10,7 @@
         <h2>Enter a Steam URL</h2>
         <div class="row">
             <input type="text" @bind="@steamURL" placeholder="Player's URL">
-            <button @onclick="CheckUser"><img src="images/image.png"></button>
+            <button @onclick="CheckUser"><img src="images/search.png"></button>
         </div>
     </div>
 
@@ -36,10 +36,10 @@
         <h2>@playerName</h2>
         <h4>Percentage Chance of Smurf: </h4>
         <ul>
-            <li>Number of Games: </li>
-            <li>VAC Bans: </li>
-            <li>Hours Played: </li>
-            <li>Active for: </li>
+            <li>Number of Games: @gameCount</li>
+            <li>VAC Banned: @vacStatus</li>
+            <li>Total Hours Played: @hoursPlayed</li>
+            <li>Active for: @accountLifetime days</li>
         </ul>
     </div>
 </div>
@@ -50,6 +50,11 @@
     // Initialisation
     string steamURL;
     string playerName = "";
+    int gameCount;
+    bool vacStatus;
+    float hoursPlayed;
+    int accountLifetime;
+
     Process backend;
     private bool containerHidden = true;
 
@@ -72,6 +77,13 @@
         // First get username
         SteamXML.GetUserDetails(user, steamURL);
         playerName = user.GetSteamID();
+        vacStatus = user.GetVacStatus();
+        accountLifetime = user.AccountLifeTimeInDays();
+
+        // Then we'll need to use the API
+        SteamWeb.GetOwnedGames(user);
+        gameCount = user.GetGameCount();
+        hoursPlayed = user.TotalPlaytimeInHours();
 
 
         containerHidden = false;

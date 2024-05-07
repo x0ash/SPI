@@ -79,6 +79,7 @@ namespace SteamAPI
                     }
                     user.AddGame(newGame);                                                                     // Once the new game has been created fully, add it to the user object.
                 }
+                user.SetGameCount(user.GetGamesList().Count());
                 return 0;
             }
 

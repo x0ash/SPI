@@ -30,6 +30,7 @@
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
         <Title>Steam Player Investigator</Title>
         <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
@@ -44,7 +45,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Backend\Backend.csproj" />
+      <ProjectReference Include="..\Backend\WebHelper.csproj" />
       <ProjectReference Include="..\SteamAPI\SteamAPI.csproj" />
       <ProjectReference Include="..\IO\IO.csproj" />
       <ProjectReference Include="..\SmurfPredictor\SmurfPredictor.csproj" />
@@ -53,9 +54,15 @@
       <None Remove="Resources\.DS_Store" />
     </ItemGroup>
     <ItemGroup>
-      <None Include="wwwroot\images\search.png" />
+      <Content Include="Resources\AppIcon\icon.png" />
     </ItemGroup>
+  <ItemGroup>
+    <MauiIcon Include="Resources\AppIcon\icon.png" />
+  </ItemGroup>
     <ItemGroup>
-      <Folder Include="Resources\" />
+      <None Update="Resources\AppIcon\icon.png">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
     </ItemGroup>
 </Project>

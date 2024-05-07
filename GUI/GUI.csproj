@@ -53,6 +53,9 @@
       <None Remove="Resources\.DS_Store" />
     </ItemGroup>
     <ItemGroup>
+      <None Include="wwwroot\images\search.png" />
+    </ItemGroup>
+    <ItemGroup>
       <Folder Include="Resources\" />
     </ItemGroup>
 </Project>

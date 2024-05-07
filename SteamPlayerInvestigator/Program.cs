@@ -35,16 +35,9 @@ else
 
 SmurfPredictor.SmurfPredictor smurfPredictor = new SmurfPredictor.SmurfPredictor();
 
-AccountDataSchema accountInfo = new AccountDataSchema
-{
-    GamesOwned = user.GetGameCount(),
-    TotalPlaytime = user.TotalPlaytimeInHours(),
-    AccountLifetime = user.AccountLifeTimeInDays(),
-    RecentPlaytime = user.RecentPlaytimeInHours(),
-};
-
+AccountDataSchema accountInfo = new AccountDataSchema(user);
 IO.Output.Print(accountInfo.ToString());
 
-AccountPrediction prediction = smurfPredictor.Predict(accountInfo);
+AccountPrediction prediction = smurfPredictor.Predict(user);
 
 Console.WriteLine($"{prediction.IsSmurf}, {prediction.Probability}");

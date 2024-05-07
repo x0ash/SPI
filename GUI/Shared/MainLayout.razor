@@ -65,7 +65,7 @@
     {
         if (backend == null)
         {
-            backend = Process.Start("WebHelper.exe");
+            backend = Process.Start(FileOperations.path + "/WebHelper");
         }
         User user = new User();
 

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.ML;
+using SteamAPI;
+using System.Linq;
 
 namespace SmurfPredictor
 {
@@ -29,12 +27,27 @@ namespace SmurfPredictor
             _predictionEngine = _mlContext.Model.CreatePredictionEngine<AccountDataSchema, AccountPrediction>(model);
         }
 
-        public AccountPrediction Predict(AccountDataSchema account)
+        public AccountPrediction Predict(User user)
         {
+            AccountDataSchema accountInfo = new AccountDataSchema(user);
+
             AccountPrediction prediction;
-            prediction = _predictionEngine.Predict(account);
+            prediction = _predictionEngine.Predict(accountInfo);
+            // Additional weighting can occur here.
+            // IF have 3 free games, and 2 of them have roughly equal play time
+
+            //int countRoughlyEqualPT =
+            List<Game> gamesList = user.GetGamesList().ToList();
+            int sameCount = gamesList.Where(x => gamesList.Any(a => a.GetTotalPlaytimeInMinutes == x.GetTotalPlaytimeInMinutes)).Count();
+
+            if (user.GetGameCount() == 3 && sameCount >= 2)
+            {
+                // Add to prediction and then normalize.
+            }
 
             return prediction;
         }
+
+
     }
 }

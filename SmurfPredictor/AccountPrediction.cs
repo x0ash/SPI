@@ -12,11 +12,15 @@ namespace SmurfPredictor
         [ColumnName("PredictedLabel")]
         public bool IsSmurf { get; set; }
 
-        // Score is not normalized
+        /// <summary>
+        /// Score is not normalized (not 0-1), use probability instead.
+        /// </summary>
         [ColumnName("Score")]
         public float Score { get; set; }
 
-        // Probability is normalized and therefore the more useful "certainty" value
+        /// <summary>
+        /// Normalized 0-1 value
+        /// </summary>
         [ColumnName("Probability")]
         public float Probability { get; set; }
     }

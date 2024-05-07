@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ML;
 using Microsoft.ML.Data;
+using SteamAPI;
 
 
 namespace SmurfPredictor
@@ -21,6 +22,14 @@ namespace SmurfPredictor
         public string ToString()
         {
             return $"{GamesOwned}, {TotalPlaytime}, {AccountLifetime}, {RecentPlaytime}";
+        }
+
+        public AccountDataSchema(User user)
+        {
+            GamesOwned = user.GetGameCount();
+            TotalPlaytime = user.TotalPlaytimeInHours();
+            AccountLifetime = user.AccountLifeTimeInDays();
+            RecentPlaytime = user.RecentPlaytimeInHours();
         }
     }
 }

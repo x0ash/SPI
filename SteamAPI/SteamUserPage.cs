@@ -28,6 +28,23 @@ namespace SteamAPI
 
 			user.SetUserLevel(int.Parse(levelNode.InnerText));
 		}
+
+		public static void GetGameCountFromBadge(User user, string url)
+		{
+			Output.LogProgress("Requesting badges page (HTML)");
+			string userPage = HTMLRequest.GetHTMLPage(url+"/badges/13");
+			Output.LogProgress("Converting user page to document");
+			HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
+			document.LoadHtml(userPage);
+
+			// Badge description holds the number we need
+			Output.LogProgress("Obtaining the user's game count from badge");
+			HtmlAgilityPack.HtmlNode countNode = Fizzler.Systems.HtmlAgilityPack.HtmlNodeSelection.QuerySelectorAll(document.DocumentNode, "div.badge_description").First();
+
+			// This originally gets spat out as "\n\t\t\t\t\t\t\t[x] games owned" or smth like that, so we need to obtain [x].
+			string numString = countNode.InnerText.Split(" ")[0];
+            user.SetGameCount(int.Parse(numString.Substring(8,numString.Length-8)));
+		}
 	}
 }
 

@@ -13,7 +13,7 @@ using AccountCrawler;
 using System.Text.Json;
 using System.Diagnostics;
 
-const int max_accs = 10;
+const int max_accs = 20;
 List<(string, string)> urls_to_check = new List<(string, string)>();
 
 Console.WriteLine("Loading API key from Data Collection config");

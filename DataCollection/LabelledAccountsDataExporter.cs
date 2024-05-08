@@ -40,11 +40,7 @@ namespace DataCollection
         {
             List<User> accounts = GetAccounts();
 
-            foreach (User user in accounts)
-            {
-                Console.WriteLine(user.GetGamesList().Count());
-            }
-
+            // Write each account to csv file
             using (StreamWriter sw = new StreamWriter(_labelledAccountsDataFile))
             {
                 foreach (User account in accounts)
@@ -52,7 +48,6 @@ namespace DataCollection
                     float gamesOwnedAsFloat = (float)account.GetGamesList().Count();
                     float accountLifeTimeAsFloat = (float)account.AccountLifeTimeInDays();
                     sw.WriteLine($"{gamesOwnedAsFloat.ToString()},{account.TotalPlaytimeInHours()},{accountLifeTimeAsFloat.ToString()},{account.RecentPlaytimeInHours().ToString()},{account.IsSmurf}");
-                    Console.WriteLine($"total hr: {account.TotalPlaytimeInHours()}");
                 }
             }
 
@@ -136,9 +131,11 @@ namespace DataCollection
                 }
                 else
                 {
-                    SteamAPI.Output.Error($"Didn't add user {user.GetSteamID()}");
+                    IO.Output.Error($"Didn't add user {user.GetSteamID()}");
                 }
             }
+            int smurfCount = accounts.Where(acc => acc.IsSmurf == 1).Count();
+            IO.Output.Print($"{smurfCount} of {accounts.Count} collected accounts are smurfs.");
             return accounts;
         }
     }

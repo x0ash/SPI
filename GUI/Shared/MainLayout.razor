@@ -1,0 +1,131 @@
+﻿@inherits LayoutComponentBase
+@using SteamAPI;
+@using IO;
+@using SmurfPredictor;
+@using System.Diagnostics;
+@using System.IO.Pipes;
+
+<div class="container">
+    <div class="homepage">
+        <h1>Steam Player Investigation System</h1>
+        <img src="images/logo.png" class="logo"/>
+        <h2>Enter a Steam URL</h2>
+        <div class="row">
+            <input type="text" @bind="@steamURL" placeholder="Player's URL">
+            <button @onclick="CheckUser"><img src="images/search.png"></button>
+        </div>
+    </div>
+
+
+    @* <div class="loading">
+        <h2>@playerName</h2>
+        <ul>
+            <h4></h4>
+        </ul>
+
+         <div class="progress_bar_container">
+            <div class="bar">
+            </div>
+        </div>
+        <!--Create loading bar potentially-->
+        <!--once loaded button appears to move on-->
+        <button onclick="endScreen()">Finished</button>
+    </div>  *@
+   
+
+    <div class="finalpage" hidden="@containerHidden">
+        <h1>Rating</h1>
+        <h2>@playerName</h2>
+        <h4>Percentage Chance of Smurf: @smurfPercentage%</h4>
+        <ul>
+            <li>Number of Games: @gameCount</li>
+            <li>VAC Banned: @vacStatus</li>
+            <li>Total Hours Played: @hoursPlayed</li>
+            <li>Active for: @accountLifetime days</li>
+        </ul>
+    </div>
+</div>
+
+
+@code
+{
+    // Initialisation
+    string steamURL;
+    string playerName = "";
+    int gameCount;
+    bool vacStatus;
+    string hoursPlayed;
+    int accountLifetime;
+    int smurfPercentage;
+
+    Process backend;
+    private bool containerHidden = true;
+
+    private void Initialise()
+    {
+        FileOperations.GetPath();
+        FileOperations.LoadConfigFile();
+
+        NamedPipeClientStream pipeClient;
+        backend = Process.Start(FileOperations.path + "/WebHelper");
+        int selfPID = Process.GetCurrentProcess().Id;
+        pipeClient = new NamedPipeClientStream(".", "spi", PipeDirection.InOut, PipeOptions.None);
+        pipeClient.Connect();
+        StreamWriter sw = new StreamWriter(pipeClient);
+        StreamReader sr = new StreamReader(pipeClient);
+        sw.AutoFlush = true;
+        sw.WriteLine("spi::pid::{0}", selfPID);
+        if (sr.Peek() > 0)
+        {
+            if (sr.ReadLine() == "spi::status:0")
+            {
+                pipeClient.Close();
+            }
+        }
+    }
+
+    private void CheckUser()
+    {
+        SteamWeb.API_Key = FileOperations.loaded_config.key;
+        User user = new User();
+
+        try
+        {
+            // First get username
+            SteamXML.GetUserDetails(user, steamURL);
+            playerName = user.GetSteamID();
+            vacStatus = user.GetVacStatus();
+            accountLifetime = user.AccountLifeTimeInDays();
+
+            // Then we'll need to use the API
+            if (SteamWeb.GetOwnedGames(user) != 0)
+            {
+                SteamUserPage.GetGameCountFromBadge(user, steamURL);
+                hoursPlayed = "Unknown";
+            }
+            else
+            {
+                hoursPlayed = user.TotalPlaytimeInHours().ToString();
+            }
+            gameCount = user.GetGameCount();
+
+            SmurfPredictor smurfPredictor = new SmurfPredictor();
+            AccountPrediction prediction = smurfPredictor.Predict(user);
+
+            smurfPercentage = (int)Math.Round(prediction.Probability * 100);
+        }
+        catch
+        {
+            Console.WriteLine("Account can't be found.");
+        }
+
+        containerHidden = false;
+
+    }
+
+    protected override void OnInitialized()
+    {
+        Initialise();
+        base.OnInitialized();
+    }
+}

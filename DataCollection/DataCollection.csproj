@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SteamAPI\SteamAPI.csproj" />
+    <ProjectReference Include="..\IO\IO.csproj" />
   </ItemGroup>
 
 </Project>

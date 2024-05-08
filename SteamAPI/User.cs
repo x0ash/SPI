@@ -19,6 +19,7 @@ namespace SteamAPI
         int userLevel;
         string url;
         bool visible;
+        int gameCount;
         
         // Obtainable via Web API
         List<Game> gamesList;
@@ -33,6 +34,7 @@ namespace SteamAPI
             vacBanned = false;
             memberSince = new DateTime();
             userLevel = -1;
+            gameCount = 0;
 
             IsSmurf = 0;
 
@@ -141,6 +143,16 @@ namespace SteamAPI
             gamesList = new List<Game>(_gamesList);
         }
 
+        public int GetGameCount()
+        {
+            return gameCount;
+        }
+
+        public void SetGameCount(int _gameCount)
+        {
+            gameCount = _gameCount;
+        }
+
         #endregion
 
         public void AddGame(Game game)
@@ -159,7 +171,7 @@ namespace SteamAPI
 
             for (int i = 0; i < 5; i++)
             {
-                SteamStorePage.GetCommunityTags(sortedPlaytime[i]);
+                //SteamStorePage.GetCommunityTags(sortedPlaytime[i]);
                 playtimeString += sortedPlaytime[i].ToString();
             }
 
@@ -175,7 +187,7 @@ namespace SteamAPI
             {
                 if (sortedPlaytime[i].GetRecentPlaytimeInMinutes() != 0)
                 {
-                    SteamStorePage.GetCommunityTags(sortedPlaytime[i]);
+                    //SteamStorePage.GetCommunityTags(sortedPlaytime[i]);
                     recentPlaytime += sortedPlaytime[i].ToString();
                 }
             }

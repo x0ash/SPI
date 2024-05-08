@@ -1,5 +1,6 @@
 ﻿namespace AccountCrawler
 {
+
     [Serializable]
     internal struct Config
     {

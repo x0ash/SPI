@@ -13,11 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSuite", "TestSuite\Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountCrawler", "AccountCrawler\AccountCrawler.csproj", "{3C1C3FE7-13F1-466F-B5C9-9240EB4848D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GUI", "GUI\GUI.csproj", "{40750B63-1704-4E7F-80C5-1F024082D4E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPI", "GUI\SPI.csproj", "{40750B63-1704-4E7F-80C5-1F024082D4E2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IO", "IO\IO.csproj", "{87BD83C5-6725-4904-8BC9-CD9264696568}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SteamPlayerInvestigator", "SteamPlayerInvestigator\SteamPlayerInvestigator.csproj", "{45B0157E-A6B1-4268-853D-9D78DEAB30FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPI-CLI", "SteamPlayerInvestigator\SPI-CLI.csproj", "{45B0157E-A6B1-4268-853D-9D78DEAB30FE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmurfPredictor", "SmurfPredictor\SmurfPredictor.csproj", "{36CFEC73-421C-4285-BBD2-7A1C0047A1CD}"
 EndProject

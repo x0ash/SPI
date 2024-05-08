@@ -55,9 +55,15 @@ namespace SmurfPredictorModelTraining
             }
 
             Console.WriteLine("Saved models");
-   
+
             // Test models
 
+            // Use the model to make predictions on test data
+            var predictions = fastTreeModel.Transform(testData);
+
+            var confusionMatrix = _mlContext.BinaryClassification.Evaluate(predictions, labelColumnName: "IsSmurf").ConfusionMatrix;
+
+            Console.WriteLine(confusionMatrix.GetFormattedConfusionTable());
         }
 
         private TrainTestData LoadDataSetWithSplit(float split)

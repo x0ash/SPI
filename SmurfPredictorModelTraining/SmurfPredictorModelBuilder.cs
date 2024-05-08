@@ -27,21 +27,21 @@ namespace SmurfPredictorModelTraining
             // Convert fields into floats
             // Add them to the pipeline
             // use LdSvm trainer
-            var SmurfDetectorPipeline = mlContext.Transforms.Conversion.ConvertType("S_GamesOwned", "GamesOwned", Microsoft.ML.Data.DataKind.Single)
-                .Append(mlContext.Transforms.Conversion.ConvertType("S_AccountLifetime", "AccountLifetime", Microsoft.ML.Data.DataKind.Single))
-                .Append(mlContext.Transforms.Concatenate("Features", "S_GamesOwned", "S_AccountLifetime", "TotalPlaytime", "RecentPlaytime"))
-                .Append(mlContext.BinaryClassification.Trainers.LdSvm(labelColumnName: "IsSmurf"));
+            var ldSvmPipeline = _mlContext.Transforms.Conversion.ConvertType("S_GamesOwned", "GamesOwned", Microsoft.ML.Data.DataKind.Single)
+                .Append(_mlContext.Transforms.Conversion.ConvertType("S_AccountLifetime", "AccountLifetime", Microsoft.ML.Data.DataKind.Single))
+                .Append(_mlContext.Transforms.Concatenate("Features", "S_GamesOwned", "S_AccountLifetime", "TotalPlaytime", "RecentPlaytime"))
+                .Append(_mlContext.BinaryClassification.Trainers.LdSvm(labelColumnName: "IsSmurf"));
 
             // FastTree model
-            var fastTreePipeline = mlContext.Transforms.Conversion.ConvertType("S_GamesOwned", "GamesOwned", Microsoft.ML.Data.DataKind.Single)
-                .Append(mlContext.Transforms.Conversion.ConvertType("S_AccountLifetime", "AccountLifetime", Microsoft.ML.Data.DataKind.Single))
-                .Append(mlContext.Transforms.Concatenate("Features", "S_GamesOwned", "S_AccountLifetime", "TotalPlaytime", "RecentPlaytime"))
-                .Append(mlContext.BinaryClassification.Trainers.FastTree(labelColumnName: "IsSmurf"));
+            var fastTreePipeline = _mlContext.Transforms.Conversion.ConvertType("S_GamesOwned", "GamesOwned", Microsoft.ML.Data.DataKind.Single)
+                .Append(_mlContext.Transforms.Conversion.ConvertType("S_AccountLifetime", "AccountLifetime", Microsoft.ML.Data.DataKind.Single))
+                .Append(_mlContext.Transforms.Concatenate("Features", "S_GamesOwned", "S_AccountLifetime", "TotalPlaytime", "RecentPlaytime"))
+                .Append(_mlContext.BinaryClassification.Trainers.FastTree(labelColumnName: "IsSmurf"));
 
-            var fastTreeNoTimePipeline = mlContext.Transforms.Conversion.ConvertType("S_GamesOwned", "GamesOwned", Microsoft.ML.Data.DataKind.Single)
-                .Append(mlContext.Transforms.Conversion.ConvertType("S_AccountLifetime", "AccountLifetime", Microsoft.ML.Data.DataKind.Single))
-                .Append(mlContext.Transforms.Concatenate("Features", "S_GamesOwned", "S_AccountLifetime"))
-                .Append(mlContext.BinaryClassification.Trainers.FastTree(labelColumnName: "IsSmurf"));
+            var fastTreeNoTimePipeline = _mlContext.Transforms.Conversion.ConvertType("S_GamesOwned", "GamesOwned", Microsoft.ML.Data.DataKind.Single)
+                .Append(_mlContext.Transforms.Conversion.ConvertType("S_AccountLifetime", "AccountLifetime", Microsoft.ML.Data.DataKind.Single))
+                .Append(_mlContext.Transforms.Concatenate("Features", "S_GamesOwned", "S_AccountLifetime"))
+                .Append(_mlContext.BinaryClassification.Trainers.FastTree(labelColumnName: "IsSmurf"));
 
             // Potentially try out lightGbm model
 
@@ -53,7 +53,7 @@ namespace SmurfPredictorModelTraining
 
             var fastTreeModel = fastTreePipeline.Fit(trainingData);
 
-            var fastTreeNoTimeModel = fastTreeNoTimePipeline.Fit(DataView);
+            var fastTreeNoTimeModel = fastTreeNoTimePipeline.Fit(trainingData);
 
             Console.WriteLine("Fitted dataview");
 
@@ -69,7 +69,7 @@ namespace SmurfPredictorModelTraining
 
             using (FileStream fs = new FileStream("ftNoTimeSmurfPredictorModel.zip", FileMode.Create, FileAccess.Write, FileShare.Write))
             {
-                mlContext.Model.Save(fastTreeNoTimeModel, DataView.Schema, fs);
+                _mlContext.Model.Save(fastTreeNoTimeModel, trainingData.Schema, fs);
             }
 
             Console.WriteLine("Saved models");

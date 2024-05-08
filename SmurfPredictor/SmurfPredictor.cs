@@ -47,7 +47,6 @@ namespace SmurfPredictor
             {
                 prediction = _predictionEngine.Predict(accountInfo);
             }
-
             
             // Additional weighting can occur here.
             // IF have 3 free games, and 2 of them have roughly equal play time

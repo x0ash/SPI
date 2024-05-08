@@ -24,13 +24,13 @@ namespace SmurfPredictorModelTraining
             // use LdSvm trainer
             var SmurfDetectorPipeline = mlContext.Transforms.Conversion.ConvertType("S_GamesOwned", "GamesOwned", Microsoft.ML.Data.DataKind.Single)
                 .Append(mlContext.Transforms.Conversion.ConvertType("S_AccountLifetime", "AccountLifetime", Microsoft.ML.Data.DataKind.Single))
-                .Append(mlContext.Transforms.Concatenate("Features", "S_GamesOwned", "TotalPlaytime", "S_AccountLifetime", "RecentPlaytime"))
+                .Append(mlContext.Transforms.Concatenate("Features", "S_GamesOwned", "S_AccountLifetime", "TotalPlaytime", "RecentPlaytime"))
                 .Append(mlContext.BinaryClassification.Trainers.LdSvm(labelColumnName: "IsSmurf"));
 
             // FastTree model
             var fastTreePipeline = mlContext.Transforms.Conversion.ConvertType("S_GamesOwned", "GamesOwned", Microsoft.ML.Data.DataKind.Single)
                 .Append(mlContext.Transforms.Conversion.ConvertType("S_AccountLifetime", "AccountLifetime", Microsoft.ML.Data.DataKind.Single))
-                .Append(mlContext.Transforms.Concatenate("Features", "S_GamesOwned", "TotalPlaytime", "S_AccountLifetime", "RecentPlaytime"))
+                .Append(mlContext.Transforms.Concatenate("Features", "S_GamesOwned", "S_AccountLifetime", "TotalPlaytime", "RecentPlaytime"))
                 .Append(mlContext.BinaryClassification.Trainers.FastTree(labelColumnName: "IsSmurf"));
 
             var fastTreeNoTimePipeline = mlContext.Transforms.Conversion.ConvertType("S_GamesOwned", "GamesOwned", Microsoft.ML.Data.DataKind.Single)
@@ -68,7 +68,7 @@ namespace SmurfPredictorModelTraining
                 mlContext.Model.Save(fastTreeNoTimeModel, DataView.Schema, fs);
             }
 
-            Console.WriteLine("Saved model");
+            Console.WriteLine("Saved models");
       
         }
     }

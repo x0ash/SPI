@@ -3,6 +3,7 @@
 @using IO;
 @using SmurfPredictor;
 @using System.Diagnostics;
+@using System.IO.Pipes;
 
 <div class="container">
     <div class="homepage">
@@ -65,14 +66,26 @@
         FileOperations.LoadConfigFile();
         SteamWeb.API_Key = FileOperations.loaded_config.key;
 
+        NamedPipeClientStream pipeClient;
+        backend = Process.Start(FileOperations.path + "/WebHelper");
+        int selfPID = Process.GetCurrentProcess().Id;
+        pipeClient = new NamedPipeClientStream(".", "spi", PipeDirection.InOut, PipeOptions.None);
+        pipeClient.Connect();
+        StreamWriter sw = new StreamWriter(pipeClient);
+        StreamReader sr = new StreamReader(pipeClient);
+        sw.AutoFlush = true;
+        sw.WriteLine("spi::pid::{0}", selfPID);
+        if (sr.Peek() > 0)
+        {
+            if (sr.ReadLine() == "spi::status:0")
+            {
+                pipeClient.Close();
+            }
+        }
     }
 
     private void CheckUser()
     {
-        if (backend == null)
-        {
-            backend = Process.Start(FileOperations.path + "/WebHelper");
-        }
         User user = new User();
 
         // First get username
@@ -90,8 +103,6 @@
         containerHidden = false;
 
     }
-
-
 
     protected override void OnInitialized()
     {

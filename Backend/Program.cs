@@ -1,4 +1,6 @@
-﻿using System.IO.Pipes;
+﻿using System.Diagnostics;
+using System.IO.Pipes;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 // Start the server
@@ -12,10 +14,11 @@ pipeServer = new NamedPipeServerStream("spi", PipeDirection.InOut);
 sw = new StreamWriter(pipeServer);
 sr = new StreamReader(pipeServer);
 
+Process clientProc;
+bool connected = false;
 
 try
 {
-    bool connected = false;
     string url = "";
     while (true)
     {
@@ -23,10 +26,16 @@ try
         {
             url = sr.ReadLine();
             Console.WriteLine("URL: {0}", url);
-            if (url == "spi::-1::disconnected")
+            if (url.Substring(0,10) == "spi::pid::")
             {
-                //connected = false;
-                System.Environment.Exit(0);
+                int pid = int.Parse(url.Substring(10));
+                Console.WriteLine("Client PID: {0}", pid);
+                clientProc = Process.GetProcessById(pid);
+                clientProc.EnableRaisingEvents = true;
+                clientProc.Exited += CloseServer;
+                sw.WriteLine("spi::status::0");
+                pipeServer.Close();
+                connected = false;
             }
             else
             {
@@ -75,46 +84,8 @@ string GetHTMLPage(string url)
     return RequestHTMLPage(url).Result;
 }
 
-class StreamString
+void CloseServer(object sender, EventArgs e)
 {
-    Stream ioStream;
-    UnicodeEncoding streamEncoding;
-
-    public StreamString(Stream ioStream)
-    {
-        this.ioStream = ioStream;
-        this.streamEncoding = new UnicodeEncoding();
-    }
-
-    public string ReadString()
-    {
-        try
-        {
-            int len = 0;
-
-            len = ioStream.ReadByte() * 256;
-            len += ioStream.ReadByte();
-            byte[] inBuffer = new byte[len];
-            ioStream.Read(inBuffer, 0, len);
-
-            return streamEncoding.GetString(inBuffer);
-        }
-
-        catch
-        {
-            return "spi::-1::disconnected";
-        }
-    }
-
-    public int WriteString(string outString)
-    {
-        byte[] outBuffer = streamEncoding.GetBytes(outString);
-        int len = outBuffer.Length;
-        ioStream.WriteByte((byte)(len / 256));
-        ioStream.WriteByte((byte)(len & 255));
-        ioStream.Write(outBuffer, 0, len);
-        ioStream.Flush();
-
-        return outBuffer.Length + 2;
-    }
+    pipeServer.Close();
+    System.Environment.Exit(0);
 }

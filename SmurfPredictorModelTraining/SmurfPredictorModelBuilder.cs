@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -16,7 +16,7 @@ namespace SmurfPredictorModelTraining
 
             string solutionPath = Directory.GetParent(Assembly.GetExecutingAssembly().Location).Parent.Parent.Parent.Parent.FullName;
             string dataLocation = Path.Combine(solutionPath, @"DataCollection\LabelledAccountData.csv"); ;
-            
+
             var DataView = mlContext.Data.LoadFromTextFile<AccountDataSchema>(dataLocation, separatorChar: ',');
             // Convert fields into floats
             // Add them to the pipeline
@@ -58,7 +58,67 @@ namespace SmurfPredictorModelTraining
             Console.WriteLine("Saved model");
 
 
-            // Now need to make predicitons somehow?
+            // Now need to make predicitons somehow?        
+        }
+
+        {
+            static void MakePredictions(MLContext mlContext, ITransformer model, IEnumerable<AccountData> testData)
+
+                // Create prediction engine
+                var predictionEngine = mlContext.Model.CreatePredictionEngine<AccountData, AccountPrediction>(SmurfPredictorModelTraining);
+
+            // Make predictions for each test account
+            foreach(var account in data)
+            {
+                var prediction = predictionEngine.Predict(account);
+
+                //  prediction as percentage
+                double probabilityOfSmurf = prediction.Score * 100;
+
+                //  prediction result
+                Console.WriteLine($"Prediction: {probabilityOfSmurf}% likely a smurf");
+
+                // Output result interpretation
+                if (probabilityOfSmurf >= 0.9)
+                {
+                    Console.WriteLine("Prediction: 90-100 percent a smurf");
+                }
+                else if (probabilityOfSmurf >= 0.8)
+                {
+                    Console.WriteLine("Prediction: 80-89 percent a smurf");
+                }
+                else if (probabilityOfSmurf >= 0.7)
+                {
+                    Console.WriteLine("Prediction: 70-79 percent a smurf");
+                }
+                else if (probabilityOfSmurf >= 0.6)
+                {
+                    Console.WriteLine("Prediction: 60-69 percent a smurf");
+                }
+                else if (probabilityOfSmurf >= 0.5)
+                {
+                    Console.WriteLine("Prediction: 50-59 percent a smurf");
+                }
+                else if (probabilityOfSmurf >= 0.4)
+                {
+                    Console.WriteLine("Prediction: 40-49 percent a smurf");
+                }
+                else if (probabilityOfSmurf >= 0.3)
+                {
+                    Console.WriteLine("Prediction: 30-39 percent a smurf");
+                }
+                else if (probabilityOfSmurf >= 0.2)
+                {
+                    Console.WriteLine("Prediction: 20-29 percent a smurf");
+                }
+                else
+                {
+                    Console.WriteLine("Prediction: 0-19 percent a smurf (least likely)");
+                }
+
+                // Output predicted label
+                Console.WriteLine($"Predicted label: {prediction.Prediction}");
+            }
         }
     }
 }

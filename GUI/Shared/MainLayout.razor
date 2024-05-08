@@ -36,7 +36,7 @@
     <div class="finalpage" hidden="@containerHidden">
         <h1>Rating</h1>
         <h2>@playerName</h2>
-        <h4>Percentage Chance of Smurf: </h4>
+        <h4>Percentage Chance of Smurf: @smurfPercentage%</h4>
         <ul>
             <li>Number of Games: @gameCount</li>
             <li>VAC Banned: @vacStatus</li>
@@ -54,8 +54,9 @@
     string playerName = "";
     int gameCount;
     bool vacStatus;
-    float hoursPlayed;
+    string hoursPlayed;
     int accountLifetime;
+    int smurfPercentage;
 
     Process backend;
     private bool containerHidden = true;
@@ -64,7 +65,6 @@
     {
         FileOperations.GetPath();
         FileOperations.LoadConfigFile();
-        SteamWeb.API_Key = FileOperations.loaded_config.key;
 
         NamedPipeClientStream pipeClient;
         backend = Process.Start(FileOperations.path + "/WebHelper");
@@ -86,19 +86,38 @@
 
     private void CheckUser()
     {
+        SteamWeb.API_Key = FileOperations.loaded_config.key;
         User user = new User();
 
-        // First get username
-        SteamXML.GetUserDetails(user, steamURL);
-        playerName = user.GetSteamID();
-        vacStatus = user.GetVacStatus();
-        accountLifetime = user.AccountLifeTimeInDays();
+        try
+        {
+            // First get username
+            SteamXML.GetUserDetails(user, steamURL);
+            playerName = user.GetSteamID();
+            vacStatus = user.GetVacStatus();
+            accountLifetime = user.AccountLifeTimeInDays();
 
-        // Then we'll need to use the API
-        SteamWeb.GetOwnedGames(user);
-        gameCount = user.GetGameCount();
-        hoursPlayed = user.TotalPlaytimeInHours();
+            // Then we'll need to use the API
+            if (SteamWeb.GetOwnedGames(user) != 0)
+            {
+                SteamUserPage.GetGameCountFromBadge(user, steamURL);
+                hoursPlayed = "Unknown";
+            }
+            else
+            {
+                hoursPlayed = user.TotalPlaytimeInHours().ToString();
+            }
+            gameCount = user.GetGameCount();
 
+            SmurfPredictor smurfPredictor = new SmurfPredictor();
+            AccountPrediction prediction = smurfPredictor.Predict(user);
+
+            smurfPercentage = (int)Math.Round(prediction.Probability * 100);
+        }
+        catch
+        {
+            Console.WriteLine("Account can't be found.");
+        }
 
         containerHidden = false;
 

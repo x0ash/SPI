@@ -33,6 +33,11 @@ namespace SmurfPredictorModelTraining
                 .Append(mlContext.Transforms.Concatenate("Features", "S_GamesOwned", "TotalPlaytime", "S_AccountLifetime", "RecentPlaytime"))
                 .Append(mlContext.BinaryClassification.Trainers.FastTree(labelColumnName: "IsSmurf"));
 
+            var fastTreeNoTimePipeline = mlContext.Transforms.Conversion.ConvertType("S_GamesOwned", "GamesOwned", Microsoft.ML.Data.DataKind.Single)
+                .Append(mlContext.Transforms.Conversion.ConvertType("S_AccountLifetime", "AccountLifetime", Microsoft.ML.Data.DataKind.Single))
+                .Append(mlContext.Transforms.Concatenate("Features", "S_GamesOwned", "S_AccountLifetime"))
+                .Append(mlContext.BinaryClassification.Trainers.FastTree(labelColumnName: "IsSmurf"));
+
             // Potentially try out lightGbm model
 
             //var SmurfDetectorPipeline = mlContext.Transforms.Concatenate("Features", "GamesOwned", "TotalPlaytime","AccountLifetime", "RecentPlaytime")
@@ -44,6 +49,8 @@ namespace SmurfPredictorModelTraining
 
             var fastTreeModel = fastTreePipeline.Fit(DataView);
 
+            var fastTreeNoTimeModel = fastTreeNoTimePipeline.Fit(DataView);
+
             Console.WriteLine("Fitted dataview");
 
             using (FileStream fs = new FileStream("ldsvmSmurfPredictorModel.zip", FileMode.Create, FileAccess.Write, FileShare.Write))
@@ -54,6 +61,11 @@ namespace SmurfPredictorModelTraining
             using (FileStream fs = new FileStream("ftSmurfPredictorModel.zip", FileMode.Create, FileAccess.Write, FileShare.Write))
             {
                 mlContext.Model.Save(fastTreeModel, DataView.Schema, fs);
+            }
+
+            using (FileStream fs = new FileStream("ftNoTimeSmurfPredictorModel.zip", FileMode.Create, FileAccess.Write, FileShare.Write))
+            {
+                mlContext.Model.Save(fastTreeNoTimeModel, DataView.Schema, fs);
             }
 
             Console.WriteLine("Saved model");

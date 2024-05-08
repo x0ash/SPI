@@ -9,11 +9,13 @@ namespace SmurfPredictor
     {
         private MLContext _mlContext;
         private PredictionEngine<AccountDataSchema, AccountPrediction> _predictionEngine;
+        private PredictionEngine<AccountDataSchema, AccountPrediction> _noTimePredictionEngine;
         public SmurfPredictor()
         {
             _mlContext = new MLContext();
 
             ITransformer model;
+            ITransformer noTimeModel;
             // Load from file the model
             // Copy the model produced from training into the location of the assembly
             // Choose between using the ldsvm or fast tree model
@@ -23,8 +25,13 @@ namespace SmurfPredictor
             {
                 model = _mlContext.Model.Load(fs, out var schema);
             }
-            
+            using (FileStream fs = new FileStream("ftNoTimeSmurfPredictorModel.zip", FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                noTimeModel = _mlContext.Model.Load(fs, out var schema);
+            }
+
             _predictionEngine = _mlContext.Model.CreatePredictionEngine<AccountDataSchema, AccountPrediction>(model);
+            _noTimePredictionEngine = _mlContext.Model.CreatePredictionEngine<AccountDataSchema, AccountPrediction>(noTimeModel);
         }
 
         public AccountPrediction Predict(User user)
@@ -32,7 +39,16 @@ namespace SmurfPredictor
             AccountDataSchema accountInfo = new AccountDataSchema(user);
 
             AccountPrediction prediction;
-            prediction = _predictionEngine.Predict(accountInfo);
+            if (accountInfo.TotalPlaytime == 0 || accountInfo.RecentPlaytime == 0)
+            {
+                prediction = _noTimePredictionEngine.Predict(accountInfo);
+            }
+            else
+            {
+                prediction = _predictionEngine.Predict(accountInfo);
+            }
+
+            
             // Additional weighting can occur here.
             // IF have 3 free games, and 2 of them have roughly equal play time
 

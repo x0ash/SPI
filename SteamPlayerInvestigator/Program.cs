@@ -22,11 +22,7 @@ string steam_url = IO.Input.Read();
 User user = new User();
 SteamXML.GetUserDetails(user, steam_url);
 SteamUserPage.GetUserLevel(user, steam_url);
-if (SteamWeb.GetOwnedGames(user) == 0)
-{
-    user.SetGameCount(user.GetGamesList().Count());
-}
-else
+if (SteamWeb.GetOwnedGames(user) != 0)
 {
     SteamUserPage.GetGameCountFromBadge(user, steam_url);
 }

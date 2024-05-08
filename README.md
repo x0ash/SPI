@@ -47,7 +47,7 @@ Requires this format:
 
 The table/data for training will look something like this, open to change.
 
-| No. Games owned | Total playtime (hrs)| Account lifetime (days)| Total Recent Playtime (hrs) | Label |
+| No. Games owned |Account lifetime (days) |  Total playtime (hrs) | Total Recent Playtime (hrs) | Label |
 |-----------------|----------------|------------------|-----------------------|-------|
 | | | | | |
 | | | | | |

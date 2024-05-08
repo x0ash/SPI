@@ -18,7 +18,7 @@ namespace SmurfPredictorModelTraining
         {
             _mlContext = new MLContext();
 
-            // Split 70 30 training testing data
+            // Split data into training and testing
             var data = LoadDataSetWithSplit(0.3f);
             var trainingData = data.TrainSet;
             var testData = data.TestSet;
@@ -62,17 +62,22 @@ namespace SmurfPredictorModelTraining
             var predictions = fastTreeModel.Transform(testData);
 
             var confusionMatrix = _mlContext.BinaryClassification.Evaluate(predictions, labelColumnName: "IsSmurf").ConfusionMatrix;
-
-            Console.WriteLine(confusionMatrix.GetFormattedConfusionTable());
+            Console.WriteLine("Fast tree\n" + confusionMatrix.GetFormattedConfusionTable());
         }
 
-        private TrainTestData LoadDataSetWithSplit(float split)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="testSplit"> Percentage of data that is for testing </param>
+        /// <returns></returns>
+        private TrainTestData LoadDataSetWithSplit(float testSplit)
         {
             string solutionPath = Directory.GetParent(Assembly.GetExecutingAssembly().Location).Parent.Parent.Parent.Parent.FullName;
             string dataLocation = Path.Combine(solutionPath, @"DataCollection\LabelledAccountData.csv"); ;
 
             var data = _mlContext.Data.LoadFromTextFile<AccountDataSchema>(dataLocation, separatorChar: ',');
-            var splitData = _mlContext.Data.TrainTestSplit(data, testFraction: split);
+            Random rand = new Random();
+            var splitData = _mlContext.Data.TrainTestSplit(data, testFraction: testSplit, seed: 1);
             return splitData;
         }
 

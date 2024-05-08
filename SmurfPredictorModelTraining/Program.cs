@@ -1,6 +1,6 @@
 ﻿using Microsoft.ML;
 
-namespace SmurfPredictorModelTraining_Hamza
+namespace SmurfPredictorModelTraining
 {
     internal class Program
     {

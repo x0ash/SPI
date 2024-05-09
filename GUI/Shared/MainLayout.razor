@@ -14,6 +14,7 @@
             <input type="text" @bind="@steamURL" placeholder="Player's URL">
             <button @onclick="CheckUser"><img src="images/search.png"></button>
         </div>
+        <span style="color:red;">@errorMessage</span>
     </div>
 
 
@@ -57,8 +58,9 @@
     string hoursPlayed;
     int accountLifetime;
     int smurfPercentage;
+    string errorMessage = "";
 
-    Process backend;
+    Process server;
     private bool containerHidden = true;
 
     private void Initialise()
@@ -66,22 +68,7 @@
         FileOperations.GetPath();
         FileOperations.LoadConfigFile();
 
-        NamedPipeClientStream pipeClient;
-        backend = Process.Start(FileOperations.path + "/WebHelper");
-        int selfPID = Process.GetCurrentProcess().Id;
-        pipeClient = new NamedPipeClientStream(".", "spi", PipeDirection.InOut, PipeOptions.None);
-        pipeClient.Connect();
-        StreamWriter sw = new StreamWriter(pipeClient);
-        StreamReader sr = new StreamReader(pipeClient);
-        sw.AutoFlush = true;
-        sw.WriteLine("spi::pid::{0}", selfPID);
-        if (sr.Peek() > 0)
-        {
-            if (sr.ReadLine() == "spi::status:0")
-            {
-                pipeClient.Close();
-            }
-        }
+        StartServer();
     }
 
     private void CheckUser()
@@ -92,7 +79,10 @@
         try
         {
             // First get username
-            SteamXML.GetUserDetails(user, steamURL);
+            if (SteamXML.GetUserDetails(user, steamURL) != 0)
+            {
+                throw new InvalidDataException("XML fetch failed");
+            }
             playerName = user.GetSteamID();
             vacStatus = user.GetVacStatus();
             accountLifetime = user.AccountLifeTimeInDays();
@@ -113,13 +103,15 @@
             AccountPrediction prediction = smurfPredictor.Predict(user);
 
             smurfPercentage = (int)Math.Round(prediction.Probability * 100);
+            errorMessage = "";
+            containerHidden = false;
         }
         catch
         {
             Console.WriteLine("Account can't be found.");
+            errorMessage = "Error: Account could not be retrieved.";
+            containerHidden = true;
         }
-
-        containerHidden = false;
 
     }
 
@@ -127,5 +119,32 @@
     {
         Initialise();
         base.OnInitialized();
+    }
+
+    private void StartServer()
+    {
+        NamedPipeClientStream pipeClient;
+        server = Process.Start(FileOperations.path + "/WebHelper");
+        server.EnableRaisingEvents = true;
+        server.Exited += ServerExitEvent;
+        int selfPID = Process.GetCurrentProcess().Id;
+        pipeClient = new NamedPipeClientStream(".", "spi", PipeDirection.InOut, PipeOptions.None);
+        pipeClient.Connect();
+        StreamWriter sw = new StreamWriter(pipeClient);
+        StreamReader sr = new StreamReader(pipeClient);
+        sw.AutoFlush = true;
+        sw.WriteLine("spi::pid::{0}", selfPID);
+        if (sr.Peek() > 0)
+        {
+            if (sr.ReadLine() == "spi::status:0")
+            {
+                pipeClient.Close();
+            }
+        }
+    }
+
+    void ServerExitEvent(object sender, EventArgs e)
+    {
+        StartServer();          // we don't ever want the web helper to die so we'll just do it like this.
     }
 }

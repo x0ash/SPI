@@ -1,6 +1,6 @@
 # Steam Player Investigator
 
-Steam player investigator TSE project.
+Steam Player Investigator
 
 ### Sections
 
